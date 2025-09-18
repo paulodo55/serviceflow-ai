@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from "framer-motion";
-import { FaCalendarCheck, FaTools, FaClock, FaBell, FaSync, FaChartBar, FaTruckLoading, FaAnalytics } from "react-icons/fa"; // Note: Icons are approximate matches
+import { FaCalendarCheck, FaTools, FaClock, FaBell, FaSync, FaChartBar, FaTruckLoading, FaChartLine } from "react-icons/fa"; // Updated FaAnalytics to FaChartLine
 
 const features = [
   {
@@ -40,7 +40,7 @@ const features = [
     description: "Integrates with OEM APIs and local supplier databases to forecast parts delivery dates. When parts delays exceed acceptable thresholds, AI automatically offers alternative genuine or certified aftermarket options to avoid extended bay downtime."
   },
   {
-    icon: <FaAnalytics />,
+    icon: <FaChartLine />,
     title: "Performance Analytics & ROI Reporting",
     description: "AI aggregates key metrics—bay utilization, average repair time variance, no-show rate, and revenue per bay. Interactive dashboards project monthly profit improvements and calculate time saved per service advisor (target: 2+ hours per day)."
   }
