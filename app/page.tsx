@@ -59,13 +59,13 @@ export default function Home() {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-dark via-darkGray to-neutral-900">
       {/* Navbar */}
       <motion.nav 
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="fixed top-0 w-full bg-white/90 backdrop-blur-lg shadow-sm border-b border-neutral-100 z-50"
+        className="fixed top-0 w-full bg-dark/90 backdrop-blur-lg shadow-sm border-b border-neutral-800 z-50"
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <motion.h1 
@@ -75,16 +75,20 @@ export default function Home() {
             ServiceFlow AI
           </motion.h1>
           <div className="hidden md:flex space-x-8">
-            {['Features', 'Solutions', 'Contact'].map((item, index) => (
+            {[
+              { name: 'Features', href: '/features' },
+              { name: 'Solutions', href: '#solutions' },
+              { name: 'Contact', href: '#contact' }
+            ].map((item, index) => (
               <motion.a
-                key={item}
-                href={`#${item.toLowerCase()}`}
+                key={item.name}
+                href={item.href}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * index, duration: 0.5 }}
-                className="text-neutral-600 hover:text-primary transition-all duration-300 relative group"
+                className="text-neutral-400 hover:text-primary transition-all duration-300 relative group"
               >
-                {item}
+                {item.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
               </motion.a>
             ))}
@@ -94,7 +98,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10"></div>
         <motion.div
           style={{ opacity }}
           className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10"
@@ -107,7 +111,7 @@ export default function Home() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.h1 
-              className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-neutral-900 via-primary to-secondary bg-clip-text text-transparent leading-tight"
+              className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-primary to-secondary bg-clip-text text-transparent leading-tight"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.2 }}
@@ -116,7 +120,7 @@ export default function Home() {
             </motion.h1>
             
             <motion.p 
-              className="text-xl md:text-2xl text-neutral-600 mb-12 max-w-4xl mx-auto leading-relaxed"
+              className="text-xl md:text-2xl text-neutral-300 mb-12 max-w-4xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -131,8 +135,8 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.6 }}
             >
               <motion.a
-                href="#features"
-                whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(0, 102, 255, 0.3)" }}
+                href="/features"
+                whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(139, 92, 246, 0.3)" }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
               >
@@ -144,7 +148,7 @@ export default function Home() {
                 href="#solutions"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-white text-primary px-8 py-4 rounded-full font-semibold border-2 border-primary hover:bg-primary hover:text-white transition-all duration-300"
+                className="bg-transparent text-white px-8 py-4 rounded-full font-semibold border-2 border-primary hover:bg-primary hover:text-white transition-all duration-300"
               >
                 View Solutions
               </motion.a>
@@ -158,7 +162,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-24 bg-white">
+      <section id="features" className="py-24 bg-darkGray">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -184,15 +188,15 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -10, scale: 1.02 }}
-                className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-neutral-100 hover:border-primary/20"
+                className="group bg-neutral-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-neutral-700 hover:border-primary/50"
               >
                 <div className="text-5xl text-primary mb-6 group-hover:scale-110 transition-transform duration-300">
                   {feature.icon}
                 </div>
-                <h4 className="text-xl font-bold mb-4 text-neutral-900 group-hover:text-primary transition-colors duration-300">
+                <h4 className="text-xl font-bold mb-4 text-white group-hover:text-primary transition-colors duration-300">
                   {feature.title}
                 </h4>
-                <p className="text-neutral-600 leading-relaxed">
+                <p className="text-neutral-300 leading-relaxed">
                   {feature.description}
                 </p>
               </motion.div>
@@ -202,7 +206,7 @@ export default function Home() {
       </section>
 
       {/* Solutions Section */}
-      <section id="solutions" className="py-24 bg-gradient-to-br from-neutral-50 to-blue-50/30">
+      <section id="solutions" className="py-24 bg-gradient-to-br from-dark to-neutral-900/50">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -228,13 +232,13 @@ export default function Home() {
                 transition={{ duration: 0.8, delay: index * 0.2 }}
                 viewport={{ once: true }}
                 whileHover={{ scale: 1.02 }}
-                className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-neutral-100 hover:border-primary/30"
+                className="group bg-neutral-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-neutral-700 hover:border-primary/50"
               >
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center text-white font-bold text-lg group-hover:scale-110 transition-transform duration-300">
                     {index + 1}
                   </div>
-                  <p className="text-neutral-700 text-lg leading-relaxed group-hover:text-neutral-900 transition-colors duration-300">
+                  <p className="text-neutral-300 text-lg leading-relaxed group-hover:text-white transition-colors duration-300">
                     {solution}
                   </p>
                 </div>
@@ -262,7 +266,7 @@ export default function Home() {
             <motion.button
               whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(255, 255, 255, 0.3)" }}
               whileTap={{ scale: 0.95 }}
-              className="bg-white text-primary px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+              className="bg-white text-dark px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Get Started Today
             </motion.button>
@@ -279,21 +283,21 @@ export default function Home() {
                 ServiceFlow AI
               </h3>
               <p className="text-neutral-400">
-                Revolutionizing dealership service operations with AI-powered automation and optimization.
+                A Vervid Product - Revolutionizing dealership service operations with AI-powered automation and optimization.
               </p>
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4">Contact</h4>
-              <p className="text-neutral-400">info@serviceflow.ai</p>
-              <p className="text-neutral-400">1-800-SERVICEFLOW</p>
+              <p className="text-neutral-400">hello@vervidai.com</p>
+              <p className="text-neutral-400">(512) 264-5260</p>
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4">Solutions</h4>
               <ul className="space-y-2 text-neutral-400">
-                <li>Automated Scheduling</li>
-                <li>Technician Matching</li>
-                <li>Performance Analytics</li>
-                <li>Customer Communication</li>
+                <li><a href="/features/instant-booking" className="hover:text-primary transition-colors">Instant Online Booking</a></li>
+                <li><a href="/features/technician-matching" className="hover:text-primary transition-colors">Technician Matching</a></li>
+                <li><a href="/features/analytics-reporting" className="hover:text-primary transition-colors">Performance Analytics</a></li>
+                <li><a href="/features/automated-reminders" className="hover:text-primary transition-colors">Automated Reminders</a></li>
               </ul>
             </div>
           </div>
