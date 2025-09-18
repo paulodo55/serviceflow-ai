@@ -257,7 +257,7 @@ export default function Home() {
               Ready to Transform Your Service Department?
             </h2>
             <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-              Join industry leaders who've increased their service revenue by 15-25% with ServiceFlow AI
+              Join industry leaders who&apos;ve increased their service revenue by 15-25% with ServiceFlow AI
             </p>
             <motion.button
               whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(255, 255, 255, 0.3)" }}
