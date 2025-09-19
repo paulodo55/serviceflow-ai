@@ -80,7 +80,7 @@ export default function DemoPage() {
           <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-12 rounded-2xl border border-primary/20">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Transform Your Service Department?</h2>
             <p className="text-xl text-neutral-200 mb-8 max-w-2xl mx-auto">
-              Schedule a personalized demo and see how ServiceFlow can increase your revenue by 15-25%
+              Join leading dealerships who&apos;ve increased their service revenue by 15-25% with intelligent automation
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.button

@@ -22,7 +22,7 @@ export default function SignUpPage() {
               Start Your ServiceFlow Journey
             </h1>
             <p className="text-xl text-neutral-200 mb-8 leading-relaxed font-light">
-              Join leading dealerships who've increased their service revenue by 15-25% with intelligent automation
+              Join leading dealerships who&apos;ve increased their service revenue by 15-25% with intelligent automation
             </p>
             
             <div className="space-y-6">
