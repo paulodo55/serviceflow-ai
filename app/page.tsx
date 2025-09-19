@@ -70,9 +70,12 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <motion.h1 
             whileHover={{ scale: 1.05 }}
-            className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+            className="flex flex-col items-center"
           >
-            ServiceFlow AI
+            <div className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              ServiceFlow
+            </div>
+            <div className="text-xs text-neutral-400 font-normal mt-1">by Vervid</div>
           </motion.h1>
           <div className="hidden md:flex space-x-8">
             {[
@@ -110,14 +113,17 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <motion.h1 
-              className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-primary to-secondary bg-clip-text text-transparent leading-tight"
+            <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.2 }}
+              className="text-center"
             >
-              ServiceFlow AI
-            </motion.h1>
+              <h1 className="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-r from-white via-primary to-secondary bg-clip-text text-transparent leading-tight">
+                ServiceFlow
+              </h1>
+              <p className="text-lg md:text-xl text-neutral-400 font-light mb-8">by Vervid</p>
+            </motion.div>
             
             <motion.p 
               className="text-xl md:text-2xl text-neutral-300 mb-12 max-w-4xl mx-auto leading-relaxed"
@@ -125,7 +131,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Industry-exclusive, cloud-native application that automates and optimizes every step of service scheduling and customer communication using advanced AI
+              Intelligent, cloud-native platform that streamlines and optimizes every aspect of service scheduling and customer communication for dealerships
             </motion.p>
             
             <motion.div
@@ -261,7 +267,7 @@ export default function Home() {
               Ready to Transform Your Service Department?
             </h2>
             <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-              Join industry leaders who&apos;ve increased their service revenue by 15-25% with ServiceFlow AI
+              Join industry leaders who&apos;ve increased their service revenue by 15-25% with ServiceFlow
             </p>
             <motion.button
               whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(255, 255, 255, 0.3)" }}
@@ -280,10 +286,10 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div>
               <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-4">
-                ServiceFlow AI
+                ServiceFlow
               </h3>
               <p className="text-neutral-400">
-                A Vervid Product - Revolutionizing dealership service operations with AI-powered automation and optimization.
+                by Vervid - Revolutionizing dealership service operations with intelligent automation and optimization.
               </p>
             </div>
             <div>
@@ -302,7 +308,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-neutral-800 pt-8 text-center">
-            <p className="text-neutral-400">&copy; 2025 ServiceFlow AI. All rights reserved.</p>
+            <p className="text-neutral-400">&copy; 2025 ServiceFlow by Vervid. All rights reserved.</p>
           </div>
         </div>
       </footer>

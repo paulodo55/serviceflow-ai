@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ServiceFlow AI",
-  description: "AI-powered service scheduling and optimization for dealerships",
+  title: "ServiceFlow by Vervid",
+  description: "Intelligent service scheduling and optimization for dealerships - by Vervid",
 };
 
 export default function RootLayout({

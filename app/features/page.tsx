@@ -75,7 +75,7 @@ export default function FeaturesPage() {
             transition={{ duration: 0.8 }}
             className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-primary to-secondary bg-clip-text text-transparent mb-6"
           >
-            ServiceFlow AI Features
+            ServiceFlow Features
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
@@ -83,7 +83,7 @@ export default function FeaturesPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-xl text-neutral-300 max-w-3xl mx-auto"
           >
-            Explore our comprehensive suite of AI-powered tools designed to revolutionize your dealership service operations
+            Explore our comprehensive suite of intelligent tools designed to revolutionize your dealership service operations
           </motion.p>
         </div>
       </div>
