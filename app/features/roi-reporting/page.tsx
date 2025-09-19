@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { FaChartLine, FaArrowLeft, FaDollarSign, FaTrendingUp, FaCrown } from 'react-icons/fa';
+import { FaChartLine, FaArrowLeft, FaDollarSign, FaArrowUp, FaCrown } from 'react-icons/fa';
 
 export default function ROIReportingPage() {
   return (
@@ -63,7 +63,7 @@ export default function ROIReportingPage() {
               <p className="text-neutral-200">Track revenue directly attributable to ServiceFlow automation and optimization.</p>
             </div>
             <div className="bg-darkCard p-6 rounded-xl border border-neutral-800 hover:border-primary/40 transition-colors duration-300">
-              <FaTrendingUp className="text-3xl text-primary mb-4" />
+              <FaArrowUp className="text-3xl text-primary mb-4" />
               <h3 className="text-xl font-semibold text-white mb-3">Performance Trends</h3>
               <p className="text-neutral-200">Analyze long-term trends in efficiency, customer satisfaction, and profitability.</p>
             </div>
