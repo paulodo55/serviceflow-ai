@@ -7,12 +7,12 @@ const features = [
   {
     icon: <FaCalendarCheck />,
     title: "Instant Online Booking",
-    description: "Embedded website widget and standalone mobile app allow customers to book appointments in under 90 seconds. AI-driven queue management ensures multiple customers can book simultaneously with no slowdowns."
+    description: "Embedded website widget and standalone mobile app allow customers to book appointments in under 90 seconds. Intelligent queue management ensures multiple customers can book simultaneously with no slowdowns."
   },
   {
-    icon: <FaTools />,
-    title: "Predictive Technician Matching",
-    description: "Machine learning models analyze each technician’s specializations, certifications, current workload, and average repair times. The AI engine automatically assigns new jobs to the best-suited technician, balancing skill and availability to maximize throughput."
+    icon: <FaBell />,
+    title: "Auto Calling & AI Pickups",
+    description: "Automated calling system handles appointment confirmations and after-hours customer inquiries with intelligent AI voice responses, ensuring 24/7 customer service availability."
   },
   {
     icon: <FaClock />,
@@ -59,7 +59,10 @@ export default function Home() {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-dark via-darkGray to-neutral-900">
+    <div className="min-h-screen bg-dark relative overflow-hidden">
+      {/* Full-screen background effects */}
+      <div className="fixed inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none"></div>
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent pointer-events-none"></div>
       {/* Navbar */}
       <motion.nav 
         initial={{ y: -100 }}
@@ -100,14 +103,20 @@ export default function Home() {
       </motion.nav>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10"></div>
+      <section className="relative pt-32 pb-32 min-h-screen flex items-center overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full blur-3xl"></div>
+        </div>
+        
         <motion.div
           style={{ opacity }}
-          className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10"
+          className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent"
         ></motion.div>
         
-        <div className="relative max-w-7xl mx-auto px-6 text-center">
+        <div className="relative max-w-7xl mx-auto px-6 text-center z-10">
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
@@ -126,7 +135,7 @@ export default function Home() {
             </motion.div>
             
             <motion.p 
-              className="text-xl md:text-2xl text-neutral-300 mb-12 max-w-4xl mx-auto leading-relaxed"
+              className="text-xl md:text-2xl text-neutral-200 mb-12 max-w-4xl mx-auto leading-relaxed font-light"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -161,14 +170,12 @@ export default function Home() {
             </motion.div>
           </motion.div>
         </div>
-        
-        {/* Floating elements */}
-        <div className="absolute top-1/4 left-10 w-20 h-20 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-10 w-32 h-32 bg-gradient-to-br from-secondary/20 to-accent/20 rounded-full blur-xl animate-pulse delay-1000"></div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-24 bg-darkGray">
+      <section id="features" className="relative py-32 bg-gradient-to-b from-darkGray to-dark">
+        {/* Section background effects */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-secondary/5"></div>
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -202,7 +209,7 @@ export default function Home() {
                 <h4 className="text-xl font-bold mb-4 text-white group-hover:text-primary transition-colors duration-300">
                   {feature.title}
                 </h4>
-                <p className="text-neutral-300 leading-relaxed">
+                <p className="text-neutral-200 leading-relaxed text-base">
                   {feature.description}
                 </p>
               </motion.div>
@@ -212,7 +219,9 @@ export default function Home() {
       </section>
 
       {/* Solutions Section */}
-      <section id="solutions" className="py-24 bg-gradient-to-br from-dark to-neutral-900/50">
+      <section id="solutions" className="relative py-32 bg-gradient-to-br from-neutral-900 to-dark">
+        {/* Section background effects */}
+        <div className="absolute inset-0 bg-gradient-to-l from-primary/5 via-transparent to-secondary/5"></div>
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -244,7 +253,7 @@ export default function Home() {
                   <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center text-white font-bold text-lg group-hover:scale-110 transition-transform duration-300">
                     {index + 1}
                   </div>
-                  <p className="text-neutral-300 text-lg leading-relaxed group-hover:text-white transition-colors duration-300">
+                  <p className="text-neutral-200 text-lg leading-relaxed group-hover:text-white transition-colors duration-300">
                     {solution}
                   </p>
                 </div>
@@ -255,18 +264,21 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-r from-primary to-secondary">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+      <section className="relative py-32 bg-gradient-to-r from-primary to-secondary overflow-hidden">
+        {/* CTA background effects */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent"></div>
+        <div className="relative max-w-4xl mx-auto px-6 text-center z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight">
               Ready to Transform Your Service Department?
             </h2>
-            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl text-white/95 mb-12 max-w-3xl mx-auto font-light leading-relaxed">
               Join industry leaders who&apos;ve increased their service revenue by 15-25% with ServiceFlow
             </p>
             <motion.button
@@ -301,7 +313,7 @@ export default function Home() {
               <h4 className="text-lg font-semibold mb-4">Solutions</h4>
               <ul className="space-y-2 text-neutral-400">
                 <li><a href="/features/instant-booking" className="hover:text-primary transition-colors">Instant Online Booking</a></li>
-                <li><a href="/features/technician-matching" className="hover:text-primary transition-colors">Technician Matching</a></li>
+                <li><a href="/features/auto-calling" className="hover:text-primary transition-colors">Auto Calling & AI Pickups</a></li>
                 <li><a href="/features/analytics-reporting" className="hover:text-primary transition-colors">Performance Analytics</a></li>
                 <li><a href="/features/automated-reminders" className="hover:text-primary transition-colors">Automated Reminders</a></li>
               </ul>

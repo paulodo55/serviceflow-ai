@@ -13,11 +13,11 @@ const features = [
     slug: 'instant-booking'
   },
   {
-    id: 'technician-matching',
-    icon: <FaTools />,
-    title: 'Predictive Technician Matching',
-    description: 'Machine learning models analyze each technician\'s specializations, certifications, current workload, and average repair times.',
-    slug: 'technician-matching'
+    id: 'auto-calling',
+    icon: <FaBell />,
+    title: 'Auto Calling & AI Pickups',
+    description: 'Automated calling system handles appointment confirmations and after-hours customer inquiries with intelligent AI voice responses.',
+    slug: 'auto-calling'
   },
   {
     id: 'slot-optimization',
