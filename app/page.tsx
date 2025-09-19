@@ -184,11 +184,11 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 mb-6">
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight">
               Core Features
             </h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
-              Discover how ServiceFlow AI transforms your dealership operations with cutting-edge technology
+            <p className="text-xl md:text-2xl text-neutral-100 max-w-3xl mx-auto font-light leading-relaxed">
+              Discover how ServiceFlow transforms your dealership operations with intelligent automation
             </p>
           </motion.div>
           
@@ -230,11 +230,11 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 mb-6">
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight">
               Transform Your Operations
             </h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
-              Discover how ServiceFlow AI eliminates inefficiencies and drives growth
+            <p className="text-xl md:text-2xl text-neutral-100 max-w-3xl mx-auto font-light leading-relaxed">
+              Discover how ServiceFlow eliminates inefficiencies and drives growth
             </p>
           </motion.div>
           
