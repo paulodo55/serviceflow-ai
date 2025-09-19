@@ -48,13 +48,6 @@ const features = [
     slug: 'downtime-insights'
   },
   {
-    id: 'parts-predictor',
-    icon: <FaTruckLoading />,
-    title: 'Parts Lead-Time Predictor',
-    description: 'Integrates with OEM APIs and local supplier databases to forecast parts delivery dates.',
-    slug: 'parts-predictor'
-  },
-  {
     id: 'analytics-reporting',
     icon: <FaChartLine />,
     title: 'Performance Analytics & ROI Reporting',

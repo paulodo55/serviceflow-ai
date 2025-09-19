@@ -83,7 +83,8 @@ export default function Home() {
           <div className="hidden md:flex space-x-8">
             {[
               { name: 'Features', href: '/features' },
-              { name: 'Solutions', href: '#solutions' },
+              { name: 'Demo', href: '/demo' },
+              { name: 'Pricing', href: '/pricing' },
               { name: 'Contact', href: '#contact' }
             ].map((item, index) => (
               <motion.a
@@ -150,22 +151,22 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.6 }}
             >
               <motion.a
-                href="/features"
+                href="/signup"
                 whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(139, 92, 246, 0.3)" }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
               >
-                Explore Features
+                Start Free Trial
                 <FaArrowRight className="text-sm" />
               </motion.a>
               
               <motion.a
-                href="#solutions"
+                href="/demo"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-transparent text-white px-8 py-4 rounded-full font-semibold border-2 border-primary hover:bg-primary hover:text-white transition-all duration-300"
               >
-                View Solutions
+                Watch Demo
               </motion.a>
             </motion.div>
           </motion.div>
@@ -281,13 +282,14 @@ export default function Home() {
             <p className="text-xl md:text-2xl text-white/95 mb-12 max-w-3xl mx-auto font-light leading-relaxed">
               Join industry leaders who&apos;ve increased their service revenue by 15-25% with ServiceFlow
             </p>
-            <motion.button
+            <motion.a
+              href="/signup"
               whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(255, 255, 255, 0.3)" }}
               whileTap={{ scale: 0.95 }}
-              className="bg-white text-dark px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+              className="inline-block bg-white text-dark px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Get Started Today
-            </motion.button>
+            </motion.a>
           </motion.div>
         </div>
       </section>
