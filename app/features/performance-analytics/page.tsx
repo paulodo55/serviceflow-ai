@@ -51,18 +51,18 @@ export default function PerformanceAnalyticsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-darkCard p-6 rounded-xl border border-neutral-800 hover:border-primary/40 transition-colors duration-300">
               <FaChartBar className="text-3xl text-primary mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-3">Bay Utilization</h3>
-              <p className="text-neutral-200">Track service bay efficiency and identify optimization opportunities in real-time.</p>
+              <h3 className="text-xl font-semibold text-white mb-3">Resource Utilization</h3>
+              <p className="text-neutral-200">Track service resource efficiency and identify optimization opportunities in real-time.</p>
             </div>
             <div className="bg-darkCard p-6 rounded-xl border border-neutral-800 hover:border-primary/40 transition-colors duration-300">
               <FaClock className="text-3xl text-primary mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-3">Repair Time Variance</h3>
-              <p className="text-neutral-200">Monitor average repair times and identify bottlenecks in your service process.</p>
+              <h3 className="text-xl font-semibold text-white mb-3">Service Time Variance</h3>
+              <p className="text-neutral-200">Monitor average service completion times and identify bottlenecks in your workflow process.</p>
             </div>
             <div className="bg-darkCard p-6 rounded-xl border border-neutral-800 hover:border-primary/40 transition-colors duration-300">
               <FaDollarSign className="text-3xl text-primary mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-3">Revenue Per Bay</h3>
-              <p className="text-neutral-200">Calculate profitability metrics and optimize revenue generation per service bay.</p>
+              <h3 className="text-xl font-semibold text-white mb-3">Revenue Per Service</h3>
+              <p className="text-neutral-200">Calculate profitability metrics and optimize revenue generation per service interaction.</p>
             </div>
           </div>
         </motion.section>
@@ -141,9 +141,9 @@ export default function PerformanceAnalyticsPage() {
                 <p className="text-neutral-200 text-sm">Average improvement within 3 months</p>
               </div>
               <div>
-                <div className="text-4xl font-bold text-primary mb-2">95%</div>
-                <p className="text-white font-semibold mb-1">Data Accuracy</p>
-                <p className="text-neutral-200 text-sm">Automated reporting eliminates errors</p>
+                <div className="text-4xl font-bold text-primary mb-2">90%</div>
+                <p className="text-white font-semibold mb-1">Resource Efficiency</p>
+                <p className="text-neutral-200 text-sm">Optimal utilization of service capacity</p>
               </div>
             </div>
           </div>

@@ -34,11 +34,11 @@ const features = [
     slug: 'automated-reminders'
   },
   {
-    id: 'status-updates',
+    id: 'real-time-updates',
     icon: <FaSync />,
     title: 'Real-Time Status Updates',
-    description: 'Customers receive live updates when their vehicle enters diagnostics, moves to repair, or is ready for pickup.',
-    slug: 'status-updates'
+    description: 'Customers receive live updates throughout their service journey with accurate progress tracking and notifications.',
+    slug: 'real-time-updates'
   },
   {
     id: 'downtime-insights',
@@ -48,11 +48,11 @@ const features = [
     slug: 'downtime-insights'
   },
   {
-    id: 'analytics-reporting',
+    id: 'performance-analytics',
     icon: <FaChartLine />,
     title: 'Performance Analytics & ROI Reporting',
-    description: 'AI aggregates key metrics—bay utilization, average repair time variance, no-show rate, and revenue per bay.',
-    slug: 'analytics-reporting'
+    description: 'Advanced analytics aggregate key metrics—resource utilization, service completion rates, customer satisfaction, and revenue optimization.',
+    slug: 'performance-analytics'
   }
 ];
 

@@ -48,10 +48,10 @@ const features = [
 
 const solutions = [
   "Eliminates Manual Scheduling: Automated booking and technician matching remove the need for back-and-forth calls, freeing advisors to focus on customer service.",
-  "Maximizes Throughput: Dynamic slot optimization and predictive assignments ensure every bay operates at peak capacity.",
+  "Maximizes Throughput: Dynamic slot optimization and intelligent assignments ensure every resource operates at peak capacity.",
   "Reduces No-Shows: Personalized reminders and self-service rescheduling lower missed appointments by up to 40%.",
   "Improves Customer Satisfaction: Real-time updates and accurate ETAs build trust and increase repeat business.",
-  "Drives Revenue Growth: By minimizing idle time and filling short gaps with quick upsell opportunities, dealerships can boost service department revenue by 15–25% within three months."
+  "Drives Revenue Growth: By minimizing idle time and filling gaps with additional service opportunities, businesses can boost service revenue by 15–25% within three months."
 ];
 
 export default function Home() {
@@ -316,7 +316,7 @@ export default function Home() {
               <ul className="space-y-2 text-neutral-400">
                 <li><a href="/features/instant-booking" className="hover:text-primary transition-colors">Instant Online Booking</a></li>
                 <li><a href="/features/auto-calling" className="hover:text-primary transition-colors">Auto Calling & AI Pickups</a></li>
-                <li><a href="/features/analytics-reporting" className="hover:text-primary transition-colors">Performance Analytics</a></li>
+                <li><a href="/features/performance-analytics" className="hover:text-primary transition-colors">Performance Analytics</a></li>
                 <li><a href="/features/automated-reminders" className="hover:text-primary transition-colors">Automated Reminders</a></li>
               </ul>
             </div>

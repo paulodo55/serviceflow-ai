@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { FaSync, FaArrowLeft, FaTools, FaCheckCircle, FaCar } from 'react-icons/fa';
+import { FaSync, FaArrowLeft, FaTools, FaCheckCircle, FaBell } from 'react-icons/fa';
 
 export default function RealTimeUpdatesPage() {
   return (
@@ -32,7 +32,7 @@ export default function RealTimeUpdatesPage() {
               Real-Time Status Updates
             </h1>
             <p className="text-xl md:text-2xl text-neutral-200 max-w-3xl mx-auto leading-relaxed font-light">
-              Keep customers informed every step of the way with live updates and accurate ETA predictions throughout their service experience
+              Keep customers informed every step of the way with live updates and accurate progress tracking throughout their service experience
             </p>
           </motion.div>
         </div>
@@ -51,18 +51,18 @@ export default function RealTimeUpdatesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-darkCard p-6 rounded-xl border border-neutral-800 hover:border-primary/40 transition-colors duration-300">
               <FaTools className="text-3xl text-primary mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-3">Diagnostics Phase</h3>
-              <p className="text-neutral-200">Customers receive updates when their vehicle enters diagnostic evaluation.</p>
+              <h3 className="text-xl font-semibold text-white mb-3">Service Initiated</h3>
+              <p className="text-neutral-200">Customers receive updates when their service request begins processing and work commences.</p>
             </div>
             <div className="bg-darkCard p-6 rounded-xl border border-neutral-800 hover:border-primary/40 transition-colors duration-300">
-              <FaCar className="text-3xl text-primary mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-3">Repair Progress</h3>
-              <p className="text-neutral-200">Live updates as work progresses with detailed status information.</p>
+              <FaBell className="text-3xl text-primary mb-4" />
+              <h3 className="text-xl font-semibold text-white mb-3">Progress Milestones</h3>
+              <p className="text-neutral-200">Live updates as work progresses with detailed status information and completion milestones.</p>
             </div>
             <div className="bg-darkCard p-6 rounded-xl border border-neutral-800 hover:border-primary/40 transition-colors duration-300">
               <FaCheckCircle className="text-3xl text-primary mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-3">Ready for Pickup</h3>
-              <p className="text-neutral-200">Instant notification when service is complete and vehicle is ready.</p>
+              <h3 className="text-xl font-semibold text-white mb-3">Service Complete</h3>
+              <p className="text-neutral-200">Instant notification when service is complete and ready for customer pickup or delivery.</p>
             </div>
           </div>
         </motion.section>
@@ -79,28 +79,28 @@ export default function RealTimeUpdatesPage() {
             {[
               {
                 step: 1,
-                status: "Vehicle Check-In",
-                description: "Customer receives confirmation that their vehicle has been received and initial inspection has begun"
+                status: "Request Received",
+                description: "Customer receives confirmation that their service request has been received and initial processing has begun"
               },
               {
                 step: 2,
-                status: "Diagnostic Complete",
-                description: "Detailed diagnostic results shared with estimated repair time and cost breakdown"
+                status: "Assessment Complete",
+                description: "Detailed assessment results shared with estimated completion time and service breakdown"
               },
               {
                 step: 3,
-                status: "Repair in Progress",
-                description: "Regular updates on repair progress with photos and explanations of work being performed"
+                status: "Service in Progress",
+                description: "Regular updates on service progress with detailed explanations of work being performed"
               },
               {
                 step: 4,
-                status: "Quality Check",
-                description: "Notification when repairs are complete and vehicle is undergoing final quality inspection"
+                status: "Quality Review",
+                description: "Notification when service is complete and undergoing final quality review"
               },
               {
                 step: 5,
-                status: "Ready for Pickup",
-                description: "Final notification with pickup instructions and service summary"
+                status: "Ready for Delivery",
+                description: "Final notification with delivery/pickup instructions and service summary"
               }
             ].map((item, index) => (
               <motion.div 
