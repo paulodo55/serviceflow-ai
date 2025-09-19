@@ -69,7 +69,7 @@ export default function PricingPage() {
               Simple, Transparent Pricing
             </h1>
             <p className="text-xl md:text-2xl text-neutral-200 max-w-3xl mx-auto leading-relaxed font-light mb-12">
-              Choose the plan that fits your dealership's needs. All plans include a 14-day free trial.
+              Choose the plan that fits your dealership&apos;s needs. All plans include a 14-day free trial.
             </p>
           </motion.div>
         </div>
@@ -142,7 +142,7 @@ export default function PricingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
             <div className="bg-darkCard p-6 rounded-xl border border-neutral-800">
               <h3 className="text-xl font-semibold text-white mb-3">Is there a setup fee?</h3>
-              <p className="text-neutral-200">No setup fees. We'll help you get started with onboarding and training at no extra cost.</p>
+              <p className="text-neutral-200">No setup fees. We&apos;ll help you get started with onboarding and training at no extra cost.</p>
             </div>
             <div className="bg-darkCard p-6 rounded-xl border border-neutral-800">
               <h3 className="text-xl font-semibold text-white mb-3">Can I change plans anytime?</h3>
