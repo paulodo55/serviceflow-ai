@@ -45,7 +45,7 @@ export default function DemoPage() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 text-center">What You'll See in the Demo</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 text-center">What You&apos;ll See in the Demo</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-darkCard p-8 rounded-xl border border-neutral-800 hover:border-primary/40 transition-colors duration-300">
               <FaCalendarCheck className="text-4xl text-primary mb-6" />
