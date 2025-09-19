@@ -7,9 +7,9 @@ export default function PricingPage() {
   const plans = [
     {
       name: "Starter",
-      price: "$299",
+      price: "$199",
       period: "/month",
-      description: "Perfect for small dealerships",
+      description: "Perfect for small businesses",
       features: [
         "Up to 500 appointments/month",
         "Basic automated reminders",
@@ -20,16 +20,16 @@ export default function PricingPage() {
     },
     {
       name: "Professional",
-      price: "$599",
+      price: "$499",
       period: "/month",
-      description: "Most popular for growing dealerships",
+      description: "Most popular for growing businesses",
       popular: true,
       features: [
         "Up to 2,000 appointments/month",
         "Advanced automated reminders",
         "Multi-channel communications",
         "Real-time status updates",
-        "Performance analytics & ROI reporting",
+        "Performance analytics",
         "24/7 AI phone support",
         "Priority support"
       ]
@@ -38,10 +38,11 @@ export default function PricingPage() {
       name: "Enterprise",
       price: "Custom",
       period: "",
-      description: "For large dealership groups",
+      description: "For large business groups",
       features: [
         "Unlimited appointments",
         "All premium features",
+        "ROI reporting & analytics",
         "Custom integrations",
         "Dedicated account manager",
         "White-label options",
@@ -69,7 +70,7 @@ export default function PricingPage() {
               Simple, Transparent Pricing
             </h1>
             <p className="text-xl md:text-2xl text-neutral-200 max-w-3xl mx-auto leading-relaxed font-light mb-12">
-              Choose the plan that fits your dealership&apos;s needs. All plans include a 14-day free trial.
+              Choose the plan that fits your business needs. All plans include a 14-day free trial.
             </p>
           </motion.div>
         </div>

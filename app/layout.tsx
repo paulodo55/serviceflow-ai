@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "ServiceFlow by Vervid",
-  description: "Intelligent service scheduling and optimization for dealerships - by Vervid",
+  description: "Streamline your CRM experience with intelligent scheduling and automation for service-based businesses - by Vervid",
 };
 
 export default function RootLayout({

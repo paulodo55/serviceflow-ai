@@ -76,7 +76,7 @@ export default function FeaturesPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-xl text-neutral-300 max-w-3xl mx-auto"
           >
-            Explore our comprehensive suite of intelligent tools designed to revolutionize your dealership service operations
+            Explore our comprehensive suite of intelligent tools designed to streamline your CRM experience and optimize business operations
           </motion.p>
         </div>
       </div>

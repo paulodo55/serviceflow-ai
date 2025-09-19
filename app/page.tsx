@@ -141,7 +141,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Intelligent, cloud-native platform that streamlines and optimizes every aspect of service scheduling and customer communication for dealerships
+              Intelligent, cloud-native platform that streamlines the CRM experience with automated scheduling and customer communication for all service-based businesses
             </motion.p>
             
             <motion.div
@@ -189,7 +189,7 @@ export default function Home() {
               Core Features
             </h2>
             <p className="text-xl md:text-2xl text-neutral-100 max-w-3xl mx-auto font-light leading-relaxed">
-              Discover how ServiceFlow transforms your dealership operations with intelligent automation
+              Discover how ServiceFlow transforms your business operations with intelligent CRM automation
             </p>
           </motion.div>
           
@@ -303,7 +303,7 @@ export default function Home() {
                 ServiceFlow
               </h3>
               <p className="text-neutral-400">
-                by Vervid - Revolutionizing dealership service operations with intelligent automation and optimization.
+                by Vervid - Streamlining the CRM experience for service-based businesses with intelligent automation and optimization.
               </p>
             </div>
             <div>
