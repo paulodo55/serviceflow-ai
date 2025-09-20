@@ -80,7 +80,7 @@ export default function Home() {
             </div>
             <div className="text-xs text-neutral-400 font-normal mt-1">by Vervid</div>
           </motion.h1>
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex items-center space-x-8">
             {[
               { name: 'Features', href: '/features' },
               { name: 'Demo', href: '/demo' },
@@ -99,6 +99,12 @@ export default function Home() {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
               </motion.a>
             ))}
+            <Link 
+              href="/login" 
+              className="bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-lg font-medium hover:shadow-lg transition-all duration-300"
+            >
+              Sign In
+            </Link>
           </div>
         </div>
       </motion.nav>

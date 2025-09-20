@@ -14,10 +14,13 @@
     "@types/react-dom": "^18",
     "framer-motion": "^11.3.28",
     "next": "14.2.5",
+    "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.3.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
     "postcss": "^8",
@@ -25,6 +28,8 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "autoprefixer": "^10.4.20",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.6"
   }
 }
