@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { signIn, getSession } from 'next-auth/react';
 import { motion } from 'framer-motion';
 import { FaEye, FaEyeSlash, FaGoogle, FaSpinner, FaExclamationTriangle } from 'react-icons/fa';
-import SiMicrosoft from 'react-icons/si/SiMicrosoft.js';
+import * as SiIcons from 'react-icons/si';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -435,7 +435,7 @@ export default function LoginPage() {
                 whileTap={{ scale: isLoading ? 1 : 0.98 }}
                 className="w-full bg-white/10 hover:bg-white/20 text-white border border-neutral-600 py-3 px-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <SiMicrosoft className="text-lg" />
+                <SiIcons.SiMicrosoft className="text-lg" />
                 Continue with Microsoft
               </motion.button>
             </div>
