@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { FaArrowRight, FaCalendarCheck, FaChartBar, FaSync, FaTools, FaBell, FaClock, FaArrowLeft, FaDollarSign, FaChartLine, FaArrowUp } from "react-icons/fa";
+import { FaArrowRight, FaCalendarCheck, FaChartBar, FaSync, FaTools, FaBell, FaClock, FaArrowLeft, FaDollarSign, FaChartLine, FaArrowUp, FaTruckLoading } from "react-icons/fa";
 import Link from 'next/link';
 
 const features = [
