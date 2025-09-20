@@ -196,6 +196,8 @@ export default function LoginPage() {
     }
   };
 
+  const SiMicrosoft = lazy(() => import('react-icons/si').then(module => ({ default: module.SiMicrosoft })));
+
   return (
     <div className="min-h-screen bg-dark relative overflow-hidden">
       {/* Animated background elements */}
