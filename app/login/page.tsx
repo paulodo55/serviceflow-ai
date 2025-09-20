@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { signIn, getSession } from 'next-auth/react';
 import { motion } from 'framer-motion';
 import { FaEye, FaEyeSlash, FaGoogle, FaSpinner, FaExclamationTriangle } from 'react-icons/fa';
-import { SiMicrosoft } from 'react-icons/si';
+import SiMicrosoft from 'react-icons/si/SiMicrosoft';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
