@@ -241,19 +241,19 @@ export const cleanupExpiredData = (): void => {
   const now = Date.now();
   
   // Clean up expired CSRF tokens
-  for (const [sessionId, data] of csrfTokens.entries()) {
+  csrfTokens.forEach((data, sessionId) => {
     if (data.expires < now) {
       csrfTokens.delete(sessionId);
     }
-  }
+  });
   
   // Clean up old rate limit entries (older than 24 hours)
   const oneDayAgo = now - (24 * 60 * 60 * 1000);
-  for (const [clientId, data] of rateLimitStore.entries()) {
+  rateLimitStore.forEach((data, clientId) => {
     if (data.lastAttempt < oneDayAgo) {
       rateLimitStore.delete(clientId);
     }
-  }
+  });
 };
 
 // Run cleanup every hour
