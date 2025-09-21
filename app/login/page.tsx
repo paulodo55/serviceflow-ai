@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { signIn, getSession } from 'next-auth/react';
 import { motion } from 'framer-motion';
 import { FaEye, FaEyeSlash, FaGoogle, FaSpinner, FaExclamationTriangle } from 'react-icons/fa';
-import { lazy, Suspense } from 'react';
+import { FaMicrosoft } from 'react-icons/fa';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -196,7 +196,6 @@ export default function LoginPage() {
     }
   };
 
-  const SiMicrosoft = lazy(() => import('react-icons/si').then(module => ({ default: module.SiMicrosoft })));
 
   return (
     <div className="min-h-screen bg-dark relative overflow-hidden">
@@ -429,19 +428,17 @@ export default function LoginPage() {
                 Continue with Google
               </motion.button>
 
-              <Suspense fallback={<div className="w-5 h-5 bg-neutral-600 rounded" />}>
-                <motion.button
-                  type="button"
-                  onClick={() => handleSocialLogin('microsoft')}
-                  disabled={isLoading}
-                  whileHover={{ scale: isLoading ? 1 : 1.02 }}
-                  whileTap={{ scale: isLoading ? 1 : 0.98 }}
-                  className="w-full bg-white/10 hover:bg-white/20 text-white border border-neutral-600 py-3 px-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <SiMicrosoft className="text-lg" />
-                  Continue with Microsoft
-                </motion.button>
-              </Suspense>
+              <motion.button
+                type="button"
+                onClick={() => handleSocialLogin('microsoft')}
+                disabled={isLoading}
+                whileHover={{ scale: isLoading ? 1 : 1.02 }}
+                whileTap={{ scale: isLoading ? 1 : 0.98 }}
+                className="w-full bg-white/10 hover:bg-white/20 text-white border border-neutral-600 py-3 px-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <FaMicrosoft className="text-lg" />
+                Continue with Microsoft
+              </motion.button>
             </div>
 
             {/* Sign Up Link */}
