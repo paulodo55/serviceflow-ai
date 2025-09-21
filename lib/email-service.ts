@@ -258,8 +258,8 @@ export const sendEmail = async (template: EmailTemplate): Promise<boolean> => {
     const nodemailer = await import('nodemailer');
     
     const transporter = nodemailer.default.createTransport({
-      host: 'smtp.gmail.com', // Gmail SMTP
-      port: 587,
+      host: process.env.SMTP_HOST || 'smtp.mail.me.com', // iCloud SMTP
+      port: parseInt(process.env.SMTP_PORT || '587'),
       secure: false, // Use TLS
       auth: {
         user: process.env.SMTP_USER || 'hello@vervidai.com',
