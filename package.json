@@ -1,6 +1,6 @@
 {
   "name": "serviceflow-ai",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -17,7 +17,7 @@
     "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",
-    "react-icons": "^5.4.0",
+    "react-icons": "5.4.0",
     "typescript": "^5",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.2"

@@ -1,0 +1,4 @@
+# Force cache invalidation
+.vercel/
+.next/
+node_modules/
