@@ -7,8 +7,8 @@ import { EmailTemplate, WelcomeEmailData, PasswordResetData } from '@/types';
 export const createWelcomeEmail = (data: WelcomeEmailData): EmailTemplate => {
   const { fullName, email, companyName, tempPassword } = data;
   const loginUrl = 'https://vervidflow.com/login';
-  const supportEmail = 'hello@vervidai.com';
-  const supportPhone = '(512) 264-5260';
+  const supportEmail = 'hello@vervidflow.com';
+  const supportPhone = '(214) 973-3761';
 
   const html = `
     <!DOCTYPE html>
@@ -149,7 +149,7 @@ export const createWelcomeEmail = (data: WelcomeEmailData): EmailTemplate => {
 export const createPasswordResetEmail = (data: PasswordResetData): EmailTemplate => {
   const { fullName, email, resetToken } = data;
   const resetUrl = `https://vervidflow.com/reset-password?token=${resetToken}`;
-  const supportEmail = 'hello@vervidai.com';
+  const supportEmail = 'hello@vervidflow.com';
 
   const html = `
     <!DOCTYPE html>
@@ -262,7 +262,7 @@ export const sendEmail = async (template: EmailTemplate): Promise<boolean> => {
       port: parseInt(process.env.SMTP_PORT || '587'),
       secure: false, // Use TLS
       auth: {
-        user: process.env.SMTP_USER || 'hello@vervidai.com',
+        user: process.env.SMTP_USER || 'hello@vervidflow.com',
         pass: process.env.SMTP_PASSWORD,
       },
     });
@@ -271,7 +271,7 @@ export const sendEmail = async (template: EmailTemplate): Promise<boolean> => {
     await transporter.verify();
 
     const info = await transporter.sendMail({
-      from: `"ServiceFlow by Vervid" <${process.env.SMTP_USER || 'hello@vervidai.com'}>`,
+      from: `"ServiceFlow by Vervid" <${process.env.SMTP_USER || 'hello@vervidflow.com'}>`,
       to: template.to,
       subject: template.subject,
       text: template.text,

@@ -87,7 +87,7 @@ export default function Home() {
               { name: 'Features', href: '/features' },
               { name: 'Demo', href: '/demo' },
               { name: 'Pricing', href: '/pricing' },
-              { name: 'Contact', href: '#contact' }
+              { name: 'Contact', href: '/contact' }
             ].map((item, index) => (
               <motion.a
                 key={item.name}
@@ -169,14 +169,15 @@ export default function Home() {
                 </motion.div>
               </Link>
               
-              <motion.a
-                href="/demo"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-transparent text-white px-8 py-4 rounded-full font-semibold border-2 border-primary hover:bg-primary hover:text-white transition-all duration-300"
-              >
-                Watch Demo
-              </motion.a>
+              <Link href="/contact">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-transparent text-white px-8 py-4 rounded-full font-semibold border-2 border-primary hover:bg-primary hover:text-white transition-all duration-300 cursor-pointer flex items-center gap-2"
+                >
+                  Contact Sales
+                </motion.div>
+              </Link>
             </motion.div>
           </motion.div>
         </div>
@@ -318,8 +319,8 @@ export default function Home() {
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4">Contact</h4>
-              <p className="text-neutral-400">hello@vervidai.com</p>
-              <p className="text-neutral-400">(512) 264-5260</p>
+              <p className="text-neutral-400">hello@vervidflow.com</p>
+              <p className="text-neutral-400">(214) 973-3761</p>
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4">Solutions</h4>
