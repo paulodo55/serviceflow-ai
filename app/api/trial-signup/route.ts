@@ -134,6 +134,8 @@ export async function POST(request: NextRequest) {
       createdAt: new Date(),
       trialExpiresAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days
       isActive: true,
+      name: sanitizedFullName, // Use fullName as name
+      type: 'trial' as const
     };
 
     // Add to storage
