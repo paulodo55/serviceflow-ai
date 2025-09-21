@@ -257,7 +257,7 @@ export const sendEmail = async (template: EmailTemplate): Promise<boolean> => {
     // Import nodemailer dynamically to avoid build issues
     const nodemailer = await import('nodemailer');
     
-    const transporter = nodemailer.default.createTransporter({
+    const transporter = nodemailer.default.createTransport({
       host: 'smtp.gmail.com', // Gmail SMTP
       port: 587,
       secure: false, // Use TLS
