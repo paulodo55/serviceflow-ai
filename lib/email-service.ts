@@ -238,49 +238,62 @@ export const createPasswordResetEmail = (data: PasswordResetData): EmailTemplate
   };
 };
 
-// Mock email sending function
-// In production, integrate with your email service (SendGrid, AWS SES, etc.)
+// Email sending function with Nodemailer
 export const sendEmail = async (template: EmailTemplate): Promise<boolean> => {
   try {
-    // Log email for development
+    // Log email for development/debugging
     console.log('=== EMAIL SENDING ===');
     console.log(`To: ${template.to}`);
     console.log(`Subject: ${template.subject}`);
-    console.log('HTML Content Length:', template.html.length);
-    console.log('Text Content Length:', template.text.length);
-    console.log('=== END EMAIL ===');
+    console.log('=== END EMAIL LOG ===');
 
-    // Simulate email sending delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Check if we have SMTP credentials
+    if (!process.env.SMTP_PASSWORD || !process.env.SMTP_USER) {
+      console.warn('SMTP credentials not configured. Email will not be sent.');
+      console.log('Please set SMTP_USER and SMTP_PASSWORD environment variables.');
+      return false;
+    }
 
-    // In production, replace with actual email service:
-    /*
-    const nodemailer = require('nodemailer');
+    // Import nodemailer dynamically to avoid build issues
+    const nodemailer = await import('nodemailer');
     
-    const transporter = nodemailer.createTransporter({
-      host: 'smtp.gmail.com', // or your SMTP server
+    const transporter = nodemailer.default.createTransporter({
+      host: 'smtp.gmail.com', // Gmail SMTP
       port: 587,
-      secure: false,
+      secure: false, // Use TLS
       auth: {
-        user: 'hello@vervidai.com',
+        user: process.env.SMTP_USER || 'hello@vervidai.com',
         pass: process.env.SMTP_PASSWORD,
       },
     });
 
+    // Verify transporter configuration
+    await transporter.verify();
+
     const info = await transporter.sendMail({
-      from: '"ServiceFlow by Vervid" <hello@vervidai.com>',
+      from: `"ServiceFlow by Vervid" <${process.env.SMTP_USER || 'hello@vervidai.com'}>`,
       to: template.to,
       subject: template.subject,
       text: template.text,
       html: template.html,
     });
 
-    return info.messageId ? true : false;
-    */
-
+    console.log('Email sent successfully:', info.messageId);
     return true;
+
   } catch (error) {
     console.error('Email sending error:', error);
+    
+    // Fallback: Log email content for manual sending if SMTP fails
+    if (process.env.NODE_ENV === 'development') {
+      console.log('=== EMAIL CONTENT FOR MANUAL SENDING ===');
+      console.log(`To: ${template.to}`);
+      console.log(`Subject: ${template.subject}`);
+      console.log('Text Content:');
+      console.log(template.text);
+      console.log('=== END EMAIL CONTENT ===');
+    }
+    
     return false;
   }
 };
