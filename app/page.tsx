@@ -320,7 +320,6 @@ export default function Home() {
             <div>
               <h4 className="text-lg font-semibold mb-4">Contact</h4>
               <p className="text-neutral-400">hello@vervidflow.com</p>
-              <p className="text-neutral-400">(214) 973-3761</p>
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4">Solutions</h4>
