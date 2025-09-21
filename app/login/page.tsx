@@ -183,6 +183,11 @@ export default function LoginPage() {
     }
   };
 
+  const handleBubbleDemo = () => {
+    // Direct access to Bubble.io demo app
+    window.open('https://odopaul55-61471.bubbleapps.io', '_blank');
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
@@ -441,15 +446,29 @@ export default function LoginPage() {
               </motion.button>
             </div>
 
+            {/* Bubble.io Demo Access */}
+            <div className="mt-6 pt-6 border-t border-neutral-700 text-center">
+              <p className="text-neutral-400 text-sm mb-3">Quick Demo Access</p>
+              <motion.button
+                type="button"
+                onClick={handleBubbleDemo}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 mb-4"
+              >
+                Try Live Demo
+              </motion.button>
+            </div>
+
             {/* Sign Up Link */}
-            <div className="mt-6 text-center">
+            <div className="mt-4 text-center">
               <p className="text-neutral-400">
                 Don&apos;t have an account?{' '}
                 <Link
-                  href="/signup"
+                  href="/free-trial"
                   className="text-primary hover:text-primary/80 font-medium transition-colors"
                 >
-                  Sign up
+                  Start Free Trial
                 </Link>
               </p>
             </div>

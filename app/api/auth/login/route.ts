@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { compare } from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { findTrialUserByEmail } from "@/lib/trial-users";
 
 // Mock user database - replace with your actual database
 const users = [
@@ -9,6 +10,7 @@ const users = [
     email: "demo@vervidflow.com",
     password: "$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj2ukD5/rO4W", // "password123"
     name: "Demo User",
+    type: "demo",
   },
 ];
 
@@ -58,10 +60,11 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Find user
-    const user = users.find((user) => user.email === email);
+    // Find user in both regular users and trial users
+    let user = users.find((user) => user.email === email);
+    let trialUser = findTrialUserByEmail(email);
     
-    if (!user) {
+    if (!user && !trialUser) {
       // Update rate limit on failed attempt
       rateLimitStore.set(clientIP, {
         attempts: (rateLimit?.attempts || 0) + 1,
@@ -75,7 +78,28 @@ export async function POST(request: NextRequest) {
     }
 
     // Verify password
-    const isPasswordValid = await compare(password, user.password);
+    let isPasswordValid = false;
+    let userData: any = null;
+
+    if (user) {
+      isPasswordValid = await compare(password, user.password);
+      userData = {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        type: user.type || 'regular'
+      };
+    } else if (trialUser) {
+      isPasswordValid = await compare(password, trialUser.password);
+      userData = {
+        id: trialUser.id,
+        email: trialUser.email,
+        name: trialUser.fullName,
+        company: trialUser.companyName,
+        type: 'trial',
+        trialExpiresAt: trialUser.trialExpiresAt
+      };
+    }
     
     if (!isPasswordValid) {
       // Update rate limit on failed attempt
@@ -96,23 +120,26 @@ export async function POST(request: NextRequest) {
     // Generate JWT for Bubble integration
     const bubbleToken = jwt.sign(
       { 
-        id: user.id,
-        email: user.email,
-        name: user.name,
+        id: userData.id,
+        email: userData.email,
+        name: userData.name,
+        company: userData.company,
+        type: userData.type,
+        trialExpiresAt: userData.trialExpiresAt,
         timestamp: Date.now()
       },
       process.env.NEXTAUTH_SECRET || "fallback-secret",
-      { expiresIn: "1h" }
+      { expiresIn: "24h" }
     );
+
+    // Use Bubble.io app URL for redirect
+    const redirectUrl = `https://odopaul55-61471.bubbleapps.io?token=${encodeURIComponent(bubbleToken)}&user=${encodeURIComponent(userData.email)}`;
 
     return NextResponse.json({
       message: "Login successful",
-      user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-      },
-      redirectUrl: `https://app.vervidflow.com?token=${bubbleToken}`
+      user: userData,
+      token: bubbleToken,
+      redirectUrl
     });
 
   } catch (error) {

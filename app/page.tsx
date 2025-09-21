@@ -158,15 +158,16 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              <motion.a
-                href="/signup"
-                whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(139, 92, 246, 0.3)" }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
-              >
-                Start Free Trial
-                <FaArrowRight className="text-sm" />
-              </motion.a>
+              <Link href="/free-trial">
+                <motion.div
+                  whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(139, 92, 246, 0.3)" }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 cursor-pointer"
+                >
+                  Start Free Trial
+                  <FaArrowRight className="text-sm" />
+                </motion.div>
+              </Link>
               
               <motion.a
                 href="/demo"
@@ -290,14 +291,15 @@ export default function Home() {
             <p className="text-xl md:text-2xl text-white/95 mb-12 max-w-3xl mx-auto font-light leading-relaxed">
               Join industry leaders who&apos;ve increased their service revenue by 15-25% with ServiceFlow
             </p>
-            <motion.a
-              href="/signup"
-              whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(255, 255, 255, 0.3)" }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-block bg-white text-dark px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              Get Started Today
-            </motion.a>
+            <Link href="/free-trial">
+              <motion.div
+                whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(255, 255, 255, 0.3)" }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-block bg-white text-dark px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+              >
+                Start Free Trial Today
+              </motion.div>
+            </Link>
           </motion.div>
         </div>
       </section>
