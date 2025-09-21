@@ -1,5 +1,6 @@
 // Security utilities for ServiceFlow
 import { NextRequest } from 'next/server';
+import { RateLimitConfig, RateLimitResult, PasswordValidation } from '@/types';
 
 // Rate limiting storage
 const rateLimitStore = new Map<string, { 
@@ -10,12 +11,6 @@ const rateLimitStore = new Map<string, {
 
 // CSRF token storage (in production, use Redis or database)
 const csrfTokens = new Map<string, { token: string; expires: number }>();
-
-interface RateLimitConfig {
-  windowMs: number; // Time window in milliseconds
-  maxAttempts: number; // Max attempts per window
-  blockDuration: number; // Block duration in milliseconds after max attempts
-}
 
 // Default rate limit configurations
 export const RATE_LIMITS = {
@@ -42,7 +37,7 @@ export const getClientId = (request: NextRequest): string => {
 export const checkRateLimit = (
   clientId: string, 
   config: RateLimitConfig
-): { allowed: boolean; retryAfter?: number; attemptsRemaining?: number } => {
+): RateLimitResult => {
   const now = Date.now();
   const record = rateLimitStore.get(clientId);
 
@@ -172,10 +167,7 @@ export const isValidEmail = (email: string): boolean => {
 };
 
 // Password strength validation
-export const validatePasswordStrength = (password: string): {
-  isValid: boolean;
-  errors: string[];
-} => {
+export const validatePasswordStrength = (password: string): PasswordValidation => {
   const errors: string[] = [];
   
   if (password.length < 8) {

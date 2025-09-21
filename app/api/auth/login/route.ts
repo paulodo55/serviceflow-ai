@@ -2,6 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { compare } from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { findTrialUserByEmail } from "@/lib/trial-users";
+import { 
+  checkRateLimit, 
+  recordFailedAttempt, 
+  clearRateLimit, 
+  getClientId, 
+  RATE_LIMITS, 
+  SECURITY_HEADERS,
+  sanitizeInput,
+  isValidEmail
+} from "@/lib/security";
 
 // Mock user database - replace with your actual database
 const users = [
@@ -14,32 +24,45 @@ const users = [
   },
 ];
 
-// Rate limiting storage
-const rateLimitStore = new Map<string, { attempts: number; lastAttempt: number }>();
-
 export async function POST(request: NextRequest) {
   try {
-    const { email, password, recaptchaToken } = await request.json();
+    // Get client identifier for rate limiting
+    const clientId = getClientId(request);
     
-    if (!email || !password) {
+    // Check rate limit
+    const rateLimitResult = checkRateLimit(clientId, RATE_LIMITS.LOGIN);
+    if (!rateLimitResult.allowed) {
       return NextResponse.json(
-        { error: "Email and password are required" },
-        { status: 400 }
+        { 
+          error: "Too many login attempts. Please try again later.",
+          retryAfter: rateLimitResult.retryAfter 
+        },
+        { 
+          status: 429,
+          headers: SECURITY_HEADERS
+        }
       );
     }
 
-    // Rate limiting check
-    const clientIP = request.ip || "unknown";
-    const now = Date.now();
-    const rateLimit = rateLimitStore.get(clientIP);
+    const { email, password, recaptchaToken } = await request.json();
     
-    if (rateLimit && rateLimit.attempts >= 5 && (now - rateLimit.lastAttempt) < 300000) { // 5 minutes
+    // Sanitize inputs
+    const sanitizedEmail = sanitizeInput(email || '').toLowerCase();
+    const sanitizedPassword = sanitizeInput(password || '');
+    
+    if (!sanitizedEmail || !sanitizedPassword) {
+      recordFailedAttempt(clientId);
       return NextResponse.json(
-        { 
-          error: "Too many login attempts. Please try again in 5 minutes.",
-          retryAfter: Math.ceil((300000 - (now - rateLimit.lastAttempt)) / 1000)
-        },
-        { status: 429 }
+        { error: "Email and password are required" },
+        { status: 400, headers: SECURITY_HEADERS }
+      );
+    }
+
+    if (!isValidEmail(sanitizedEmail)) {
+      recordFailedAttempt(clientId);
+      return NextResponse.json(
+        { error: "Please provide a valid email address" },
+        { status: 400, headers: SECURITY_HEADERS }
       );
     }
 
@@ -61,19 +84,14 @@ export async function POST(request: NextRequest) {
     }
 
     // Find user in both regular users and trial users
-    let user = users.find((user) => user.email === email);
-    let trialUser = findTrialUserByEmail(email);
+    let user = users.find((user) => user.email === sanitizedEmail);
+    let trialUser = findTrialUserByEmail(sanitizedEmail);
     
     if (!user && !trialUser) {
-      // Update rate limit on failed attempt
-      rateLimitStore.set(clientIP, {
-        attempts: (rateLimit?.attempts || 0) + 1,
-        lastAttempt: now
-      });
-      
+      recordFailedAttempt(clientId);
       return NextResponse.json(
         { error: "Invalid email or password" },
-        { status: 401 }
+        { status: 401, headers: SECURITY_HEADERS }
       );
     }
 
@@ -82,7 +100,7 @@ export async function POST(request: NextRequest) {
     let userData: any = null;
 
     if (user) {
-      isPasswordValid = await compare(password, user.password);
+      isPasswordValid = await compare(sanitizedPassword, user.password);
       userData = {
         id: user.id,
         email: user.email,
@@ -90,7 +108,7 @@ export async function POST(request: NextRequest) {
         type: user.type || 'regular'
       };
     } else if (trialUser) {
-      isPasswordValid = await compare(password, trialUser.password);
+      isPasswordValid = await compare(sanitizedPassword, trialUser.password);
       userData = {
         id: trialUser.id,
         email: trialUser.email,
@@ -102,20 +120,15 @@ export async function POST(request: NextRequest) {
     }
     
     if (!isPasswordValid) {
-      // Update rate limit on failed attempt
-      rateLimitStore.set(clientIP, {
-        attempts: (rateLimit?.attempts || 0) + 1,
-        lastAttempt: now
-      });
-      
+      recordFailedAttempt(clientId);
       return NextResponse.json(
         { error: "Invalid email or password" },
-        { status: 401 }
+        { status: 401, headers: SECURITY_HEADERS }
       );
     }
 
-    // Reset rate limit on successful login
-    rateLimitStore.delete(clientIP);
+    // Clear rate limit on successful login
+    clearRateLimit(clientId);
 
     // Generate JWT for Bubble integration
     const bubbleToken = jwt.sign(
@@ -140,13 +153,15 @@ export async function POST(request: NextRequest) {
       user: userData,
       token: bubbleToken,
       redirectUrl
+    }, {
+      headers: SECURITY_HEADERS
     });
 
   } catch (error) {
     console.error("Login error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500, headers: SECURITY_HEADERS }
     );
   }
 }

@@ -8,16 +8,7 @@ import { FaMicrosoft } from 'react-icons/fa';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-interface LoginFormData {
-  email: string;
-  password: string;
-  rememberMe: boolean;
-}
-
-interface LoginError {
-  message: string;
-  field?: 'email' | 'password' | 'general';
-}
+import { LoginFormData, LoginError } from '@/types';
 
 export default function LoginPage() {
   const router = useRouter();

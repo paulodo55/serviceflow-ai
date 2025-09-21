@@ -1,62 +1,100 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-
-// Rate limiting storage (in production, use Redis or similar)
-const rateLimitStore = new Map<string, { attempts: number; lastAttempt: number }>();
+import { 
+  checkRateLimit, 
+  recordFailedAttempt, 
+  getClientId, 
+  RATE_LIMITS, 
+  SECURITY_HEADERS,
+  sanitizeInput,
+  isValidEmail
+} from "@/lib/security";
+import { findTrialUserByEmail } from "@/lib/trial-users";
+import { createPasswordResetEmail, sendEmail } from "@/lib/email-service";
 
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json();
+    // Get client identifier for rate limiting
+    const clientId = getClientId(request);
     
-    if (!email) {
-      return NextResponse.json(
-        { error: "Email is required" },
-        { status: 400 }
-      );
-    }
-
-    // Rate limiting check
-    const clientIP = request.ip || "unknown";
-    const now = Date.now();
-    const rateLimit = rateLimitStore.get(clientIP);
-    
-    if (rateLimit && rateLimit.attempts >= 5 && (now - rateLimit.lastAttempt) < 300000) { // 5 minutes
+    // Check rate limit
+    const rateLimitResult = checkRateLimit(clientId, RATE_LIMITS.PASSWORD_RESET);
+    if (!rateLimitResult.allowed) {
       return NextResponse.json(
         { 
-          error: "Too many attempts. Please try again in 5 minutes.",
-          retryAfter: Math.ceil((300000 - (now - rateLimit.lastAttempt)) / 1000)
+          error: "Too many password reset attempts. Please try again later.",
+          retryAfter: rateLimitResult.retryAfter 
         },
-        { status: 429 }
+        { 
+          status: 429,
+          headers: SECURITY_HEADERS
+        }
       );
     }
 
-    // Update rate limit
-    rateLimitStore.set(clientIP, {
-      attempts: (rateLimit?.attempts || 0) + 1,
-      lastAttempt: now
-    });
+    const { email } = await request.json();
+    const sanitizedEmail = sanitizeInput(email || '').toLowerCase();
+    
+    if (!sanitizedEmail) {
+      recordFailedAttempt(clientId);
+      return NextResponse.json(
+        { error: "Email is required" },
+        { status: 400, headers: SECURITY_HEADERS }
+      );
+    }
 
-    // Generate reset token
-    const resetToken = jwt.sign(
-      { email, purpose: "password-reset" },
-      process.env.NEXTAUTH_SECRET || "fallback-secret",
-      { expiresIn: "1h" }
-    );
+    if (!isValidEmail(sanitizedEmail)) {
+      recordFailedAttempt(clientId);
+      return NextResponse.json(
+        { error: "Please provide a valid email address" },
+        { status: 400, headers: SECURITY_HEADERS }
+      );
+    }
 
-    // In production, send email with reset link
-    console.log(`Password reset requested for: ${email}`);
-    console.log(`Reset link: ${process.env.NEXTAUTH_URL}/reset-password?token=${resetToken}`);
+    // Check if user exists (trial user)
+    const trialUser = findTrialUserByEmail(sanitizedEmail);
+    
+    // Always return success message for security (don't reveal if email exists)
+    const successMessage = "If an account with this email exists, you will receive a password reset link.";
+    
+    if (trialUser) {
+      // Generate reset token
+      const resetToken = jwt.sign(
+        { 
+          email: sanitizedEmail, 
+          purpose: "password-reset",
+          userId: trialUser.id 
+        },
+        process.env.NEXTAUTH_SECRET || "fallback-secret",
+        { expiresIn: "1h" }
+      );
+
+      // Send password reset email
+      try {
+        const resetEmail = createPasswordResetEmail({
+          fullName: trialUser.fullName,
+          email: sanitizedEmail,
+          resetToken
+        });
+        
+        await sendEmail(resetEmail);
+      } catch (emailError) {
+        console.error('Failed to send password reset email:', emailError);
+        // Continue with success response even if email fails
+      }
+    }
 
     return NextResponse.json({
-      message: "If an account with this email exists, you will receive a password reset link.",
-      resetToken: resetToken // Remove this in production
+      message: successMessage
+    }, {
+      headers: SECURITY_HEADERS
     });
 
   } catch (error) {
     console.error("Forgot password error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500, headers: SECURITY_HEADERS }
     );
   }
 }

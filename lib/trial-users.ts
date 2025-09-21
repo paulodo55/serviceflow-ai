@@ -1,17 +1,7 @@
 // Shared trial users storage
 // In production, this would be replaced with a proper database
 
-export interface TrialUser {
-  id: string;
-  fullName: string;
-  email: string;
-  companyName: string;
-  phoneNumber?: string;
-  password: string;
-  createdAt: Date;
-  trialExpiresAt: Date;
-  isActive: boolean;
-}
+import { TrialUser } from '@/types';
 
 // In-memory storage for demo purposes
 // In production, use a proper database like PostgreSQL, MongoDB, etc.

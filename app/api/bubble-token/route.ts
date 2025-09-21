@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import jwt from 'jsonwebtoken';
+import { SECURITY_HEADERS } from '@/lib/security';
 
 // Bubble.io integration configuration
 const BUBBLE_CONFIG = {
@@ -80,7 +81,7 @@ export async function GET(request: NextRequest) {
     if (!token) {
       return NextResponse.json(
         { error: 'Authentication required' },
-        { status: 401 }
+        { status: 401, headers: SECURITY_HEADERS }
       );
     }
 
@@ -100,7 +101,7 @@ export async function GET(request: NextRequest) {
     if (!bubbleResult.success) {
       return NextResponse.json(
         { error: 'Failed to create user in Bubble app' },
-        { status: 500 }
+        { status: 500, headers: SECURITY_HEADERS }
       );
     }
 
@@ -126,13 +127,15 @@ export async function GET(request: NextRequest) {
       redirectUrl,
       bubbleUserId: bubbleResult.bubbleUserId,
       expiresIn: 24 * 60 * 60, // 24 hours in seconds
+    }, {
+      headers: SECURITY_HEADERS
     });
 
   } catch (error) {
     console.error('Bubble token generation error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
-      { status: 500 }
+      { status: 500, headers: SECURITY_HEADERS }
     );
   }
 }
@@ -145,7 +148,7 @@ export async function POST(request: NextRequest) {
     if (!email || !name) {
       return NextResponse.json(
         { error: 'Email and name are required' },
-        { status: 400 }
+        { status: 400, headers: SECURITY_HEADERS }
       );
     }
 
@@ -161,7 +164,7 @@ export async function POST(request: NextRequest) {
     if (!bubbleResult.success) {
       return NextResponse.json(
         { error: 'Failed to create user in Bubble app' },
-        { status: 500 }
+        { status: 500, headers: SECURITY_HEADERS }
       );
     }
 
@@ -186,13 +189,15 @@ export async function POST(request: NextRequest) {
       token: bubbleToken,
       redirectUrl,
       bubbleUserId: bubbleResult.bubbleUserId,
+    }, {
+      headers: SECURITY_HEADERS
     });
 
   } catch (error) {
     console.error('Bubble token creation error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
-      { status: 500 }
+      { status: 500, headers: SECURITY_HEADERS }
     );
   }
 }

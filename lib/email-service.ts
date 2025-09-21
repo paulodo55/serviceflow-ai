@@ -1,25 +1,7 @@
 // Email service for ServiceFlow
 // Integrates with hello@vervidai.com SMTP settings
 
-export interface EmailTemplate {
-  to: string;
-  subject: string;
-  html: string;
-  text: string;
-}
-
-export interface WelcomeEmailData {
-  fullName: string;
-  email: string;
-  companyName: string;
-  tempPassword: string;
-}
-
-export interface PasswordResetData {
-  fullName: string;
-  email: string;
-  resetToken: string;
-}
+import { EmailTemplate, WelcomeEmailData, PasswordResetData } from '@/types';
 
 // Email templates
 export const createWelcomeEmail = (data: WelcomeEmailData): EmailTemplate => {

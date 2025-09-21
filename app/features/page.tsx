@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { FaCalendarCheck, FaTools, FaClock, FaBell, FaSync, FaChartBar, FaTruckLoading, FaChartLine } from 'react-icons/fa';
+import { FaCalendarCheck, FaTools, FaClock, FaBell, FaSync, FaChartBar, FaChartLine } from 'react-icons/fa';
 
 const features = [
   {

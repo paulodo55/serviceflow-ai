@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { trialUsers, addTrialUser, findTrialUserByEmail, type TrialUser } from '@/lib/trial-users';
+import { trialUsers, addTrialUser, findTrialUserByEmail } from '@/lib/trial-users';
 import { createWelcomeEmail, sendEmail } from '@/lib/email-service';
 import { 
   checkRateLimit, 
@@ -16,6 +16,7 @@ import {
   isValidCompanyName,
   isValidPhoneNumber
 } from '@/lib/security';
+import { TrialSignupData, TrialSignupResponse } from '@/types';
 
 // Generate temporary password
 const generateTempPassword = (): string => {
