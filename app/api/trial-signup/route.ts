@@ -222,5 +222,4 @@ export async function GET() {
   }
 }
 
-// Export the trial users array for use in other API routes
-export { trialUsers };
+// Note: trialUsers array is managed in lib/trial-users.ts for shared access

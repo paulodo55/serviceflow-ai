@@ -270,7 +270,8 @@ export const SECURITY_HEADERS = {
   'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.vercel.com;",
 };
 
-export default {
+// Export security utilities as named exports
+const securityUtils = {
   checkRateLimit,
   recordFailedAttempt,
   clearRateLimit,
@@ -286,3 +287,5 @@ export default {
   RATE_LIMITS,
   SECURITY_HEADERS,
 };
+
+export default securityUtils;
