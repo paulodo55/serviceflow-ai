@@ -116,6 +116,8 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
+      console.log('🔐 Attempting login with:', { email: formData.email });
+      
       // Use NextAuth for authentication
       const result = await signIn('credentials', {
         email: formData.email,
@@ -123,10 +125,14 @@ export default function LoginPage() {
         redirect: false,
       });
 
+      console.log('🔐 Login result:', result);
+
       if (result?.ok && !result?.error) {
+        console.log('✅ Login successful, redirecting to /app');
         // Redirect to ServiceFlow app dashboard
         router.push('/app');
       } else {
+        console.log('❌ Login failed:', result?.error);
         setError({ message: result?.error || 'Invalid credentials', field: 'general' });
       }
     } catch (err) {

@@ -29,6 +29,7 @@ const users = [
 ];
 
 export const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET || "serviceflow-fallback-secret-key-for-development-32-chars-minimum",
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -37,7 +38,10 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        console.log('🔐 NextAuth authorize called with:', { email: credentials?.email });
+        
         if (!credentials?.email || !credentials?.password) {
+          console.log('❌ Missing credentials');
           return null;
         }
 
@@ -47,16 +51,22 @@ export const authOptions: NextAuthOptions = {
           (user as any).username === credentials.email
         );
         
+        console.log('👤 User found:', user ? { id: user.id, email: user.email, name: user.name } : 'Not found');
+        
         if (!user) {
+          console.log('❌ User not found');
           return null;
         }
 
         const isPasswordValid = await compare(credentials.password, user.password);
+        console.log('🔑 Password valid:', isPasswordValid);
         
         if (!isPasswordValid) {
+          console.log('❌ Invalid password');
           return null;
         }
 
+        console.log('✅ Login successful for:', user.email);
         return {
           id: user.id,
           email: user.email,
@@ -74,7 +84,7 @@ export const authOptions: NextAuthOptions = {
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   jwt: {
-    secret: process.env.NEXTAUTH_SECRET,
+    secret: process.env.NEXTAUTH_SECRET || "serviceflow-fallback-secret-key-for-development-32-chars-minimum",
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   pages: {
