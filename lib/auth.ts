@@ -19,6 +19,13 @@ const users = [
     password: "$2a$12$VfgkTBFcCieYiLKduW045.bwwDipxdKuxNzVhikM/K9zTX0i7.PFS", // "verviddemo123"
     name: "Paul Odo",
   },
+  {
+    id: "3",
+    email: "odopaul55@gmail.com",
+    username: "odopaul55",
+    password: "$2a$12$VfgkTBFcCieYiLKduW045.bwwDipxdKuxNzVhikM/K9zTX0i7.PFS", // "verviddemo123"
+    name: "Paul Odo",
+  },
 ];
 
 export const authOptions: NextAuthOptions = {
