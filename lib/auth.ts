@@ -12,6 +12,13 @@ const users = [
     password: "$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj2ukD5/rO4W", // "password123"
     name: "Demo User",
   },
+  {
+    id: "2",
+    email: "paulodo55@example.com",
+    username: "paulodo55",
+    password: "$2a$12$VfgkTBFcCieYiLKduW045.bwwDipxdKuxNzVhikM/K9zTX0i7.PFS", // "verviddemo123"
+    name: "Paul Odo",
+  },
 ];
 
 export const authOptions: NextAuthOptions = {
@@ -19,7 +26,7 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        email: { label: "Email", type: "email" },
+        email: { label: "Email or Username", type: "text", placeholder: "email@example.com or username" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
@@ -27,7 +34,11 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const user = users.find((user) => user.email === credentials.email);
+        // Find user by email or username
+        const user = users.find((user) => 
+          user.email === credentials.email || 
+          (user as any).username === credentials.email
+        );
         
         if (!user) {
           return null;

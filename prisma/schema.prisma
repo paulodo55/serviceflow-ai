@@ -1,0 +1,365 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String   @id @default(cuid())
+  email             String   @unique
+  username          String   @unique
+  password          String
+  name              String
+  role              UserRole @default(ADMIN)
+  businessName      String?
+  phone             String?
+  address           String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  lastLoginAt       DateTime?
+  
+  // Business settings
+  businessSettings  BusinessSettings?
+  
+  // Relationships
+  customers         Customer[]
+  appointments      Appointment[]
+  services          Service[]
+  invoices          Invoice[]
+  messages          Message[]
+  reviews           Review[]
+  
+  @@map("users")
+}
+
+model BusinessSettings {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Business info
+  businessName      String
+  businessPhone     String?
+  businessAddress   String?
+  businessEmail     String?
+  website           String?
+  logo              String?
+  
+  // Operating hours
+  mondayOpen        String?
+  mondayClose       String?
+  tuesdayOpen       String?
+  tuesdayClose      String?
+  wednesdayOpen     String?
+  wednesdayClose    String?
+  thursdayOpen      String?
+  thursdayClose     String?
+  fridayOpen        String?
+  fridayClose       String?
+  saturdayOpen      String?
+  saturdayClose     String?
+  sundayOpen        String?
+  sundayClose       String?
+  
+  // Notification preferences
+  emailNotifications Boolean @default(true)
+  smsNotifications   Boolean @default(true)
+  reviewAlerts       Boolean @default(true)
+  appointmentReminders Boolean @default(true)
+  
+  // Branding
+  primaryColor      String  @default("#3B82F6")
+  secondaryColor    String  @default("#10B981")
+  accentColor       String  @default("#F59E0B")
+  
+  // Integrations
+  stripeAccountId   String?
+  twilioAccountSid  String?
+  sendgridApiKey    String?
+  googleCalendarId  String?
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@map("business_settings")
+}
+
+model Customer {
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  name              String
+  email             String?
+  phone             String?
+  address           String?
+  notes             String?
+  tags              String[] @default([])
+  
+  // Customer analytics
+  lifetimeValue     Float    @default(0)
+  appointmentCount  Int      @default(0)
+  lastAppointment   DateTime?
+  averageRating     Float?
+  
+  // Status
+  status            CustomerStatus @default(ACTIVE)
+  isVip             Boolean  @default(false)
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  // Relationships
+  appointments      Appointment[]
+  invoices          Invoice[]
+  messages          Message[]
+  reviews           Review[]
+  
+  @@map("customers")
+}
+
+model Service {
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  name              String
+  description       String?
+  price             Float
+  duration          Int      // in minutes
+  category          String?
+  isActive          Boolean  @default(true)
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  // Relationships
+  appointments      Appointment[]
+  
+  @@map("services")
+}
+
+model Appointment {
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  customerId        String
+  customer          Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  serviceId         String?
+  service           Service? @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  
+  title             String
+  description       String?
+  startTime         DateTime
+  endTime           DateTime
+  status            AppointmentStatus @default(SCHEDULED)
+  
+  // Pricing
+  price             Float?
+  notes             String?
+  
+  // Recurring appointments
+  isRecurring       Boolean  @default(false)
+  recurringType     RecurringType?
+  recurringEnd      DateTime?
+  parentAppointmentId String?
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  // Relationships
+  invoices          Invoice[]
+  
+  @@map("appointments")
+}
+
+model Invoice {
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  customerId        String
+  customer          Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  appointmentId     String?
+  appointment       Appointment? @relation(fields: [appointmentId], references: [id], onDelete: SetNull)
+  
+  invoiceNumber     String   @unique
+  amount            Float
+  tax               Float    @default(0)
+  total             Float
+  description       String?
+  
+  status            InvoiceStatus @default(UNPAID)
+  dueDate           DateTime
+  paidAt            DateTime?
+  
+  // Stripe integration
+  stripePaymentIntentId String?
+  stripeInvoiceId   String?
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@map("invoices")
+}
+
+model Message {
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  customerId        String
+  customer          Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  
+  content           String
+  channel           MessageChannel @default(SMS)
+  direction         MessageDirection @default(OUTBOUND)
+  status            MessageStatus @default(SENT)
+  
+  // Template info
+  templateCategory  String?
+  isAutomated       Boolean  @default(false)
+  
+  // External IDs
+  twilioMessageId   String?
+  sendgridMessageId String?
+  
+  sentAt            DateTime @default(now())
+  readAt            DateTime?
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@map("messages")
+}
+
+model Review {
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  customerId        String
+  customer          Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  
+  rating            Int      // 1-5 stars
+  content           String?
+  platform          ReviewPlatform @default(GOOGLE)
+  status            ReviewStatus @default(PENDING)
+  
+  // External info
+  externalId        String?
+  externalUrl       String?
+  
+  // Response
+  response          String?
+  respondedAt       DateTime?
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@map("reviews")
+}
+
+// Future AI features (placeholders)
+model AICallbackSession {
+  id                String   @id @default(cuid())
+  customerId        String
+  phoneNumber       String
+  status            String   @default("PENDING")
+  transcript        String?
+  summary           String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@map("ai_callback_sessions")
+}
+
+model AICallTranscript {
+  id                String   @id @default(cuid())
+  sessionId         String
+  content           String
+  speaker           String   // "CUSTOMER" or "AI"
+  timestamp         DateTime
+  confidence        Float?
+  
+  createdAt         DateTime @default(now())
+  
+  @@map("ai_call_transcripts")
+}
+
+// Enums
+enum UserRole {
+  ADMIN
+  MANAGER
+  STAFF
+}
+
+enum CustomerStatus {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum RecurringType {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  UNPAID
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+enum MessageChannel {
+  SMS
+  EMAIL
+  WHATSAPP
+  FACEBOOK
+  INSTAGRAM
+  WEB_CHAT
+}
+
+enum MessageDirection {
+  INBOUND
+  OUTBOUND
+}
+
+enum MessageStatus {
+  PENDING
+  SENT
+  DELIVERED
+  READ
+  FAILED
+}
+
+enum ReviewPlatform {
+  GOOGLE
+  YELP
+  FACEBOOK
+  CUSTOM
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  RESPONDED
+  HIDDEN
+}
