@@ -17,6 +17,7 @@ import {
   XCircle,
   AlertCircle
 } from 'lucide-react';
+import GoogleCalendarConnectButton from '@/components/app/GoogleCalendarConnectButton';
 
 // Types
 interface Appointment {
@@ -274,47 +275,74 @@ export default function CalendarPage() {
         )}
       </div>
 
-      {/* Calendar View Placeholder */}
+      {/* Google Calendar Integration */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold text-gray-900 capitalize">
-            {viewMode} View
+          <h2 className="text-lg font-semibold text-gray-900">
+            Google Calendar Integration
           </h2>
           <div className="flex items-center space-x-2">
-            <button className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50">
-              <ChevronLeft className="h-4 w-4" />
-            </button>
-            <span className="px-4 py-2 text-sm font-medium">
-              {currentDate.toLocaleDateString('en-US', { 
-                month: 'long', 
-                year: 'numeric' 
-              })}
-            </span>
-            <button className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50">
-              <ChevronRight className="h-4 w-4" />
-            </button>
+            <GoogleCalendarConnectButton />
           </div>
         </div>
 
-        {/* Calendar Grid Placeholder */}
-        <div className="text-center py-12 border-2 border-dashed border-gray-300 rounded-lg">
-          <CalendarIcon className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
-            Interactive Calendar Coming Soon
-          </h3>
-          <p className="text-gray-500 mb-4">
-            Full calendar view with drag-and-drop scheduling will be available here
-          </p>
-          <div className="flex justify-center space-x-2">
-            <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
-              Drag & Drop
-            </span>
-            <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
-              Conflict Detection
-            </span>
-            <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">
-              Recurring Events
-            </span>
+        {/* Google Calendar Embed */}
+        <div className="space-y-4">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div className="flex items-start space-x-3">
+              <CalendarIcon className="h-5 w-5 text-blue-600 mt-0.5" />
+              <div>
+                <h3 className="text-sm font-medium text-blue-900">
+                  Why Google Calendar?
+                </h3>
+                <ul className="mt-2 text-sm text-blue-700 space-y-1">
+                  <li>• Sync across all devices automatically</li>
+                  <li>• Familiar interface your customers already know</li>
+                  <li>• Built-in conflict detection and notifications</li>
+                  <li>• Mobile apps with push notifications</li>
+                  <li>• Share calendars with team members</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Embedded Google Calendar */}
+          <div className="border border-gray-300 rounded-lg overflow-hidden">
+            <iframe
+              src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FNew_York&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=1&showCalendars=0&showTz=0"
+              style={{ borderWidth: 0 }}
+              width="100%"
+              height="600"
+              frameBorder="0"
+              scrolling="no"
+              title="Google Calendar"
+              className="w-full"
+            />
+          </div>
+
+          {/* Integration Status */}
+          <div className="bg-gray-50 rounded-lg p-4">
+            <h4 className="text-sm font-medium text-gray-900 mb-2">
+              Integration Features
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="h-4 w-4 text-green-600" />
+                <span className="text-sm text-gray-700">Two-way sync</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="h-4 w-4 text-green-600" />
+                <span className="text-sm text-gray-700">Customer notifications</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="h-4 w-4 text-green-600" />
+                <span className="text-sm text-gray-700">Mobile app sync</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="h-4 w-4 text-green-600" />
+                <span className="text-sm text-gray-700">Conflict detection</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
