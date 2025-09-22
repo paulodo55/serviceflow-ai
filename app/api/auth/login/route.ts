@@ -22,6 +22,22 @@ const users = [
     name: "Demo User",
     type: "demo",
   },
+  {
+    id: "2",
+    email: "paulodo55@example.com",
+    username: "paulodo55",
+    password: "$2a$12$VfgkTBFcCieYiLKduW045.bwwDipxdKuxNzVhikM/K9zTX0i7.PFS", // "verviddemo123"
+    name: "Paul Odo",
+    type: "admin",
+  },
+  {
+    id: "3",
+    email: "odopaul55@gmail.com",
+    username: "odopaul55",
+    password: "$2a$12$VfgkTBFcCieYiLKduW045.bwwDipxdKuxNzVhikM/K9zTX0i7.PFS", // "verviddemo123"
+    name: "Paul Odo",
+    type: "admin",
+  },
 ];
 
 export async function POST(request: NextRequest) {
@@ -58,13 +74,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!isValidEmail(sanitizedEmail)) {
-      recordFailedAttempt(clientId);
-      return NextResponse.json(
-        { error: "Please provide a valid email address" },
-        { status: 400, headers: SECURITY_HEADERS }
-      );
-    }
+    // Skip email validation since we now support usernames too
+    // Users can login with either email or username
 
     // Verify reCAPTCHA (in production)
     if (recaptchaToken && process.env.RECAPTCHA_SECRET) {
@@ -83,8 +94,11 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Find user in both regular users and trial users
-    let user = users.find((user) => user.email === sanitizedEmail);
+    // Find user in both regular users and trial users (support email or username)
+    let user = users.find((user) => 
+      user.email === sanitizedEmail || 
+      (user as any).username === sanitizedEmail
+    );
     let trialUser = findTrialUserByEmail(sanitizedEmail);
     
     if (!user && !trialUser) {

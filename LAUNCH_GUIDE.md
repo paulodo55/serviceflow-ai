@@ -313,17 +313,23 @@ POSTHOG_KEY="phc_xxxxx"
 
 ---
 
-## 💡 COMPETITIVE POSITIONING
+## 💡 COMPETITIVE POSITIONING & PRICING
 
-### **vs. Podium**
-- **Advantage**: Advanced analytics, better pricing
-- **Target**: Small-medium businesses
-- **Pricing**: $49/month vs Podium's $289/month
+### **Your Pricing Strategy**
+- **Basic Plan**: $199/month - Core CRM, messaging, calendar
+- **Premium Plan**: $499/month - Advanced analytics, AI features, integrations
 
-### **vs. ServiceTitan**
-- **Advantage**: Easier setup, modern UI
-- **Target**: Independent service businesses
-- **Pricing**: $99/month vs ServiceTitan's $300+/month
+### **vs. Competitors**
+- **vs. Podium**: $199-499/month vs their $289-1,200/month
+- **vs. ServiceTitan**: $499/month vs their $300-500+/month  
+- **vs. Housecall Pro**: $199/month vs their $79-299/month
+- **Advantage**: Better features at competitive premium pricing
+
+### **Revenue Projections**
+- **Conservative**: $199/month × 500 customers = $1.2M/year
+- **Growth Target**: $199/month × 1,000 customers = $2.4M/year
+- **Premium Mix**: 30% premium ($499) = Additional $900K/year
+- **Total Potential**: $3.3M/year with 1,000 customers (70/30 split)
 
 ---
 
