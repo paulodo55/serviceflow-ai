@@ -80,12 +80,16 @@ export default function LoginPage() {
 
   const validateForm = (): boolean => {
     if (!formData.email) {
-      setError({ message: 'Email is required', field: 'email' });
+      setError({ message: 'Email or username is required', field: 'email' });
       return false;
     }
     
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      setError({ message: 'Please enter a valid email address', field: 'email' });
+    // Allow both email and username formats
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+    const isUsername = /^[a-zA-Z0-9_]+$/.test(formData.email);
+    
+    if (!isEmail && !isUsername) {
+      setError({ message: 'Please enter a valid email address or username', field: 'email' });
       return false;
     }
     
