@@ -86,21 +86,7 @@ export interface PasswordResetData {
 }
 
 // Bubble.io Integration Types
-export interface BubbleUser {
-  email: string;
-  name: string;
-  company?: string;
-  role: string;
-  trial_expires?: string;
-}
-
-export interface BubbleTokenResponse {
-  success: boolean;
-  token: string;
-  redirectUrl: string;
-  bubbleUserId: string;
-  expiresIn?: number;
-}
+// Removed Bubble.io integration - now using ServiceFlow app directly
 
 // Security Types
 export interface RateLimitConfig {

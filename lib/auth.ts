@@ -95,19 +95,11 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // Generate JWT for Bubble integration
+      // Redirect to ServiceFlow app dashboard after login
       if (url.startsWith("/")) {
-        const bubbleToken = jwt.sign(
-          { 
-            email: url.includes("email=") ? new URL(baseUrl + url).searchParams.get("email") : "demo@vervidflow.com",
-            timestamp: Date.now()
-          },
-          process.env.NEXTAUTH_SECRET || "fallback-secret",
-          { expiresIn: "1h" }
-        );
-        return `https://app.vervidflow.com?token=${bubbleToken}`;
+        return `${baseUrl}/app`;
       }
-      return baseUrl;
+      return `${baseUrl}/app`;
     },
   },
   events: {

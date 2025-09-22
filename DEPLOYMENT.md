@@ -78,8 +78,8 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 ### Test Flow
 1. Visit `https://vervidflow.com/login`
 2. Enter demo credentials
-3. Should redirect to: `https://app.vervidflow.com?token=<JWT>`
-4. JWT contains user info for Bubble integration
+3. Should redirect to: `https://vervidflow.com/app`
+4. Access ServiceFlow dashboard directly
 
 ### JWT Payload Structure
 ```json
@@ -93,45 +93,25 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 }
 ```
 
-## 🔗 Bubble.io Integration
+## 🚀 ServiceFlow App Integration
 
-### Receiving the JWT Token
+### Direct Dashboard Access
 
-In your Bubble app, create a workflow that:
+ServiceFlow now uses a custom-built React application instead of external integrations:
 
-1. **Extracts the token** from URL parameter `token`
-2. **Validates the JWT** using your `NEXTAUTH_SECRET`
-3. **Creates or updates** the user in Bubble
-4. **Redirects** to the appropriate dashboard
+1. **Login** redirects directly to `/app`
+2. **No external tokens** needed
+3. **Seamless user experience** with NextAuth.js
+4. **Advanced dashboard** with real-time analytics
 
-### Sample Bubble Workflow
+### Authentication Flow
 
 ```javascript
-// Get token from URL
-const urlParams = new URLSearchParams(window.location.search);
-const token = urlParams.get('token');
-
-if (token) {
-  // Send to your Bubble API endpoint
-  fetch('/api/1.1/wf/validate-login-token', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer YOUR_BUBBLE_API_KEY'
-    },
-    body: JSON.stringify({ token: token })
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      // User validated, redirect to dashboard
-      window.location.href = '/dashboard';
-    } else {
-      // Invalid token, redirect to login
-      window.location.href = 'https://vervidflow.com/login';
-    }
-  });
-}
+// Simplified flow - no external redirects
+1. User logs in → NextAuth validates credentials
+2. Successful login → Redirect to `/app` 
+3. Protected route → Access ServiceFlow dashboard
+4. Session management → 30-day JWT tokens
 ```
 
 ## 🛠 Troubleshooting

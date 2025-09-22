@@ -70,25 +70,13 @@ export default function LoginPage() {
     const checkSession = async () => {
       const session = await getSession();
       if (session) {
-        // Generate JWT and redirect to Bubble app
-        const response = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            email: session.user?.email,
-            password: 'session_login' // Special flag for session-based login
-          }),
-        });
-        
-        if (response.ok) {
-          const data = await response.json();
-          window.location.href = data.redirectUrl;
-        }
+        // Redirect to ServiceFlow app dashboard
+        router.push('/app');
       }
     };
     
     checkSession();
-  }, []);
+  }, [router]);
 
   const validateForm = (): boolean => {
     if (!formData.email) {
@@ -124,28 +112,18 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      // Use custom login API for better error handling and Bubble integration
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
+      // Use NextAuth for authentication
+      const result = await signIn('credentials', {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        // Redirect to Bubble app with JWT token
-        window.location.href = data.redirectUrl;
+      if (result?.ok && !result?.error) {
+        // Redirect to ServiceFlow app dashboard
+        router.push('/app');
       } else {
-        if (response.status === 429) {
-          setRateLimitInfo({ retryAfter: data.retryAfter });
-          setError({ message: data.error, field: 'general' });
-        } else {
-          setError({ message: data.error || 'Login failed', field: 'general' });
-        }
+        setError({ message: result?.error || 'Invalid credentials', field: 'general' });
       }
     } catch (err) {
       setError({ message: 'Network error. Please try again.', field: 'general' });
@@ -174,10 +152,6 @@ export default function LoginPage() {
     }
   };
 
-  const handleBubbleDemo = () => {
-    // Direct access to Bubble.io demo app
-    window.open('https://odopaul55-61471.bubbleapps.io', '_blank');
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -437,18 +411,19 @@ export default function LoginPage() {
               </motion.button>
             </div>
 
-            {/* Bubble.io Demo Access */}
+            {/* ServiceFlow Demo Access */}
             <div className="mt-6 pt-6 border-t border-neutral-700 text-center">
               <p className="text-neutral-400 text-sm mb-3">Quick Demo Access</p>
-              <motion.button
-                type="button"
-                onClick={handleBubbleDemo}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 mb-4"
-              >
-                Try Live Demo
-              </motion.button>
+              <Link href="/demo">
+                <motion.button
+                  type="button"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 mb-4"
+                >
+                  View ServiceFlow Demo
+                </motion.button>
+              </Link>
             </div>
 
             {/* Sign Up Link */}

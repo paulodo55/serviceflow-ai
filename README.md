@@ -1,13 +1,13 @@
 # ServiceFlow by Vervid
 
-Enterprise-grade login system for ServiceFlow, seamlessly integrated with Bubble.io for complete CRM automation.
+Production-ready CRM application with advanced dashboard, customer management, and business intelligence features.
 
 ## 🚀 Features
 
 ### Authentication System
 - **Enterprise-grade security** with NextAuth.js
 - **Multi-provider support** (Email/Password, Google, Microsoft)
-- **JWT token integration** for seamless Bubble.io connection
+- **Direct dashboard access** with seamless user experience
 - **Rate limiting** and brute force protection
 - **Session management** with timeout warnings
 - **Password recovery** with secure token validation
