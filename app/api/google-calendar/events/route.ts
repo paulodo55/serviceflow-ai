@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleCalendarService, getGoogleCalendarConfig, formatEventForGoogle } from '@/lib/google-calendar';
+import { getCalendarService, formatAppointmentForGoogle } from '@/lib/google-calendar-service';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
@@ -15,30 +15,26 @@ export async function GET(request: NextRequest) {
     const timeMin = searchParams.get('timeMin');
     const timeMax = searchParams.get('timeMax');
     const maxResults = parseInt(searchParams.get('maxResults') || '50');
+    const calendarId = searchParams.get('calendarId') || 'primary';
 
-    // TODO: Get user's stored tokens from database
-    const tokens = null; // Replace with actual token retrieval
-    
-    if (!tokens) {
-      return NextResponse.json({ error: 'Calendar not connected' }, { status: 400 });
-    }
-
-    const config = getGoogleCalendarConfig();
-    const calendarService = new GoogleCalendarService(config);
-    calendarService.setTokens(tokens);
+    const calendarService = getCalendarService();
 
     const events = await calendarService.getEvents(
-      'primary',
+      calendarId,
       timeMin || undefined,
       timeMax || undefined,
       maxResults
     );
 
-    return NextResponse.json({ events });
+    return NextResponse.json({ 
+      success: true,
+      events,
+      count: events.length 
+    });
   } catch (error) {
     console.error('Error fetching calendar events:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch events' },
+      { error: 'Failed to fetch events', details: error.message },
       { status: 500 }
     );
   }
@@ -52,34 +48,30 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const appointment = await request.json();
+    const { appointment, calendarId = 'primary' } = await request.json();
 
-    // TODO: Get user's stored tokens from database
-    const tokens = null; // Replace with actual token retrieval
-    
-    if (!tokens) {
-      return NextResponse.json({ error: 'Calendar not connected' }, { status: 400 });
+    if (!appointment) {
+      return NextResponse.json({ error: 'Appointment data required' }, { status: 400 });
     }
 
-    const config = getGoogleCalendarConfig();
-    const calendarService = new GoogleCalendarService(config);
-    calendarService.setTokens(tokens);
+    const calendarService = getCalendarService();
 
     // Convert appointment to Google Calendar event format
-    const event = formatEventForGoogle(appointment);
+    const event = formatAppointmentForGoogle(appointment);
 
     // Create event in Google Calendar
-    const createdEvent = await calendarService.createEvent(event);
+    const createdEvent = await calendarService.createEvent(event, calendarId);
 
     return NextResponse.json({ 
       success: true, 
       event: createdEvent,
+      eventId: createdEvent.id,
       message: 'Appointment created in Google Calendar'
     });
   } catch (error) {
     console.error('Error creating calendar event:', error);
     return NextResponse.json(
-      { error: 'Failed to create event' },
+      { error: 'Failed to create event', details: error.message },
       { status: 500 }
     );
   }
@@ -93,24 +85,14 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { eventId, ...updateData } = await request.json();
+    const { eventId, calendarId = 'primary', ...updateData } = await request.json();
 
     if (!eventId) {
       return NextResponse.json({ error: 'Event ID required' }, { status: 400 });
     }
 
-    // TODO: Get user's stored tokens from database
-    const tokens = null; // Replace with actual token retrieval
-    
-    if (!tokens) {
-      return NextResponse.json({ error: 'Calendar not connected' }, { status: 400 });
-    }
-
-    const config = getGoogleCalendarConfig();
-    const calendarService = new GoogleCalendarService(config);
-    calendarService.setTokens(tokens);
-
-    const updatedEvent = await calendarService.updateEvent(eventId, updateData);
+    const calendarService = getCalendarService();
+    const updatedEvent = await calendarService.updateEvent(eventId, updateData, calendarId);
 
     return NextResponse.json({ 
       success: true, 
@@ -120,7 +102,7 @@ export async function PUT(request: NextRequest) {
   } catch (error) {
     console.error('Error updating calendar event:', error);
     return NextResponse.json(
-      { error: 'Failed to update event' },
+      { error: 'Failed to update event', details: error.message },
       { status: 500 }
     );
   }
@@ -136,23 +118,14 @@ export async function DELETE(request: NextRequest) {
 
     const { searchParams } = new URL(request.url);
     const eventId = searchParams.get('eventId');
+    const calendarId = searchParams.get('calendarId') || 'primary';
 
     if (!eventId) {
       return NextResponse.json({ error: 'Event ID required' }, { status: 400 });
     }
 
-    // TODO: Get user's stored tokens from database
-    const tokens = null; // Replace with actual token retrieval
-    
-    if (!tokens) {
-      return NextResponse.json({ error: 'Calendar not connected' }, { status: 400 });
-    }
-
-    const config = getGoogleCalendarConfig();
-    const calendarService = new GoogleCalendarService(config);
-    calendarService.setTokens(tokens);
-
-    await calendarService.deleteEvent(eventId);
+    const calendarService = getCalendarService();
+    await calendarService.deleteEvent(eventId, calendarId);
 
     return NextResponse.json({ 
       success: true,
@@ -161,7 +134,7 @@ export async function DELETE(request: NextRequest) {
   } catch (error) {
     console.error('Error deleting calendar event:', error);
     return NextResponse.json(
-      { error: 'Failed to delete event' },
+      { error: 'Failed to delete event', details: error.message },
       { status: 500 }
     );
   }
