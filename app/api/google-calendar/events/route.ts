@@ -3,6 +3,8 @@ import { getCalendarService, formatAppointmentForGoogle } from '@/lib/google-cal
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
@@ -34,7 +36,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Error fetching calendar events:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch events', details: error.message },
+      { error: 'Failed to fetch events', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }
@@ -71,7 +73,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Error creating calendar event:', error);
     return NextResponse.json(
-      { error: 'Failed to create event', details: error.message },
+      { error: 'Failed to create event', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }
@@ -102,7 +104,7 @@ export async function PUT(request: NextRequest) {
   } catch (error) {
     console.error('Error updating calendar event:', error);
     return NextResponse.json(
-      { error: 'Failed to update event', details: error.message },
+      { error: 'Failed to update event', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }
@@ -134,7 +136,7 @@ export async function DELETE(request: NextRequest) {
   } catch (error) {
     console.error('Error deleting calendar event:', error);
     return NextResponse.json(
-      { error: 'Failed to delete event', details: error.message },
+      { error: 'Failed to delete event', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }

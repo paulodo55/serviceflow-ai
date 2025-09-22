@@ -3,12 +3,14 @@ import { GoogleCalendarService, getGoogleCalendarConfig } from '@/lib/google-cal
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     
     if (!session) {
-      return NextResponse.redirect('/login');
+      return NextResponse.redirect(new URL('/login', request.url));
     }
 
     const { searchParams } = new URL(request.url);
@@ -17,11 +19,11 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       console.error('Google Calendar auth error:', error);
-      return NextResponse.redirect('/app/calendar?error=auth_failed');
+      return NextResponse.redirect(new URL('/app/calendar?error=auth_failed', request.url));
     }
 
     if (!code) {
-      return NextResponse.redirect('/app/calendar?error=no_code');
+      return NextResponse.redirect(new URL('/app/calendar?error=no_code', request.url));
     }
 
     const config = getGoogleCalendarConfig();
@@ -38,10 +40,10 @@ export async function GET(request: NextRequest) {
     });
 
     // Redirect back to calendar with success
-    return NextResponse.redirect('/app/calendar?success=connected');
+    return NextResponse.redirect(new URL('/app/calendar?success=connected', request.url));
     
   } catch (error) {
     console.error('Google Calendar callback error:', error);
-    return NextResponse.redirect('/app/calendar?error=callback_failed');
+    return NextResponse.redirect(new URL('/app/calendar?error=callback_failed', request.url));
   }
 }

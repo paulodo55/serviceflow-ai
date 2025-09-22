@@ -3,6 +3,8 @@ import { GoogleCalendarService, getGoogleCalendarConfig } from '@/lib/google-cal
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
