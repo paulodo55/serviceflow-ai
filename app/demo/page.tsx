@@ -124,7 +124,7 @@ export default function DemoPage() {
               
               {/* Video Description */}
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-3">What You'll See</h3>
+                <h3 className="text-xl font-semibold text-white mb-3">What You&apos;ll See</h3>
                 <ul className="space-y-2 text-neutral-300">
                   <li className="flex items-center">
                     <FaCheckCircle className="text-primary mr-3 flex-shrink-0" />
@@ -264,7 +264,7 @@ export default function DemoPage() {
                   <option value="morning">Morning (9 AM - 12 PM)</option>
                   <option value="afternoon">Afternoon (12 PM - 5 PM)</option>
                   <option value="evening">Evening (5 PM - 7 PM)</option>
-                  <option value="flexible">I'm flexible</option>
+                  <option value="flexible">I&apos;m flexible</option>
                 </select>
               </div>
 
