@@ -276,7 +276,7 @@ export default function IntegrationWorkflow() {
         id: Date.now().toString(),
         ...newWebhook,
         status: 'active' as const,
-        lastTriggered: null,
+        lastTriggered: 'Never',
         successRate: 100
       };
       
