@@ -16,7 +16,7 @@ import {
 const users = [
   {
     id: "1",
-    email: "demo@vervidflow.com",
+    email: "demo@vervidai.com",
     password: "$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj2ukD5/rO4W", // "password123"
     name: "Demo User",
     type: "demo",
