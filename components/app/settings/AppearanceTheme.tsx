@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { 
   Palette, 
   Sun, 
@@ -318,7 +319,7 @@ export default function AppearanceTheme() {
             <div className="flex items-center space-x-4">
               <div className="w-20 h-12 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
                 {themeSettings.logoUrl ? (
-                  <img src={themeSettings.logoUrl} alt="Logo" className="max-w-full max-h-full" />
+                  <Image src={themeSettings.logoUrl} alt="Logo" className="max-w-full max-h-full" width={80} height={48} />
                 ) : (
                   <ImageIcon className="h-6 w-6 text-gray-400" />
                 )}

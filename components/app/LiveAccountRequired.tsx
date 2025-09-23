@@ -101,7 +101,7 @@ export default function LiveAccountRequired({
                 </p>
                 <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
                   <p className="text-sm text-purple-800">
-                    <strong>ServiceFlow by VervIdai</strong> - We're constantly improving our platform 
+                    <strong>ServiceFlow by VervIdai</strong> - We&apos;re constantly improving our platform 
                     to bring you the most advanced CRM features.
                   </p>
                 </div>
@@ -129,8 +129,8 @@ export default function LiveAccountRequired({
                   className="text-center mb-8"
                 >
                   <p className="text-gray-600 text-lg leading-relaxed">
-                    You're currently viewing the <strong>ServiceFlow demo</strong>. This feature requires 
-                    an active subscription to access real-time data and full functionality.
+                  You&apos;re currently viewing the <strong>ServiceFlow demo</strong>. This feature requires 
+                  an active subscription to access real-time data and full functionality.
                   </p>
                 </motion.div>
 
@@ -142,7 +142,7 @@ export default function LiveAccountRequired({
                   className="mb-8"
                 >
                   <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">
-                    What you'll get with a live account:
+                    What you&apos;ll get with a live account:
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {displayFeatures.map((feature, index) => (
