@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import type { LucideIcon } from 'lucide-react';
 import { 
   Zap, 
   Calendar, 
@@ -43,7 +42,7 @@ export default function IntegrationWorkflow() {
     id: string;
     name: string;
     description: string;
-    icon: LucideIcon;
+    icon: string;
     status: 'connected';
     lastSync: string;
     settings: IntegrationSettings;
@@ -53,7 +52,7 @@ export default function IntegrationWorkflow() {
     id: string;
     name: string;
     description: string;
-    icon: LucideIcon;
+    icon: string;
     category: string;
   };
 
@@ -68,7 +67,7 @@ export default function IntegrationWorkflow() {
         id: '1',
         name: 'Google Calendar',
         description: 'Sync appointments and events',
-        icon: Calendar,
+        icon: 'calendar',
         status: 'connected',
         lastSync: '2024-09-23T14:30:00Z',
         settings: {
@@ -81,7 +80,7 @@ export default function IntegrationWorkflow() {
         id: '2',
         name: 'Gmail',
         description: 'Email integration and automation',
-        icon: Mail,
+        icon: 'mail',
         status: 'connected',
         lastSync: '2024-09-23T14:25:00Z',
         settings: {
@@ -94,7 +93,7 @@ export default function IntegrationWorkflow() {
         id: '3',
         name: 'Stripe',
         description: 'Payment processing',
-        icon: CreditCard,
+        icon: 'credit-card',
         status: 'connected',
         lastSync: '2024-09-23T14:20:00Z',
         settings: {
@@ -109,41 +108,59 @@ export default function IntegrationWorkflow() {
         id: '4',
         name: 'QuickBooks',
         description: 'Accounting and bookkeeping',
-        icon: Database,
+        icon: 'database',
         category: 'Accounting'
       },
       {
         id: '5',
         name: 'Mailchimp',
         description: 'Email marketing automation',
-        icon: Mail,
+        icon: 'mail',
         category: 'Marketing'
       },
       {
         id: '6',
         name: 'Slack',
         description: 'Team communication',
-        icon: MessageSquare,
+        icon: 'message-square',
         category: 'Communication'
       },
       {
         id: '7',
         name: 'Zapier',
         description: 'Workflow automation',
-        icon: Zap,
+        icon: 'zap',
         category: 'Automation'
       },
       {
         id: '8',
         name: 'Microsoft Outlook',
         description: 'Email and calendar sync',
-        icon: Mail,
+        icon: 'mail',
         category: 'Productivity'
       }
     ]
   };
 
   const [integrations, setIntegrations] = useState<IntegrationState>(initialIntegrations);
+
+  // Helper function to render icons based on string identifier
+  const renderIcon = (iconName: string, className = "w-5 h-5") => {
+    const iconMap = {
+      'calendar': Calendar,
+      'mail': Mail,
+      'credit-card': CreditCard,
+      'database': Database,
+      'message-square': MessageSquare,
+      'zap': Zap,
+      'webhook': Webhook,
+      'globe': Globe,
+      'settings': SettingsIcon
+    };
+    
+    const IconComponent = iconMap[iconName as keyof typeof iconMap] || Globe;
+    return <IconComponent className={className} />;
+  };
 
   const [webhooks, setWebhooks] = useState([
     {
@@ -321,7 +338,7 @@ export default function IntegrationWorkflow() {
             <div key={integration.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
               <div className="flex items-center space-x-4">
                 <div className="p-3 bg-green-100 rounded-lg">
-                  <integration.icon className="h-6 w-6 text-green-600" />
+                  {renderIcon(integration.icon, "h-6 w-6 text-green-600")}
                 </div>
                 <div>
                   <div className="flex items-center space-x-2">
@@ -370,7 +387,7 @@ export default function IntegrationWorkflow() {
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="p-2 bg-gray-100 rounded-lg">
-                  <integration.icon className="h-5 w-5 text-gray-600" />
+                  {renderIcon(integration.icon, "h-5 w-5 text-gray-600")}
                 </div>
                 <span className="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full">
                   {integration.category}
