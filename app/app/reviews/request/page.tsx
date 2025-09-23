@@ -6,7 +6,7 @@ export default function ReviewRequestPage() {
     <LiveAccountRequired
       title="Request Customer Review"
       description="Automate review requests to build your online reputation and attract more customers through positive feedback."
-      icon={Star}
+      iconName='star'
       features={[
         'Automated review request campaigns',
         'Multi-platform review collection',

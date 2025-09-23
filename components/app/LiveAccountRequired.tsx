@@ -13,14 +13,21 @@ import {
   BarChart3,
   MessageSquare,
   CreditCard,
-  LucideIcon
+  UserPlus,
+  Mail,
+  XCircle,
+  AlertCircle,
+  FileText,
+  Phone,
+  AlertTriangle,
+  Settings
 } from 'lucide-react';
 import Link from 'next/link';
 
 interface LiveAccountRequiredProps {
   title: string;
   description: string;
-  icon: LucideIcon;
+  iconName: string;
   features?: string[];
   comingSoon?: boolean;
 }
@@ -28,10 +35,34 @@ interface LiveAccountRequiredProps {
 export default function LiveAccountRequired({ 
   title, 
   description, 
-  icon: Icon, 
+  iconName, 
   features = [],
   comingSoon = false 
 }: LiveAccountRequiredProps) {
+  const iconMap = {
+    'star': Star,
+    'zap': Zap,
+    'shield': Shield,
+    'users': Users,
+    'calendar': Calendar,
+    'bar-chart3': BarChart3,
+    'message-square': MessageSquare,
+    'credit-card': CreditCard,
+    'crown': Crown,
+    'check-circle': CheckCircle,
+    'user-plus': UserPlus,
+    'mail': Mail,
+    'arrow-right': ArrowRight,
+    'x-circle': XCircle,
+    'alert-circle': AlertCircle,
+    'file-text': FileText,
+    'phone': Phone,
+    'alert-triangle': AlertTriangle,
+    'settings': Settings
+  };
+
+  const Icon = iconMap[iconName as keyof typeof iconMap] || Shield;
+
   const defaultFeatures = [
     'Real-time data synchronization',
     'Advanced analytics and reporting',

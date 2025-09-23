@@ -6,7 +6,7 @@ export default function AICallbackPage() {
     <LiveAccountRequired
       title="AI Callback Assistant"
       description="Intelligent automated callback system powered by advanced AI to handle customer inquiries and follow-ups."
-      icon={Phone}
+      iconName='phone'
       comingSoon={true}
     />
   );

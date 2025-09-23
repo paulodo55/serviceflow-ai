@@ -6,7 +6,7 @@ export default function AnalyticsPage() {
     <LiveAccountRequired
       title="Advanced Analytics"
       description="Gain deep insights into your business performance with comprehensive analytics and reporting tools."
-      icon={BarChart3}
+      iconName='bar-chart3'
       features={[
         'Real-time business intelligence dashboards',
         'Customer lifecycle and retention analysis',

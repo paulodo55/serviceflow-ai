@@ -6,7 +6,7 @@ export default function ReviewsPage() {
     <LiveAccountRequired
       title="Reviews Management"
       description="Monitor and manage customer reviews across all platforms to build your reputation and grow your business."
-      icon={Star}
+      iconName='star'
       features={[
         'Multi-platform review monitoring',
         'Automated review request campaigns',

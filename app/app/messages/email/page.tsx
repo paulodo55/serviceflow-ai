@@ -6,7 +6,7 @@ export default function EmailCampaignPage() {
     <LiveAccountRequired
       title="Email Marketing Campaign"
       description="Create and manage professional email marketing campaigns to engage customers and grow your business."
-      icon={Mail}
+      iconName='mail'
       features={[
         'Professional email templates',
         'Customer segmentation and targeting',

@@ -6,7 +6,7 @@ export default function NewCustomerPage() {
     <LiveAccountRequired
       title="Add New Customer"
       description="Create comprehensive customer profiles with advanced data management and relationship tracking capabilities."
-      icon={UserPlus}
+      iconName='user-plus'
       features={[
         'Complete customer profile management',
         'Service history and preferences',

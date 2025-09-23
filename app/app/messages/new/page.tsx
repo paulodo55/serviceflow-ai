@@ -6,7 +6,7 @@ export default function NewMessagePage() {
     <LiveAccountRequired
       title="Send New Message"
       description="Communicate with customers through multiple channels with advanced messaging and automation features."
-      icon={MessageSquare}
+      iconName='message-square'
       features={[
         'Multi-channel messaging (SMS, Email, Chat)',
         'Message templates and automation',

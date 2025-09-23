@@ -6,7 +6,7 @@ export default function NewInvoicePage() {
     <LiveAccountRequired
       title="Create New Invoice"
       description="Generate professional invoices with automated payment processing and comprehensive financial tracking."
-      icon={FileText}
+      iconName='file-text'
       features={[
         'Professional invoice templates',
         'Automated payment processing',

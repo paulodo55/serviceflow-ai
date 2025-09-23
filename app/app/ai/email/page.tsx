@@ -6,7 +6,7 @@ export default function AIEmailPage() {
     <LiveAccountRequired
       title="AI Email Assistant"
       description="Smart email composition and management powered by artificial intelligence to enhance customer communication."
-      icon={Mail}
+      iconName='mail'
       comingSoon={true}
     />
   );

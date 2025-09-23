@@ -6,7 +6,7 @@ export default function NewAppointmentPage() {
     <LiveAccountRequired
       title="Schedule New Appointment"
       description="Create and manage appointments with advanced scheduling features and automated customer notifications."
-      icon={Calendar}
+      iconName='calendar'
       features={[
         'Intelligent time slot recommendations',
         'Automated customer confirmations',
