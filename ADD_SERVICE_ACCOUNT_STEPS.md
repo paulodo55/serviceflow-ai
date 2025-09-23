@@ -133,4 +133,4 @@ When setup is complete, you should see:
 4. **Set up customer notifications**
 5. **Deploy to production**
 
-Your Google Calendar integration will be ready to compete with Calendly and other professional scheduling tools! 🎉
+ServiceFlow, a VervIdai software - Your Google Calendar integration is ready for professional scheduling! 🎉

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { compare } from "bcryptjs";
-import jwt from "jsonwebtoken";
 import { findTrialUserByEmail } from "@/lib/trial-users";
 import { 
   checkRateLimit, 
@@ -144,29 +143,9 @@ export async function POST(request: NextRequest) {
     // Clear rate limit on successful login
     clearRateLimit(clientId);
 
-    // Generate JWT for Bubble integration
-    const bubbleToken = jwt.sign(
-      { 
-        id: userData.id,
-        email: userData.email,
-        name: userData.name,
-        company: userData.company,
-        type: userData.type,
-        trialExpiresAt: userData.trialExpiresAt,
-        timestamp: Date.now()
-      },
-      process.env.NEXTAUTH_SECRET || "fallback-secret",
-      { expiresIn: "24h" }
-    );
-
-    // Use Bubble.io app URL for redirect
-    const redirectUrl = `https://odopaul55-61471.bubbleapps.io?token=${encodeURIComponent(bubbleToken)}&user=${encodeURIComponent(userData.email)}`;
-
     return NextResponse.json({
       message: "Login successful",
-      user: userData,
-      token: bubbleToken,
-      redirectUrl
+      user: userData
     }, {
       headers: SECURITY_HEADERS
     });
