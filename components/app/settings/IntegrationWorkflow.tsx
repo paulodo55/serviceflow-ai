@@ -62,7 +62,7 @@ export default function IntegrationWorkflow() {
     available: AvailableIntegration[];
   };
 
-  const [integrations, setIntegrations] = useState<IntegrationState>({
+  const initialIntegrations: IntegrationState = {
     connected: [
       {
         id: '1',
@@ -141,7 +141,9 @@ export default function IntegrationWorkflow() {
         category: 'Productivity'
       }
     ]
-  });
+  };
+
+  const [integrations, setIntegrations] = useState<IntegrationState>(initialIntegrations);
 
   const [webhooks, setWebhooks] = useState([
     {
@@ -246,8 +248,14 @@ export default function IntegrationWorkflow() {
   const disconnectIntegration = (integrationId: string) => {
     const integration = integrations.connected.find(i => i.id === integrationId);
     if (integration) {
-      const { status, lastSync, settings, ...availableIntegration } = integration;
-      setIntegrations(prev => ({
+      const availableIntegration: AvailableIntegration = {
+        id: integration.id,
+        name: integration.name,
+        description: integration.description,
+        icon: integration.icon,
+        category: 'Connected'
+      };
+      setIntegrations((prev): IntegrationState => ({
         connected: prev.connected.filter(i => i.id !== integrationId),
         available: [...prev.available, availableIntegration]
       }));
