@@ -196,10 +196,7 @@ export default function IntegrationWorkflow() {
         ...integration,
         status: 'connected' as const,
         lastSync: new Date().toISOString(),
-        settings: {
-          autoSync: true,
-          notifications: true
-        }
+        settings: {} // Empty object to make type compatible
       };
       
       setIntegrations(prev => ({
