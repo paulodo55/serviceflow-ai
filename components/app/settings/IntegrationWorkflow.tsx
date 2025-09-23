@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import type { LucideIcon } from 'lucide-react';
 import { 
   Zap, 
   Calendar, 
@@ -25,7 +26,43 @@ import SettingsCard from './SettingsCard';
 import ToggleSwitch from './ToggleSwitch';
 
 export default function IntegrationWorkflow() {
-  const [integrations, setIntegrations] = useState({
+  type IntegrationSettings = {
+    syncDirection?: 'bidirectional' | 'one-way' | string;
+    autoCreate?: boolean;
+    notifications?: boolean;
+    autoReply?: boolean;
+    templates?: boolean;
+    tracking?: boolean;
+    autoInvoice?: boolean;
+    webhooks?: boolean;
+    refunds?: boolean;
+    autoSync?: boolean;
+  };
+
+  type ConnectedIntegration = {
+    id: string;
+    name: string;
+    description: string;
+    icon: LucideIcon;
+    status: 'connected';
+    lastSync: string;
+    settings: IntegrationSettings;
+  };
+
+  type AvailableIntegration = {
+    id: string;
+    name: string;
+    description: string;
+    icon: LucideIcon;
+    category: string;
+  };
+
+  type IntegrationState = {
+    connected: ConnectedIntegration[];
+    available: AvailableIntegration[];
+  };
+
+  const [integrations, setIntegrations] = useState<IntegrationState>({
     connected: [
       {
         id: '1',
@@ -192,14 +229,14 @@ export default function IntegrationWorkflow() {
   const connectIntegration = (integrationId: string) => {
     const integration = integrations.available.find(i => i.id === integrationId);
     if (integration) {
-      const connectedIntegration = {
+      const connectedIntegration: ConnectedIntegration = {
         ...integration,
-        status: 'connected' as const,
+        status: 'connected',
         lastSync: new Date().toISOString(),
-        settings: {} // Empty object to make type compatible
+        settings: {}
       };
       
-      setIntegrations(prev => ({
+      setIntegrations((prev): IntegrationState => ({
         connected: [...prev.connected, connectedIntegration],
         available: prev.available.filter(i => i.id !== integrationId)
       }));
