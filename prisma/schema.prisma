@@ -10,41 +10,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id                String   @id @default(cuid())
-  email             String   @unique
-  username          String   @unique
-  password          String
-  name              String
-  role              UserRole @default(ADMIN)
-  businessName      String?
-  phone             String?
-  address           String?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  lastLoginAt       DateTime?
+// Multi-tenant Organization model
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  domain    String?   @unique
+  plan      String   @default("trial") // trial, basic, pro, enterprise
+  status    String   @default("active") // active, suspended, cancelled
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   
-  // Business settings
-  businessSettings  BusinessSettings?
+  // Subscription info
+  stripeCustomerId    String?  @unique
+  subscriptionId      String?  @unique
+  subscriptionStatus  String?  // active, past_due, canceled, etc.
+  trialEndsAt        DateTime?
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
   
-  // Relationships
-  customers         Customer[]
-  appointments      Appointment[]
-  services          Service[]
-  invoices          Invoice[]
-  messages          Message[]
-  reviews           Review[]
-  
-  @@map("users")
-}
-
-model BusinessSettings {
-  id                String   @id @default(cuid())
-  userId            String   @unique
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  // Business info
-  businessName      String
+  // Business info (moved from BusinessSettings)
   businessPhone     String?
   businessAddress   String?
   businessEmail     String?
@@ -67,12 +51,6 @@ model BusinessSettings {
   sundayOpen        String?
   sundayClose       String?
   
-  // Notification preferences
-  emailNotifications Boolean @default(true)
-  smsNotifications   Boolean @default(true)
-  reviewAlerts       Boolean @default(true)
-  appointmentReminders Boolean @default(true)
-  
   // Branding
   primaryColor      String  @default("#3B82F6")
   secondaryColor    String  @default("#10B981")
@@ -84,16 +62,87 @@ model BusinessSettings {
   sendgridApiKey    String?
   googleCalendarId  String?
   
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  // Relationships
+  users            User[]
+  customers        Customer[]
+  appointments     Appointment[]
+  services         Service[]
+  invoices         Invoice[]
+  messages         Message[]
+  reviews          Review[]
   
-  @@map("business_settings")
+  @@map("organizations")
 }
+
+model User {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  name           String
+  role           UserRole @default(STAFF)
+  phone          String?
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  
+  // Auth fields
+  emailVerified  DateTime?
+  image          String?
+  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  lastLoginAt    DateTime?
+  
+  // NextAuth relations
+  accounts       Account[]
+  sessions       Session[]
+  
+  @@map("users")
+}
+
+// NextAuth required models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
 
 model Customer {
   id                String   @id @default(cuid())
-  userId            String
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organizationId    String
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   
   name              String
   email             String?
@@ -126,8 +175,8 @@ model Customer {
 
 model Service {
   id                String   @id @default(cuid())
-  userId            String
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organizationId    String
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   
   name              String
   description       String?
@@ -147,8 +196,8 @@ model Service {
 
 model Appointment {
   id                String   @id @default(cuid())
-  userId            String
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organizationId    String
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   customerId        String
   customer          Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
   serviceId         String?
@@ -181,8 +230,8 @@ model Appointment {
 
 model Invoice {
   id                String   @id @default(cuid())
-  userId            String
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organizationId    String
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   customerId        String
   customer          Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
   appointmentId     String?
@@ -210,8 +259,8 @@ model Invoice {
 
 model Message {
   id                String   @id @default(cuid())
-  userId            String
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organizationId    String
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   customerId        String
   customer          Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
   
@@ -239,8 +288,8 @@ model Message {
 
 model Review {
   id                String   @id @default(cuid())
-  userId            String
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organizationId    String
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   customerId        String
   customer          Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
   

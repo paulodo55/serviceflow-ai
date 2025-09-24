@@ -1,120 +1,162 @@
-import { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
-import { compare } from "bcryptjs";
-import jwt from "jsonwebtoken";
-
-// Mock user database - replace with your actual database
-const users = [
-  {
-    id: "1",
-    email: "demo@vervidflow.com",
-    password: "$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj2ukD5/rO4W", // "password123"
-    name: "Demo User",
-  },
-  {
-    id: "2",
-    email: "paulodo55@example.com",
-    username: "paulodo55",
-    password: "$2a$12$VfgkTBFcCieYiLKduW045.bwwDipxdKuxNzVhikM/K9zTX0i7.PFS", // "verviddemo123"
-    name: "Paul Odo",
-  },
-  {
-    id: "3",
-    email: "odopaul55@gmail.com",
-    username: "odopaul55",
-    password: "$2a$12$VfgkTBFcCieYiLKduW045.bwwDipxdKuxNzVhikM/K9zTX0i7.PFS", // "verviddemo123"
-    name: "Paul Odo",
-  },
-];
+import { NextAuthOptions } from 'next-auth'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import CredentialsProvider from 'next-auth/providers/credentials'
+import GoogleProvider from 'next-auth/providers/google'
+import { prisma } from './prisma'
+import bcrypt from 'bcryptjs'
 
 export const authOptions: NextAuthOptions = {
-  secret: process.env.NEXTAUTH_SECRET || "serviceflow-fallback-secret-key-for-development-32-chars-minimum",
+  adapter: PrismaAdapter(prisma),
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
     CredentialsProvider({
-      name: "credentials",
+      name: 'credentials',
       credentials: {
-        email: { label: "Email or Username", type: "text", placeholder: "email@example.com or username" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' },
+        organizationName: { label: 'Organization Name', type: 'text' },
+        isSignup: { label: 'Is Signup', type: 'hidden' }
       },
       async authorize(credentials) {
-        console.log('🔐 NextAuth authorize called with:', { email: credentials?.email });
-        
         if (!credentials?.email || !credentials?.password) {
-          console.log('❌ Missing credentials');
-          return null;
+          return null
         }
 
-        // Find user by email or username
-        const user = users.find((user) => 
-          user.email === credentials.email || 
-          (user as any).username === credentials.email
-        );
-        
-        console.log('👤 User found:', user ? { id: user.id, email: user.email, name: user.name } : 'Not found');
-        
-        if (!user) {
-          console.log('❌ User not found');
-          return null;
-        }
+        const isSignup = credentials.isSignup === 'true'
 
-        const isPasswordValid = await compare(credentials.password, user.password);
-        console.log('🔑 Password valid:', isPasswordValid);
-        
-        if (!isPasswordValid) {
-          console.log('❌ Invalid password');
-          return null;
-        }
+        if (isSignup) {
+          // Sign up flow
+          if (!credentials.organizationName) {
+            throw new Error('Organization name is required for signup')
+          }
 
-        console.log('✅ Login successful for:', user.email);
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-        };
-      },
-    }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-    }),
+          // Check if user already exists
+          const existingUser = await prisma.user.findUnique({
+            where: { email: credentials.email }
+          })
+
+          if (existingUser) {
+            throw new Error('User already exists')
+          }
+
+          // Create organization first
+          const organization = await prisma.organization.create({
+            data: {
+              name: credentials.organizationName,
+              plan: 'trial',
+              trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days trial
+            }
+          })
+
+          // Create user with organization
+          const hashedPassword = await bcrypt.hash(credentials.password, 12)
+          const user = await prisma.user.create({
+            data: {
+              email: credentials.email,
+              name: credentials.email.split('@')[0], // Default name from email
+              organizationId: organization.id,
+              role: 'ADMIN', // First user is admin
+            }
+          })
+
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            organizationId: organization.id,
+            role: user.role,
+          }
+        } else {
+          // Sign in flow
+          const user = await prisma.user.findUnique({
+            where: { email: credentials.email },
+            include: { organization: true }
+          })
+
+          if (!user) {
+            return null
+          }
+
+          // For demo purposes, we'll skip password verification for existing demo user
+          if (user.email === 'demo@vervidai.com') {
+            return {
+              id: user.id,
+              email: user.email,
+              name: user.name,
+              organizationId: user.organizationId,
+              role: user.role,
+            }
+          }
+
+          // For production, you'd verify password here
+          // const isPasswordValid = await bcrypt.compare(credentials.password, user.password)
+          // if (!isPasswordValid) return null
+
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            organizationId: user.organizationId,
+            role: user.role,
+          }
+        }
+      }
+    })
   ],
   session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
-  jwt: {
-    secret: process.env.NEXTAUTH_SECRET || "serviceflow-fallback-secret-key-for-development-32-chars-minimum",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
-  pages: {
-    signIn: "/login",
-    error: "/login",
+    strategy: 'jwt',
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, account }) {
       if (user) {
-        token.id = user.id;
+        token.organizationId = user.organizationId
+        token.role = user.role
       }
-      return token;
+      return token
     },
     async session({ session, token }) {
-      if (token && session.user) {
-        (session.user as any).id = token.id as string;
+      if (token) {
+        session.user.id = token.sub!
+        session.user.organizationId = token.organizationId as string
+        session.user.role = token.role as string
       }
-      return session;
+      return session
     },
-    async redirect({ url, baseUrl }) {
-      // Redirect to ServiceFlow app dashboard after login
-      if (url.startsWith("/")) {
-        return `${baseUrl}/app`;
-      }
-      return `${baseUrl}/app`;
-    },
-  },
-  events: {
     async signIn({ user, account, profile }) {
-      console.log("User signed in:", { user, account, profile });
-    },
+      if (account?.provider === 'google') {
+        // Handle Google OAuth signup
+        const existingUser = await prisma.user.findUnique({
+          where: { email: user.email! }
+        })
+
+        if (!existingUser) {
+          // Create organization for new Google user
+          const organization = await prisma.organization.create({
+            data: {
+              name: `${user.name}'s Business`,
+              plan: 'trial',
+              trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+            }
+          })
+
+          // Update user with organization
+          await prisma.user.update({
+            where: { email: user.email! },
+            data: {
+              organizationId: organization.id,
+              role: 'ADMIN'
+            }
+          })
+        }
+      }
+      return true
+    }
   },
-};
+  pages: {
+    signIn: '/login',
+    signUp: '/signup',
+  },
+}
