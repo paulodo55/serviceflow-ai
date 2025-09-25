@@ -4,7 +4,7 @@ Copy these to your `.env.local` file:
 
 ```bash
 # Database
-DATABASE_URL=
+DATABASE_URL="postgresql://username:password@host:port/database"
 
 # NextAuth
 NEXTAUTH_URL="http://localhost:3000"
