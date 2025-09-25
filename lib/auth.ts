@@ -35,7 +35,7 @@ export const authOptions: NextAuthOptions = {
           }
 
           // Check if user already exists
-          const existingUser = await prisma.user.findUnique({
+          const existingUser = await (prisma as any).user.findUnique({
             where: { email: credentials.email }
           })
 
@@ -45,7 +45,7 @@ export const authOptions: NextAuthOptions = {
 
           // Create organization first
           const selectedPlan = credentials.plan || 'trial'
-          const organization = await prisma.organization.create({
+          const organization = await (prisma as any).organization.create({
             data: {
               name: credentials.organizationName,
               plan: selectedPlan,
@@ -56,7 +56,7 @@ export const authOptions: NextAuthOptions = {
 
           // Create user with organization
           const hashedPassword = await bcrypt.hash(credentials.password, 12)
-          const user = await prisma.user.create({
+          const user = await (prisma as any).user.create({
             data: {
               email: credentials.email,
               name: credentials.email.split('@')[0], // Default name from email
@@ -132,13 +132,13 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user, account, profile }) {
       if (account?.provider === 'google') {
         // Handle Google OAuth signup
-        const existingUser = await prisma.user.findUnique({
+        const existingUser = await (prisma as any).user.findUnique({
           where: { email: user.email! }
         })
 
         if (!existingUser) {
           // Create organization for new Google user
-          const organization = await prisma.organization.create({
+          const organization = await (prisma as any).organization.create({
             data: {
               name: `${user.name}'s Business`,
               plan: 'trial',
@@ -147,7 +147,7 @@ export const authOptions: NextAuthOptions = {
           })
 
           // Update user with organization
-          await prisma.user.update({
+          await (prisma as any).user.update({
             where: { email: user.email! },
             data: {
               organizationId: organization.id,
