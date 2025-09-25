@@ -130,33 +130,39 @@ export const authOptions: NextAuthOptions = {
       return session
     },
     async signIn({ user, account, profile }) {
-      if (account?.provider === 'google') {
-        // Handle Google OAuth signup
-        const existingUser = await (prisma as any).user.findUnique({
-          where: { email: user.email! }
-        })
-
-        if (!existingUser) {
-          // Create organization for new Google user
-          const organization = await (prisma as any).organization.create({
-            data: {
-              name: `${user.name}'s Business`,
-              plan: 'trial',
-              trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
-            }
+      try {
+        if (account?.provider === 'google') {
+          // Handle Google OAuth signup
+          const existingUser = await (prisma as any).user.findUnique({
+            where: { email: user.email! }
           })
 
-          // Update user with organization
-          await (prisma as any).user.update({
-            where: { email: user.email! },
-            data: {
-              organizationId: organization.id,
-              role: 'ADMIN'
-            }
-          })
+          if (!existingUser) {
+            // Create organization for new Google user
+            const organization = await (prisma as any).organization.create({
+              data: {
+                name: `${user.name}'s Business`,
+                plan: 'trial',
+                trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+              }
+            })
+
+            // Update user with organization
+            await (prisma as any).user.update({
+              where: { email: user.email! },
+              data: {
+                organizationId: organization.id,
+                role: 'ADMIN'
+              }
+            })
+          }
         }
+        return true
+      } catch (error) {
+        console.error('SignIn callback error:', error)
+        // Allow sign-in to continue even if database operations fail
+        return true
       }
-      return true
     }
   },
   pages: {
