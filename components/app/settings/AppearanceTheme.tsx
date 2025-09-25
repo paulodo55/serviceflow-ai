@@ -32,7 +32,7 @@ export default function AppearanceTheme() {
     },
     selectedPreset: 'default',
     logoUrl: '',
-    companyName: 'ServiceFlow'
+    companyName: 'VervidFlow'
   });
 
   const presetThemes = [

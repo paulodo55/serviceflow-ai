@@ -14,24 +14,24 @@
 1. **Go to "Products" → "Create product"**
 2. **Create these 3 products exactly:**
 
-### Product 1: ServiceFlow Basic
-- **Name**: `ServiceFlow Basic`
+### Product 1: VervidFlow Basic
+- **Name**: `VervidFlow Basic`
 - **Description**: `Up to 3 technicians with essential CRM features`
 - **Pricing Model**: `Recurring`
 - **Price**: `$29.00 USD`
 - **Billing Period**: `Monthly`
 - **Copy the Price ID** (starts with `price_...`)
 
-### Product 2: ServiceFlow Professional
-- **Name**: `ServiceFlow Professional`
+### Product 2: VervidFlow Professional
+- **Name**: `VervidFlow Professional`
 - **Description**: `Up to 10 technicians with advanced features and integrations`
 - **Pricing Model**: `Recurring`
 - **Price**: `$79.00 USD`
 - **Billing Period**: `Monthly`
 - **Copy the Price ID**
 
-### Product 3: ServiceFlow Enterprise
-- **Name**: `ServiceFlow Enterprise`
+### Product 3: VervidFlow Enterprise
+- **Name**: `VervidFlow Enterprise`
 - **Description**: `Unlimited technicians with white-label and priority support`
 - **Pricing Model**: `Recurring`
 - **Price**: `$149.00 USD`

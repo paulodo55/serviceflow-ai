@@ -1,4 +1,4 @@
-// Centralized TypeScript types for ServiceFlow
+// Centralized TypeScript types for VervidFlow
 
 // User Types
 export interface User {
@@ -86,7 +86,7 @@ export interface PasswordResetData {
 }
 
 // Bubble.io Integration Types
-// Removed Bubble.io integration - now using ServiceFlow app directly
+// Removed Bubble.io integration - now using VervidFlow app directly
 
 // Security Types
 export interface RateLimitConfig {

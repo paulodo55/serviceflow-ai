@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-console.log('🗄️  ServiceFlow Database Setup');
+console.log('🗄️  VervidFlow Database Setup');
 console.log('===============================\n');
 
 console.log('After updating your DATABASE_URL in .env.local, run these commands:\n');

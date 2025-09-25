@@ -47,7 +47,7 @@ export default function ContactPage() {
           
           <h2 className="text-2xl font-bold text-white mb-4">Message Sent!</h2>
           <p className="text-slate-300 mb-6">
-            Thank you for contacting ServiceFlow. We&apos;ll get back to you within 24 hours.
+            Thank you for contacting VervidFlow. We&apos;ll get back to you within 24 hours.
           </p>
           
           <div className="space-y-4">
@@ -83,7 +83,7 @@ export default function ContactPage() {
               Contact Sales
             </h1>
             <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
-              Ready to transform your CRM experience? Get in touch with our team to learn more about ServiceFlow.
+              Ready to transform your CRM experience? Get in touch with our team to learn more about VervidFlow.
             </p>
           </motion.div>
         </div>
@@ -153,7 +153,7 @@ export default function ContactPage() {
             </div>
 
             <div className="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
-              <h3 className="text-xl font-semibold text-white mb-4">Why Choose ServiceFlow?</h3>
+              <h3 className="text-xl font-semibold text-white mb-4">Why Choose VervidFlow?</h3>
               <ul className="space-y-3 text-slate-300">
                 <li className="flex items-center">
                   <FaCheckCircle className="text-emerald-400 mr-3 flex-shrink-0" />
@@ -240,7 +240,7 @@ export default function ContactPage() {
                   value={formData.message}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
-                  placeholder="Tell us about your business and how ServiceFlow can help..."
+                  placeholder="Tell us about your business and how VervidFlow can help..."
                 />
               </div>
 

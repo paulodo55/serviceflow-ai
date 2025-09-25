@@ -62,7 +62,7 @@
 
 1. **Go to Vercel Dashboard:**
    - Visit: https://vercel.com/dashboard
-   - Select your ServiceFlow project
+   - Select your VervidFlow project
 
 2. **Navigate to Environment Variables:**
    - Settings → Environment Variables
@@ -133,4 +133,4 @@ When setup is complete, you should see:
 4. **Set up customer notifications**
 5. **Deploy to production**
 
-ServiceFlow, a VervIdai software - Your Google Calendar integration is ready for professional scheduling! 🎉
+VervidFlow, a VervIdai software - Your Google Calendar integration is ready for professional scheduling! 🎉

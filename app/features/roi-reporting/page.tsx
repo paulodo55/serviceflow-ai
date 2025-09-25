@@ -60,7 +60,7 @@ export default function ROIReportingPage() {
             <div className="bg-darkCard p-6 rounded-xl border border-neutral-800 hover:border-primary/40 transition-colors duration-300">
               <FaDollarSign className="text-3xl text-primary mb-4" />
               <h3 className="text-xl font-semibold text-white mb-3">Revenue Attribution</h3>
-              <p className="text-neutral-200">Track revenue directly attributable to ServiceFlow automation and optimization.</p>
+              <p className="text-neutral-200">Track revenue directly attributable to VervidFlow automation and optimization.</p>
             </div>
             <div className="bg-darkCard p-6 rounded-xl border border-neutral-800 hover:border-primary/40 transition-colors duration-300">
               <FaArrowUp className="text-3xl text-primary mb-4" />

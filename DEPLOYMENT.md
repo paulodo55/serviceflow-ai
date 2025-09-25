@@ -1,4 +1,4 @@
-# ServiceFlow Authentication - Deployment Guide
+# VervidFlow Authentication - Deployment Guide
 
 ## 🚀 Quick Deployment to Vercel
 
@@ -79,7 +79,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 1. Visit `https://vervidflow.com/login`
 2. Enter demo credentials
 3. Should redirect to: `https://vervidflow.com/app`
-4. Access ServiceFlow dashboard directly
+4. Access VervidFlow dashboard directly
 
 ### JWT Payload Structure
 ```json
@@ -93,11 +93,11 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 }
 ```
 
-## 🚀 ServiceFlow App Integration
+## 🚀 VervidFlow App Integration
 
 ### Direct Dashboard Access
 
-ServiceFlow now uses a custom-built React application instead of external integrations:
+VervidFlow now uses a custom-built React application instead of external integrations:
 
 1. **Login** redirects directly to `/app`
 2. **No external tokens** needed
@@ -110,7 +110,7 @@ ServiceFlow now uses a custom-built React application instead of external integr
 // Simplified flow - no external redirects
 1. User logs in → NextAuth validates credentials
 2. Successful login → Redirect to `/app` 
-3. Protected route → Access ServiceFlow dashboard
+3. Protected route → Access VervidFlow dashboard
 4. Session management → 30-day JWT tokens
 ```
 

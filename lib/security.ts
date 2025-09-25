@@ -1,4 +1,4 @@
-// Security utilities for ServiceFlow
+// Security utilities for VervidFlow
 import { NextRequest } from 'next/server';
 import { RateLimitConfig, RateLimitResult, PasswordValidation } from '@/types';
 

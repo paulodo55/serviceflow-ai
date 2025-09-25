@@ -1,4 +1,4 @@
-# ServiceFlow CRM Production Implementation Guide
+# VervidFlow CRM Production Implementation Guide
 
 ## Phase 1: Core Infrastructure (Weeks 1-4)
 
@@ -99,7 +99,7 @@ Create `.env.production`:
 
 ```bash
 # Database
-DATABASE_URL="postgresql://username:password@localhost:5432/serviceflow_prod"
+DATABASE_URL="postgresql://username:password@localhost:5432/vervidflow_prod"
 
 # Authentication
 NEXTAUTH_URL="https://your-domain.com"
@@ -117,7 +117,7 @@ FROM_EMAIL="noreply@your-domain.com"
 # File Storage
 AWS_ACCESS_KEY_ID="your-access-key"
 AWS_SECRET_ACCESS_KEY="your-secret-key"
-AWS_BUCKET_NAME="serviceflow-files"
+AWS_BUCKET_NAME="vervidflow-files"
 AWS_REGION="us-east-1"
 ```
 

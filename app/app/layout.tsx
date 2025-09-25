@@ -19,7 +19,7 @@ export default async function AppLayout({
     <div className="min-h-screen bg-gray-50">
       {/* Demo Mode Indicator */}
       <div className="bg-blue-600 text-white text-center py-1 px-4 text-sm">
-        🚀 Demo Mode - Showcasing ServiceFlow&apos;s Advanced Features
+        🚀 Demo Mode - Showcasing VervidFlow&apos;s Advanced Features
       </div>
       
       <div className="flex h-screen">

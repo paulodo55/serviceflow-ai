@@ -20,7 +20,7 @@ A **server-to-server** Google Calendar integration that:
 
 2. **Create New Project**
    - Click "Select a project" → "New Project"
-   - **Project name**: `ServiceFlow CRM`
+   - **Project name**: `VervidFlow CRM`
    - **Project ID**: `serviceflow-crm-[random]` (auto-generated)
    - Click "Create"
 
@@ -46,9 +46,9 @@ A **server-to-server** Google Calendar integration that:
    - Click "Create Credentials" → "Service Account"
 
 2. **Service Account Details**
-   - **Service account name**: `ServiceFlow Calendar Service`
+   - **Service account name**: `VervidFlow Calendar Service`
    - **Service account ID**: `serviceflow-calendar` (auto-filled)
-   - **Description**: `Service account for ServiceFlow CRM calendar integration`
+   - **Description**: `Service account for VervidFlow CRM calendar integration`
    - Click "Create and Continue"
 
 3. **Grant Permissions (Skip)**
@@ -73,7 +73,7 @@ A **server-to-server** Google Calendar integration that:
 
 ---
 
-## 🔧 **STEP 2: Configure Your ServiceFlow CRM (5 minutes)**
+## 🔧 **STEP 2: Configure Your VervidFlow CRM (5 minutes)**
 
 ### **2.1 Add Environment Variable**
 
@@ -132,7 +132,7 @@ A **server-to-server** Google Calendar integration that:
 
 ---
 
-## 🎯 **STEP 3: Create ServiceFlow Calendar (Optional)**
+## 🎯 **STEP 3: Create VervidFlow Calendar (Optional)**
 
 ### **3.1 Dedicated Business Calendar**
 Instead of using your personal calendar, create a dedicated calendar for your business:
@@ -140,7 +140,7 @@ Instead of using your personal calendar, create a dedicated calendar for your bu
 1. **API Call to Create Calendar**
    ```javascript
    const calendarService = getCalendarService();
-   const calendarId = await calendarService.createServiceFlowCalendar("Your Business Name");
+   const calendarId = await calendarService.createVervidFlowCalendar("Your Business Name");
    ```
 
 2. **Share with Business Owner**
@@ -300,7 +300,7 @@ const response = await fetch('/api/google-calendar/events', {
 
 #### **"Calendar not found"**
 - ✅ Use `primary` for user's main calendar
-- ✅ Or create dedicated calendar with `createServiceFlowCalendar()`
+- ✅ Or create dedicated calendar with `createVervidFlowCalendar()`
 - ✅ Check calendar sharing permissions
 
 #### **"Insufficient permissions"**
@@ -388,4 +388,4 @@ GOOGLE_DEBUG=true
 - **Professional credibility** that justifies premium pricing
 - **Operational efficiency** with automated scheduling
 
-**ServiceFlow, a VervIdai software - Your CRM now has professional calendar functionality! 🚀**
+**VervidFlow, a VervIdai software - Your CRM now has professional calendar functionality! 🚀**

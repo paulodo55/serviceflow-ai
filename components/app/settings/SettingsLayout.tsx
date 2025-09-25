@@ -87,7 +87,7 @@ export default function SettingsLayout({ children, activeTab, onTabChange }: Set
           </div>
           <div className="flex flex-col">
             <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-            <p className="text-sm text-gray-600 mt-1">Customize your ServiceFlow experience</p>
+            <p className="text-sm text-gray-600 mt-1">Customize your VervidFlow experience</p>
           </div>
         </div>
 

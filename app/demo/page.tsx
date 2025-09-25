@@ -49,7 +49,7 @@ export default function DemoPage() {
           
           <h2 className="text-2xl font-bold text-white mb-4">Demo Request Submitted!</h2>
           <p className="text-neutral-300 mb-6">
-            Thank you for your interest in ServiceFlow. Our team will contact you within 24 hours to schedule your personalized demo.
+            Thank you for your interest in VervidFlow. Our team will contact you within 24 hours to schedule your personalized demo.
           </p>
           
           <div className="space-y-4">
@@ -86,7 +86,7 @@ export default function DemoPage() {
             className="text-center"
           >
             <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-primary to-secondary bg-clip-text text-transparent mb-6 leading-tight">
-              ServiceFlow Demo
+              VervidFlow Demo
             </h1>
             <p className="text-xl md:text-2xl text-neutral-200 max-w-3xl mx-auto leading-relaxed font-light mb-12">
               Watch our product demo and schedule a personalized walkthrough with our team
@@ -117,7 +117,7 @@ export default function DemoPage() {
                   >
                     <FaPlay className="text-white text-2xl ml-1" />
                   </motion.div>
-                  <p className="text-neutral-400 text-lg">ServiceFlow Product Demo</p>
+                  <p className="text-neutral-400 text-lg">VervidFlow Product Demo</p>
                   <p className="text-neutral-500 text-sm">Click to watch (5:30)</p>
                 </div>
               </div>
@@ -152,7 +152,7 @@ export default function DemoPage() {
 
             {/* Quick Stats */}
             <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-6 rounded-xl border border-primary/20">
-              <h4 className="text-lg font-semibold text-white mb-4">Why ServiceFlow?</h4>
+              <h4 className="text-lg font-semibold text-white mb-4">Why VervidFlow?</h4>
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-primary mb-1">15-25%</div>

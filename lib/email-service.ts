@@ -1,4 +1,4 @@
-// Email service for ServiceFlow
+// Email service for VervidFlow
 // Integrates with hello@vervidai.com SMTP settings
 
 import { EmailTemplate, WelcomeEmailData, PasswordResetData } from '@/types';
@@ -16,7 +16,7 @@ export const createWelcomeEmail = (data: WelcomeEmailData): EmailTemplate => {
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Welcome to ServiceFlow</title>
+        <title>Welcome to VervidFlow</title>
         <style>
             body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f8fafc; }
             .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
@@ -37,12 +37,12 @@ export const createWelcomeEmail = (data: WelcomeEmailData): EmailTemplate => {
     <body>
         <div class="container">
             <div class="header">
-                <div class="logo">ServiceFlow</div>
+                <div class="logo">VervidFlow</div>
                 <div class="tagline">by Vervid</div>
             </div>
             
             <div class="content">
-                <h1>Welcome to ServiceFlow, ${fullName}! 🎉</h1>
+                <h1>Welcome to VervidFlow, ${fullName}! 🎉</h1>
                 
                 <p>Your 14-day free trial is now active! We're excited to help <strong>${companyName}</strong> streamline your CRM experience with our AI-powered automation platform.</p>
                 
@@ -59,7 +59,7 @@ export const createWelcomeEmail = (data: WelcomeEmailData): EmailTemplate => {
                     <a href="${loginUrl}" class="cta-button">Access Your Dashboard</a>
                 </div>
                 
-                <h3>🚀 What You Can Do With ServiceFlow:</h3>
+                <h3>🚀 What You Can Do With VervidFlow:</h3>
                 <div class="features">
                     <div class="feature">
                         <div class="feature-icon">📅</div>
@@ -96,12 +96,12 @@ export const createWelcomeEmail = (data: WelcomeEmailData): EmailTemplate => {
                 <ul>
                     <li>📧 Email us: <a href="mailto:${supportEmail}">${supportEmail}</a></li>
                     <li>📞 Call us: <a href="tel:${supportPhone}">${supportPhone}</a></li>
-                    <li>🎥 <a href="${loginUrl}">Watch our demo</a> to see ServiceFlow in action</li>
+                    <li>🎥 <a href="${loginUrl}">Watch our demo</a> to see VervidFlow in action</li>
                 </ul>
             </div>
             
             <div class="footer">
-                <p><strong>ServiceFlow by Vervid</strong></p>
+                <p><strong>VervidFlow by Vervid</strong></p>
                 <p>Streamlining CRM experiences with AI-powered automation</p>
                 <p>
                     <a href="https://vervidflow.com">Website</a> | 
@@ -109,7 +109,7 @@ export const createWelcomeEmail = (data: WelcomeEmailData): EmailTemplate => {
                     <a href="https://vervidflow.com/privacy">Privacy</a>
                 </p>
                 <p style="font-size: 12px; color: #64748b; margin-top: 20px;">
-                    This email was sent to ${email}. If you didn't sign up for ServiceFlow, please ignore this email.
+                    This email was sent to ${email}. If you didn't sign up for VervidFlow, please ignore this email.
                 </p>
             </div>
         </div>
@@ -118,7 +118,7 @@ export const createWelcomeEmail = (data: WelcomeEmailData): EmailTemplate => {
   `;
 
   const text = `
-    Welcome to ServiceFlow, ${fullName}!
+    Welcome to VervidFlow, ${fullName}!
 
     Your 14-day free trial is now active for ${companyName}.
 
@@ -140,7 +140,7 @@ export const createWelcomeEmail = (data: WelcomeEmailData): EmailTemplate => {
 
   return {
     to: email,
-    subject: `Welcome to ServiceFlow - Your Trial Account is Ready! 🚀`,
+    subject: `Welcome to VervidFlow - Your Trial Account is Ready! 🚀`,
     html,
     text,
   };
@@ -157,7 +157,7 @@ export const createPasswordResetEmail = (data: PasswordResetData): EmailTemplate
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Reset Your ServiceFlow Password</title>
+        <title>Reset Your VervidFlow Password</title>
         <style>
             body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f8fafc; }
             .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
@@ -171,7 +171,7 @@ export const createPasswordResetEmail = (data: PasswordResetData): EmailTemplate
     <body>
         <div class="container">
             <div class="header">
-                <h1>ServiceFlow</h1>
+                <h1>VervidFlow</h1>
                 <p>by Vervid</p>
             </div>
             
@@ -180,7 +180,7 @@ export const createPasswordResetEmail = (data: PasswordResetData): EmailTemplate
                 
                 <p>Hi ${fullName},</p>
                 
-                <p>We received a request to reset your ServiceFlow password. Click the button below to create a new password:</p>
+                <p>We received a request to reset your VervidFlow password. Click the button below to create a new password:</p>
                 
                 <div style="text-align: center;">
                     <a href="${resetUrl}" class="cta-button">Reset Password</a>
@@ -202,7 +202,7 @@ export const createPasswordResetEmail = (data: PasswordResetData): EmailTemplate
             </div>
             
             <div class="footer">
-                <p>ServiceFlow by Vervid</p>
+                <p>VervidFlow by Vervid</p>
                 <p style="font-size: 12px; color: #64748b;">
                     This email was sent to ${email}. If you didn't request a password reset, please ignore this email.
                 </p>
@@ -213,7 +213,7 @@ export const createPasswordResetEmail = (data: PasswordResetData): EmailTemplate
   `;
 
   const text = `
-    Reset Your ServiceFlow Password
+    Reset Your VervidFlow Password
 
     Hi ${fullName},
 
@@ -232,7 +232,7 @@ export const createPasswordResetEmail = (data: PasswordResetData): EmailTemplate
 
   return {
     to: email,
-    subject: 'Reset Your ServiceFlow Password',
+    subject: 'Reset Your VervidFlow Password',
     html,
     text,
   };
@@ -271,7 +271,7 @@ export const sendEmail = async (template: EmailTemplate): Promise<boolean> => {
     await transporter.verify();
 
     const info = await transporter.sendMail({
-      from: `"ServiceFlow by Vervid" <${process.env.SMTP_USER || 'hello@vervidflow.com'}>`,
+      from: `"VervidFlow by Vervid" <${process.env.SMTP_USER || 'hello@vervidflow.com'}>`,
       to: template.to,
       subject: template.subject,
       text: template.text,

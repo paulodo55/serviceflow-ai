@@ -115,7 +115,7 @@ export default function FreeTrialPage() {
             <FaCheckCircle className="text-emerald-400 text-6xl mx-auto" />
           </motion.div>
           
-          <h2 className="text-2xl font-bold text-white mb-4">Welcome to ServiceFlow!</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">Welcome to VervidFlow!</h2>
           <p className="text-slate-300 mb-6">{successMessage}</p>
           
           <div className="space-y-4">
@@ -152,7 +152,7 @@ export default function FreeTrialPage() {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500"> Free Trial</span>
           </h1>
           <p className="text-xl text-slate-300 mb-8">
-            Experience the power of ServiceFlow&apos;s CRM automation. Get instant access to our full platform for 14 days.
+            Experience the power of VervidFlow&apos;s CRM automation. Get instant access to our full platform for 14 days.
           </p>
           
           <div className="space-y-4">
@@ -183,7 +183,7 @@ export default function FreeTrialPage() {
           className="bg-slate-800/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-slate-700 p-8"
         >
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-white mb-2">ServiceFlow</h2>
+            <h2 className="text-3xl font-bold text-white mb-2">VervidFlow</h2>
             <p className="text-slate-400">by Vervid</p>
             <p className="text-slate-300 mt-4">Start your 14-day free trial</p>
           </div>

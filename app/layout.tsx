@@ -7,7 +7,7 @@ import Providers from "./providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ServiceFlow by Vervid",
+  title: "VervidFlow by Vervid",
   description: "Streamline your CRM experience with intelligent scheduling and automation for service-based businesses - by Vervid",
 };
 

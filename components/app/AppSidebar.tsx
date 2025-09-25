@@ -63,7 +63,7 @@ export default function AppSidebar() {
               animate={{ opacity: 1 }}
               className="flex flex-col"
             >
-              <h1 className="text-xl font-bold text-gray-900">ServiceFlow</h1>
+              <h1 className="text-xl font-bold text-gray-900">VervidFlow</h1>
               <p className="text-xs text-gray-500">by Vervid</p>
             </motion.div>
           )}
@@ -153,7 +153,7 @@ export default function AppSidebar() {
               className="text-center"
             >
               <p className="text-xs text-gray-500">
-                ServiceFlow by VervIdai
+                VervidFlow by VervIdai
               </p>
               <p className="text-xs text-gray-400 mt-1">
                 Professional CRM Platform

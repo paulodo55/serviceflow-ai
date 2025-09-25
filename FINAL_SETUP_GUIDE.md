@@ -12,7 +12,7 @@
 
 ### **Step 1: Find Your JSON File**
 1. **Look in your Downloads folder** for a file like:
-   - `serviceflow-crm-abc123-def456.json`
+   - `vervidflow-crm-abc123-def456.json`
    - `your-project-name-123456-abcdef.json`
    - Any `.json` file you downloaded from Google Cloud Console
 
@@ -25,15 +25,15 @@ The content should look like this:
 ```json
 {
   "type": "service_account",
-  "project_id": "serviceflow-crm-123456",
+  "project_id": "vervidflow-crm-123456",
   "private_key_id": "abc123def456...",
   "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkq...\n-----END PRIVATE KEY-----\n",
-  "client_email": "serviceflow-calendar@serviceflow-crm-123456.iam.gserviceaccount.com",
+  "client_email": "vervidflow-calendar@vervidflow-crm-123456.iam.gserviceaccount.com",
   "client_id": "123456789012345678901",
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
   "token_uri": "https://oauth2.googleapis.com/token",
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/serviceflow-calendar%40serviceflow-crm-123456.iam.gserviceaccount.com"
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/vervidflow-calendar%40vervidflow-crm-123456.iam.gserviceaccount.com"
 }
 ```
 
@@ -56,7 +56,7 @@ The content should look like this:
 4. **Make sure it's all on ONE LINE** (remove any line breaks)
 5. **Should look like:**
    ```env
-   GOOGLE_SERVICE_ACCOUNT_JSON={"type":"service_account","project_id":"serviceflow-crm-123456","private_key_id":"abc123...","private_key":"-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkq...\n-----END PRIVATE KEY-----\n","client_email":"serviceflow-calendar@serviceflow-crm-123456.iam.gserviceaccount.com","client_id":"123456789012345678901","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_x509_cert_url":"https://www.googleapis.com/robot/v1/metadata/x509/serviceflow-calendar%40serviceflow-crm-123456.iam.gserviceaccount.com"}
+   GOOGLE_SERVICE_ACCOUNT_JSON={"type":"service_account","project_id":"vervidflow-crm-123456","private_key_id":"abc123...","private_key":"-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkq...\n-----END PRIVATE KEY-----\n","client_email":"vervidflow-calendar@vervidflow-crm-123456.iam.gserviceaccount.com","client_id":"123456789012345678901","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_x509_cert_url":"https://www.googleapis.com/robot/v1/metadata/x509/vervidflow-calendar%40vervidflow-crm-123456.iam.gserviceaccount.com"}
    ```
 
 6. **Save the file** (Cmd+S on Mac, Ctrl+S on Windows)
@@ -147,7 +147,7 @@ npm run dev
 
 1. **Go to Vercel Dashboard:**
    - Visit: https://vercel.com/dashboard
-   - Select your ServiceFlow project
+   - Select your VervidFlow project
 
 2. **Add Environment Variable:**
    - Settings → Environment Variables
@@ -171,7 +171,7 @@ npm run dev
 
 ## 🎉 **SUCCESS!**
 
-When you complete these steps, your ServiceFlow CRM will have:
+When you complete these steps, your VervidFlow CRM will have:
 
 🏆 **Professional Google Calendar Integration**
 🏆 **Professional scheduling** that customers trust  
@@ -179,7 +179,7 @@ When you complete these steps, your ServiceFlow CRM will have:
 🏆 **Enterprise-grade features** at startup costs
 🏆 **Advanced business automation**
 
-**ServiceFlow, a VervIdai software - Your professional CRM solution is ready to transform your business operations! 🚀**
+**VervidFlow, a VervIdai software - Your professional CRM solution is ready to transform your business operations! 🚀**
 
 ---
 

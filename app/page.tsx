@@ -78,7 +78,7 @@ export default function Home() {
             className="flex flex-col items-center"
           >
             <div className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              ServiceFlow
+              VervidFlow
             </div>
             <div className="text-xs text-neutral-400 font-normal mt-1">by Vervid</div>
           </motion.h1>
@@ -138,7 +138,7 @@ export default function Home() {
               className="text-center"
             >
               <h1 className="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-r from-white via-primary to-secondary bg-clip-text text-transparent leading-tight">
-                ServiceFlow
+                VervidFlow
               </h1>
               <p className="text-lg md:text-xl text-neutral-400 font-light mb-8">by Vervid</p>
             </motion.div>
@@ -199,7 +199,7 @@ export default function Home() {
               Core Features
             </h2>
             <p className="text-xl md:text-2xl text-neutral-100 max-w-3xl mx-auto font-light leading-relaxed">
-              Discover how ServiceFlow transforms your business operations with intelligent CRM automation
+              Discover how VervidFlow transforms your business operations with intelligent CRM automation
             </p>
           </motion.div>
           
@@ -245,7 +245,7 @@ export default function Home() {
               Transform Your Operations
             </h2>
             <p className="text-xl md:text-2xl text-neutral-100 max-w-3xl mx-auto font-light leading-relaxed">
-              Discover how ServiceFlow eliminates inefficiencies and drives growth
+              Discover how VervidFlow eliminates inefficiencies and drives growth
             </p>
           </motion.div>
           
@@ -290,7 +290,7 @@ export default function Home() {
               Ready to Transform Your Service Department?
             </h2>
             <p className="text-xl md:text-2xl text-white/95 mb-12 max-w-3xl mx-auto font-light leading-relaxed">
-              Join industry leaders who&apos;ve increased their service revenue by 15-25% with ServiceFlow
+              Join industry leaders who&apos;ve increased their service revenue by 15-25% with VervidFlow
             </p>
             <Link href="/free-trial">
               <motion.div
@@ -311,7 +311,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div>
               <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-4">
-                ServiceFlow
+                VervidFlow
               </h3>
               <p className="text-neutral-400">
                 by Vervid - Streamlining the CRM experience for service-based businesses with intelligent automation and optimization.
@@ -332,7 +332,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-neutral-800 pt-8 text-center">
-            <p className="text-neutral-400">&copy; 2025 ServiceFlow by Vervid. All rights reserved.</p>
+            <p className="text-neutral-400">&copy; 2025 VervidFlow by VervIdai. All rights reserved.</p>
           </div>
         </div>
       </footer>

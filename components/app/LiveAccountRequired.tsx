@@ -132,7 +132,7 @@ export default function LiveAccountRequired({
                 </p>
                 <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
                   <p className="text-sm text-purple-800">
-                    <strong>ServiceFlow by VervIdai</strong> - We&apos;re constantly improving our platform 
+                    <strong>VervidFlow by VervIdai</strong> - We&apos;re constantly improving our platform 
                     to bring you the most advanced CRM features.
                   </p>
                 </div>
@@ -160,7 +160,7 @@ export default function LiveAccountRequired({
                   className="text-center mb-8"
                 >
                   <p className="text-gray-600 text-lg leading-relaxed">
-                  You&apos;re currently viewing the <strong>ServiceFlow demo</strong>. This feature requires 
+                   You&apos;re currently viewing the <strong>VervidFlow demo</strong>. This feature requires
                   an active subscription to access real-time data and full functionality.
                   </p>
                 </motion.div>
@@ -228,7 +228,7 @@ export default function LiveAccountRequired({
             <div className="flex items-center justify-center space-x-2 text-gray-600">
               <Shield className="h-4 w-4" />
               <span className="text-sm">
-                <strong>ServiceFlow by VervIdai</strong> - Professional CRM Platform
+                 <strong>VervidFlow by VervIdai</strong> - Professional CRM Platform
               </span>
             </div>
           </div>

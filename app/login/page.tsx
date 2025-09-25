@@ -70,7 +70,7 @@ export default function LoginPage() {
     const checkSession = async () => {
       const session = await getSession();
       if (session) {
-        // Redirect to ServiceFlow app dashboard
+        // Redirect to VervidFlow app dashboard
         router.push('/app');
       }
     };
@@ -129,7 +129,7 @@ export default function LoginPage() {
 
       if (result?.ok && !result?.error) {
         console.log('✅ Login successful, redirecting to /app');
-        // Redirect to ServiceFlow app dashboard
+        // Redirect to VervidFlow app dashboard
         router.push('/app');
       } else {
         console.log('❌ Login failed:', result?.error);
@@ -238,7 +238,7 @@ export default function LoginPage() {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-white via-primary to-secondary bg-clip-text text-transparent">
-                ServiceFlow
+                VervidFlow
               </h1>
               <p className="text-sm text-neutral-400 font-light mb-6">by Vervid</p>
             </motion.div>
@@ -256,7 +256,7 @@ export default function LoginPage() {
               transition={{ duration: 0.6, delay: 0.5 }}
               className="text-neutral-400"
             >
-              Sign in to access your ServiceFlow dashboard
+              Sign in to access your VervidFlow dashboard
             </motion.p>
           </div>
 
@@ -421,7 +421,7 @@ export default function LoginPage() {
               </motion.button>
             </div>
 
-            {/* ServiceFlow Demo Access */}
+            {/* VervidFlow Demo Access */}
             <div className="mt-6 pt-6 border-t border-neutral-700 text-center">
               <p className="text-neutral-400 text-sm mb-3">Quick Demo Access</p>
               <Link href="/demo">
@@ -431,7 +431,7 @@ export default function LoginPage() {
                   whileTap={{ scale: 0.98 }}
                   className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 mb-4"
                 >
-                  View ServiceFlow Demo
+                  View VervidFlow Demo
                 </motion.button>
               </Link>
             </div>

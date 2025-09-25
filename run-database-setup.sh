@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🗄️  Setting up ServiceFlow Database..."
+echo "🗄️  Setting up VervidFlow Database..."
 echo "======================================"
 
 echo ""

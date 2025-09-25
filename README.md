@@ -1,4 +1,4 @@
-# ServiceFlow by Vervid
+# VervidFlow by VervIdai
 
 Production-ready CRM application with advanced dashboard, customer management, and business intelligence features.
 

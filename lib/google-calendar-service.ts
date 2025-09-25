@@ -208,23 +208,23 @@ export class GoogleCalendarServiceAccount {
     }
   }
 
-  // Create a dedicated calendar for ServiceFlow
-  async createServiceFlowCalendar(businessName: string): Promise<string> {
+  // Create a dedicated calendar for VervidFlow
+  async createVervidFlowCalendar(businessName: string): Promise<string> {
     try {
       const response = await this.calendar.calendars.insert({
         requestBody: {
-          summary: `${businessName} - ServiceFlow Appointments`,
-          description: `ServiceFlow CRM appointments for ${businessName}`,
+          summary: `${businessName} - VervidFlow Appointments`,
+          description: `VervidFlow CRM appointments for ${businessName}`,
           timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
         }
       });
 
       const calendarId = response.data.id;
-      console.log('✅ ServiceFlow calendar created:', calendarId);
+      console.log('✅ VervidFlow calendar created:', calendarId);
       
       return calendarId;
     } catch (error) {
-      console.error('❌ Error creating ServiceFlow calendar:', error);
+      console.error('❌ Error creating VervidFlow calendar:', error);
       throw error;
     }
   }
@@ -269,8 +269,8 @@ Email: ${appointment.customerEmail}
 📝 NOTES:
 ${appointment.notes || 'No additional notes'}
 
-🏢 ServiceFlow CRM
-Powered by ServiceFlow - Professional Service Management
+🏢 VervidFlow CRM
+Powered by VervidFlow - Professional Service Management
     `.trim(),
     start: {
       dateTime: `${appointment.date}T${appointment.startTime}:00`,
