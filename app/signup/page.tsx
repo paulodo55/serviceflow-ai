@@ -12,7 +12,8 @@ export default function SignupPage() {
     email: '',
     organizationName: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    plan: 'trial'
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showPassword, setShowPassword] = useState(false);
@@ -64,6 +65,7 @@ export default function SignupPage() {
         email: formData.email,
         password: formData.password,
         organizationName: formData.organizationName,
+        plan: formData.plan,
         isSignup: 'true',
         redirect: false,
       });
@@ -224,6 +226,85 @@ export default function SignupPage() {
               )}
             </div>
 
+            {/* Plan Selection */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-4">
+                Choose Your Plan
+              </label>
+              <div className="grid grid-cols-1 gap-3">
+                {/* Free Trial */}
+                <div 
+                  className={`relative border-2 rounded-lg p-4 cursor-pointer transition-all ${
+                    formData.plan === 'trial' 
+                      ? 'border-blue-500 bg-blue-50' 
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}
+                  onClick={() => handleInputChange('plan', 'trial')}
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="font-semibold text-gray-900">Free Trial</h3>
+                      <p className="text-sm text-gray-600">14 days • Full access • No credit card</p>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-2xl font-bold text-green-600">Free</div>
+                    </div>
+                  </div>
+                  {formData.plan === 'trial' && (
+                    <CheckCircle className="absolute top-2 right-2 h-5 w-5 text-blue-500" />
+                  )}
+                </div>
+
+                {/* Basic Plan */}
+                <div 
+                  className={`relative border-2 rounded-lg p-4 cursor-pointer transition-all ${
+                    formData.plan === 'basic' 
+                      ? 'border-blue-500 bg-blue-50' 
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}
+                  onClick={() => handleInputChange('plan', 'basic')}
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="font-semibold text-gray-900">Basic Plan</h3>
+                      <p className="text-sm text-gray-600">Perfect for small teams</p>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-2xl font-bold text-gray-900">$29</div>
+                      <div className="text-sm text-gray-500">/month</div>
+                    </div>
+                  </div>
+                  {formData.plan === 'basic' && (
+                    <CheckCircle className="absolute top-2 right-2 h-5 w-5 text-blue-500" />
+                  )}
+                </div>
+
+                {/* Pro Plan */}
+                <div 
+                  className={`relative border-2 rounded-lg p-4 cursor-pointer transition-all ${
+                    formData.plan === 'pro' 
+                      ? 'border-blue-500 bg-blue-50' 
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}
+                  onClick={() => handleInputChange('plan', 'pro')}
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="font-semibold text-gray-900">Pro Plan</h3>
+                      <p className="text-sm text-gray-600">Advanced features & analytics</p>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-2xl font-bold text-gray-900">$79</div>
+                      <div className="text-sm text-gray-500">/month</div>
+                    </div>
+                  </div>
+                  {formData.plan === 'pro' && (
+                    <CheckCircle className="absolute top-2 right-2 h-5 w-5 text-blue-500" />
+                  )}
+                </div>
+              </div>
+            </div>
+
             {/* Password */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
@@ -306,6 +387,18 @@ export default function SignupPage() {
                 </>
               )}
             </button>
+
+            {/* Demo Button */}
+            <div className="text-center">
+              <div className="text-sm text-gray-500 mb-3">Or</div>
+              <Link
+                href="/demo"
+                className="inline-flex items-center justify-center w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 space-x-2"
+              >
+                <span>View Demo First</span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
           </form>
 
           {/* Footer */}

@@ -2,309 +2,262 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { FaPlay, FaArrowLeft, FaPhone, FaEnvelope, FaClock, FaCheckCircle, FaCalendarCheck } from 'react-icons/fa';
+import { 
+  Play, 
+  ArrowRight, 
+  Calendar, 
+  Users, 
+  DollarSign, 
+  BarChart3,
+  Settings,
+  MessageSquare,
+  CheckCircle,
+  Star,
+  Shield,
+  Zap
+} from 'lucide-react';
 
 export default function DemoPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    phone: '',
-    preferredTime: '',
-    message: ''
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const router = useRouter();
+  const [isStarting, setIsStarting] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // For now, just show success message
-    setIsSubmitted(true);
+  const handleStartDemo = async () => {
+    setIsStarting(true);
     
-    // In production, you could send this to an API endpoint
-    console.log('Demo request submitted:', formData);
+    // Set demo mode in localStorage
+    localStorage.setItem('demoMode', 'true');
+    localStorage.setItem('demoUser', JSON.stringify({
+      id: 'demo-user',
+      name: 'Demo User',
+      email: 'demo@vervidai.com',
+      organizationId: 'demo-org',
+      organization: 'Demo Company',
+      plan: 'trial',
+      role: 'ADMIN'
+    }));
+    
+    // Simulate loading
+    setTimeout(() => {
+      router.push('/app');
+    }, 1500);
   };
 
-  if (isSubmitted) {
-    return (
-      <div className="min-h-screen bg-dark flex items-center justify-center p-4">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="bg-darkCard backdrop-blur-sm rounded-2xl shadow-2xl border border-neutral-800 p-8 max-w-md w-full text-center"
-        >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="mb-6"
-          >
-            <FaCheckCircle className="text-primary text-6xl mx-auto" />
-          </motion.div>
-          
-          <h2 className="text-2xl font-bold text-white mb-4">Demo Request Submitted!</h2>
-          <p className="text-neutral-300 mb-6">
-            Thank you for your interest in VervidFlow. Our team will contact you within 24 hours to schedule your personalized demo.
-          </p>
-          
-          <div className="space-y-4">
-            <Link
-              href="/"
-              className="block w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/80 hover:to-secondary/80 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
-            >
-              Back to Home
-            </Link>
-          </div>
-        </motion.div>
-      </div>
-    );
-  }
+  const demoFeatures = [
+    {
+      icon: Calendar,
+      title: 'Calendar Management',
+      description: 'View and manage appointments, schedule new meetings, and track availability.',
+      color: 'blue'
+    },
+    {
+      icon: Users,
+      title: 'Customer Database',
+      description: 'Complete customer profiles, service history, and communication tracking.',
+      color: 'green'
+    },
+    {
+      icon: DollarSign,
+      title: 'Invoice System',
+      description: 'Create, send, and track invoices with automated payment reminders.',
+      color: 'purple'
+    },
+    {
+      icon: BarChart3,
+      title: 'Analytics Dashboard',
+      description: 'Real-time insights, performance metrics, and business intelligence.',
+      color: 'orange'
+    },
+    {
+      icon: Settings,
+      title: 'Full Customization',
+      description: 'Theme customization, notification settings, and workflow automation.',
+      color: 'indigo'
+    },
+    {
+      icon: MessageSquare,
+      title: 'Communication Hub',
+      description: 'Centralized messaging, email templates, and customer communications.',
+      color: 'pink'
+    }
+  ];
+
+  const getColorClasses = (color: string) => {
+    const colors = {
+      blue: 'bg-blue-100 text-blue-600',
+      green: 'bg-green-100 text-green-600',
+      purple: 'bg-purple-100 text-purple-600',
+      orange: 'bg-orange-100 text-orange-600',
+      indigo: 'bg-indigo-100 text-indigo-600',
+      pink: 'bg-pink-100 text-pink-600'
+    };
+    return colors[color as keyof typeof colors] || colors.blue;
+  };
 
   return (
-    <div className="min-h-screen bg-dark relative overflow-hidden">
-      {/* Full-screen background effects */}
-      <div className="fixed inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none"></div>
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent pointer-events-none"></div>
-
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* Header */}
-      <div className="relative pt-24 pb-8 z-10">
-        <div className="max-w-7xl mx-auto px-6">
-          <Link href="/" className="inline-flex items-center text-primary hover:text-primary/80 transition-colors duration-300 mb-8">
-            <FaArrowLeft className="mr-2" />
-            Back to Home
-          </Link>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-primary to-secondary bg-clip-text text-transparent mb-6 leading-tight">
-              VervidFlow Demo
-            </h1>
-            <p className="text-xl md:text-2xl text-neutral-200 max-w-3xl mx-auto leading-relaxed font-light mb-12">
-              Watch our product demo and schedule a personalized walkthrough with our team
-            </p>
-          </motion.div>
-        </div>
+      <div className="container mx-auto px-6 py-8">
+        <Link href="/" className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-8">
+          <ArrowRight className="h-4 w-4 mr-2 rotate-180" />
+          Back to Home
+        </Link>
       </div>
 
       {/* Main Content */}
-      <div className="relative max-w-7xl mx-auto px-6 pb-24 z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          
-          {/* Video Section */}
+      <div className="container mx-auto px-6 pb-16">
+        <div className="max-w-4xl mx-auto">
+          {/* Hero Section */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-16"
           >
-            <div className="bg-darkCard rounded-2xl border border-neutral-800 overflow-hidden">
-              {/* Video Placeholder */}
-              <div className="aspect-video bg-neutral-900 flex items-center justify-center border-b border-neutral-800">
-                <div className="text-center">
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-full cursor-pointer mb-4 hover:shadow-lg transition-all duration-300"
-                  >
-                    <FaPlay className="text-white text-2xl ml-1" />
-                  </motion.div>
-                  <p className="text-neutral-400 text-lg">VervidFlow Product Demo</p>
-                  <p className="text-neutral-500 text-sm">Click to watch (5:30)</p>
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              className="w-20 h-20 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-8"
+            >
+              <Play className="h-10 w-10 text-white ml-1" />
+            </motion.div>
+
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+              Experience VervidFlow
+            </h1>
+            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+              Take a full tour of our CRM platform. No signup required - explore all features, 
+              customize settings, and see how VervidFlow can transform your business operations.
+            </p>
+
+            <motion.button
+              onClick={handleStartDemo}
+              disabled={isStarting}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center space-x-3 mx-auto"
+            >
+              {isStarting ? (
+                <>
+                  <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <span>Starting Demo...</span>
+                </>
+              ) : (
+                <>
+                  <Play className="h-6 w-6" />
+                  <span>Start Interactive Demo</span>
+                  <ArrowRight className="h-6 w-6" />
+                </>
+              )}
+            </motion.button>
+          </motion.div>
+
+          {/* Features Grid */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="mb-16"
+          >
+            <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+              What You&apos;ll Experience
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {demoFeatures.map((feature, index) => (
+                <motion.div
+                  key={feature.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + index * 0.1 }}
+                  className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300"
+                >
+                  <div className={`w-12 h-12 rounded-lg ${getColorClasses(feature.color)} flex items-center justify-center mb-4`}>
+                    <feature.icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {feature.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Benefits */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+            className="bg-white rounded-2xl p-8 shadow-xl border border-gray-200"
+          >
+            <h2 className="text-2xl font-bold text-center text-gray-900 mb-8">
+              Why Choose VervidFlow?
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle className="h-8 w-8 text-green-600" />
                 </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No Commitment</h3>
+                <p className="text-gray-600">
+                  Explore every feature without signing up or providing payment information.
+                </p>
               </div>
               
-              {/* Video Description */}
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-3">What You&apos;ll See</h3>
-                <ul className="space-y-2 text-neutral-300">
-                  <li className="flex items-center">
-                    <FaCheckCircle className="text-primary mr-3 flex-shrink-0" />
-                    Complete booking process (90 seconds)
-                  </li>
-                  <li className="flex items-center">
-                    <FaCheckCircle className="text-primary mr-3 flex-shrink-0" />
-                    Automated reminder system
-                  </li>
-                  <li className="flex items-center">
-                    <FaCheckCircle className="text-primary mr-3 flex-shrink-0" />
-                    Real-time status updates
-                  </li>
-                  <li className="flex items-center">
-                    <FaCheckCircle className="text-primary mr-3 flex-shrink-0" />
-                    Analytics dashboard walkthrough
-                  </li>
-                  <li className="flex items-center">
-                    <FaCheckCircle className="text-primary mr-3 flex-shrink-0" />
-                    ROI calculation examples
-                  </li>
-                </ul>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Star className="h-8 w-8 text-yellow-600" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Full Access</h3>
+                <p className="text-gray-600">
+                  Experience the complete platform with all premium features unlocked.
+                </p>
               </div>
-            </div>
-
-            {/* Quick Stats */}
-            <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-6 rounded-xl border border-primary/20">
-              <h4 className="text-lg font-semibold text-white mb-4">Why VervidFlow?</h4>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-primary mb-1">15-25%</div>
-                  <div className="text-sm text-neutral-300">Revenue Increase</div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Shield className="h-8 w-8 text-blue-600" />
                 </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-primary mb-1">40%</div>
-                  <div className="text-sm text-neutral-300">Fewer No-Shows</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-primary mb-1">2+ hrs</div>
-                  <div className="text-sm text-neutral-300">Saved Daily</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-primary mb-1">90 sec</div>
-                  <div className="text-sm text-neutral-300">Booking Time</div>
-                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Enterprise Grade</h3>
+                <p className="text-gray-600">
+                  See why businesses trust VervidFlow for their mission-critical operations.
+                </p>
               </div>
             </div>
           </motion.div>
 
-          {/* Contact Form */}
+          {/* CTA Section */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="bg-darkCard rounded-2xl shadow-2xl border border-neutral-800 p-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.0 }}
+            className="text-center mt-16"
           >
-            <div className="mb-6">
-              <h3 className="text-2xl font-bold text-white mb-2">Schedule Your Personal Demo</h3>
-              <p className="text-neutral-400">Get a customized walkthrough tailored to your business needs</p>
-            </div>
-            
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-neutral-300 mb-2">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-neutral-700/50 border border-neutral-600 rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
-                    placeholder="Your full name"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-neutral-300 mb-2">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-neutral-700/50 border border-neutral-600 rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
-                    placeholder="your@email.com"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-neutral-300 mb-2">
-                    Company Name *
-                  </label>
-                  <input
-                    type="text"
-                    name="company"
-                    required
-                    value={formData.company}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-neutral-700/50 border border-neutral-600 rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
-                    placeholder="Your company"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-neutral-300 mb-2">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-neutral-700/50 border border-neutral-600 rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
-                    placeholder="(555) 123-4567"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-neutral-300 mb-2">
-                  Preferred Demo Time
-                </label>
-                <select
-                  name="preferredTime"
-                  value={formData.preferredTime}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-neutral-700/50 border border-neutral-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
+              <h2 className="text-2xl font-bold mb-4">
+                Ready to Transform Your Business?
+              </h2>
+              <p className="text-blue-100 mb-6">
+                After the demo, you can sign up for a free trial or speak with our team.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  href="/signup"
+                  className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
                 >
-                  <option value="">Select preferred time</option>
-                  <option value="morning">Morning (9 AM - 12 PM)</option>
-                  <option value="afternoon">Afternoon (12 PM - 5 PM)</option>
-                  <option value="evening">Evening (5 PM - 7 PM)</option>
-                  <option value="flexible">I&apos;m flexible</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-neutral-300 mb-2">
-                  Tell us about your business
-                </label>
-                <textarea
-                  name="message"
-                  rows={4}
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-neutral-700/50 border border-neutral-600 rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 resize-none"
-                  placeholder="What type of service business do you run? How many appointments do you handle per day/week?"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/80 hover:to-secondary/80 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2"
-              >
-                <FaCalendarCheck />
-                <span>Schedule My Demo</span>
-              </button>
-            </form>
-
-            <div className="mt-6 pt-6 border-t border-neutral-700">
-              <div className="flex items-center justify-center space-x-6 text-sm text-neutral-400">
-                <div className="flex items-center">
-                  <FaClock className="mr-2 text-primary" />
-                  30-minute session
-                </div>
-                <div className="flex items-center">
-                  <FaPhone className="mr-2 text-primary" />
-                  No pressure sales
-                </div>
-                <div className="flex items-center">
-                  <FaCheckCircle className="mr-2 text-primary" />
-                  Free consultation
-                </div>
+                  Start Free Trial
+                </Link>
+                <Link
+                  href="/contact"
+                  className="border border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors"
+                >
+                  Contact Sales
+                </Link>
               </div>
             </div>
           </motion.div>

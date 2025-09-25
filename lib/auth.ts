@@ -18,6 +18,7 @@ export const authOptions: NextAuthOptions = {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
         organizationName: { label: 'Organization Name', type: 'text' },
+        plan: { label: 'Plan', type: 'text' },
         isSignup: { label: 'Is Signup', type: 'hidden' }
       },
       async authorize(credentials) {
@@ -43,11 +44,13 @@ export const authOptions: NextAuthOptions = {
           }
 
           // Create organization first
+          const selectedPlan = credentials.plan || 'trial'
           const organization = await prisma.organization.create({
             data: {
               name: credentials.organizationName,
-              plan: 'trial',
-              trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days trial
+              plan: selectedPlan,
+              trialEndsAt: selectedPlan === 'trial' ? new Date(Date.now() + 14 * 24 * 60 * 60 * 1000) : null, // 14 days trial for trial plan only
+              status: selectedPlan === 'trial' ? 'trial' : 'active'
             }
           })
 
