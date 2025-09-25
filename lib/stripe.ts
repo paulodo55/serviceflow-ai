@@ -1,8 +1,19 @@
 import Stripe from 'stripe'
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-08-27.basil',
-})
+// Lazy-load Stripe client to prevent build-time errors
+let stripeClient: Stripe | null = null
+
+function getStripeClient(): Stripe {
+  if (!stripeClient) {
+    if (!process.env.STRIPE_SECRET_KEY) {
+      throw new Error('STRIPE_SECRET_KEY is not configured')
+    }
+    stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: '2025-08-27.basil',
+    })
+  }
+  return stripeClient
+}
 
 export const PLANS = {
   trial: {
@@ -63,6 +74,7 @@ export const PLANS = {
 }
 
 export async function createStripeCustomer(email: string, name: string, organizationId: string) {
+  const stripe = getStripeClient()
   const customer = await stripe.customers.create({
     email,
     name,
@@ -75,6 +87,7 @@ export async function createStripeCustomer(email: string, name: string, organiza
 }
 
 export async function createSubscription(customerId: string, priceId: string) {
+  const stripe = getStripeClient()
   const subscription = await stripe.subscriptions.create({
     customer: customerId,
     items: [{ price: priceId }],
@@ -87,6 +100,7 @@ export async function createSubscription(customerId: string, priceId: string) {
 }
 
 export async function createPaymentIntent(amount: number, customerId: string, metadata = {}) {
+  const stripe = getStripeClient()
   const paymentIntent = await stripe.paymentIntents.create({
     amount: amount * 100, // Convert to cents
     currency: 'usd',
@@ -99,11 +113,13 @@ export async function createPaymentIntent(amount: number, customerId: string, me
 }
 
 export async function cancelSubscription(subscriptionId: string) {
+  const stripe = getStripeClient()
   const subscription = await stripe.subscriptions.cancel(subscriptionId)
   return subscription
 }
 
 export async function getCustomerPortalUrl(customerId: string, returnUrl: string) {
+  const stripe = getStripeClient()
   const session = await stripe.billingPortal.sessions.create({
     customer: customerId,
     return_url: returnUrl,
@@ -114,6 +130,7 @@ export async function getCustomerPortalUrl(customerId: string, returnUrl: string
 
 // Webhook helpers
 export function constructWebhookEvent(body: string, signature: string) {
+  const stripe = getStripeClient()
   return stripe.webhooks.constructEvent(
     body,
     signature,
