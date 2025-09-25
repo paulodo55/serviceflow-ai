@@ -24,7 +24,7 @@ npm run dev
 
 1. **Login Test**: `http://localhost:3000/login`
    - Email: `odopaul55@gmail.com`
-   - Password: `verviddemo123`
+   - Password: `[DEMO_PASSWORD]`
 
 2. **Explore Your CRM**:
    - **Dashboard**: `/app` - See real-time metrics

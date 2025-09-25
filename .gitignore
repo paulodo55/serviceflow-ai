@@ -27,8 +27,25 @@ next-env.d.ts
 /lib/generated/prisma
 .env
 
-# Environment files
-.env
+# Environment files - NEVER COMMIT THESE
+.env*
+!.env.example
+!env.template
+*.env
 .env.local
 .env.production
 .env.staging
+.env.development
+
+# Sensitive files
+*.key
+*.pem
+*.p12
+*.pfx
+service-account*.json
+credentials*.json
+
+# Backup files that might contain secrets
+*.backup
+*.bak
+*.old

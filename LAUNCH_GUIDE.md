@@ -3,7 +3,7 @@
 ## ✅ Current Status
 **Login Credentials Added:**
 - **Email**: `odopaul55@gmail.com`
-- **Password**: `verviddemo123`
+- **Password**: `[DEMO_PASSWORD]`
 - **Access**: `/app` dashboard after login
 
 ---

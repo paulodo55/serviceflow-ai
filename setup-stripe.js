@@ -57,7 +57,7 @@ NEXTAUTH_URL="http://localhost:3000"
 NEXTAUTH_SECRET="YOUR_32_CHAR_SECRET_HERE"
 
 # Database (get from Railway, Supabase, etc.)
-DATABASE_URL="postgresql://postgres:wKTLnvKktIKBSGVlxRRquukCfaVQbALT@postgres.railway.internal:5432/railway"
+DATABASE_URL="postgresql://username:password@host:port/database"
 `;
 
 console.log(requiredEnvVars);
