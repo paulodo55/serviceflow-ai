@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 
     // Get user's organization
     const user = await prisma.user.findUnique({
-      where: { id: session.user.id },
+      where: { email: session.user.email! },
       include: { organization: true }
     })
 
@@ -50,8 +50,8 @@ export async function POST(request: NextRequest) {
       data: {
         subscriptionId: subscription.id,
         subscriptionStatus: subscription.status,
-        currentPeriodStart: new Date(subscription.current_period_start * 1000),
-        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+        currentPeriodStart: new Date((subscription as any).current_period_start * 1000),
+        currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
         plan: priceId.includes('basic') ? 'basic' : 
               priceId.includes('pro') ? 'pro' : 'enterprise'
       }

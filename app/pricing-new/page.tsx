@@ -305,7 +305,7 @@ export default function PricingPage() {
             </div>
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Is there a setup fee?</h3>
-              <p className="text-gray-600">No setup fees. Start your free trial today and only pay when you're ready to upgrade.</p>
+              <p className="text-gray-600">No setup fees. Start your free trial today and only pay when you&apos;re ready to upgrade.</p>
             </div>
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Do you offer refunds?</h3>

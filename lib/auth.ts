@@ -112,13 +112,14 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user, account }) {
       if (user) {
-        token.organizationId = user.organizationId
-        token.role = user.role
+        // For new signups, user might not have organizationId yet
+        token.organizationId = (user as any).organizationId || null
+        token.role = (user as any).role || 'user'
       }
       return token
     },
     async session({ session, token }) {
-      if (token) {
+      if (token && session.user) {
         session.user.id = token.sub!
         session.user.organizationId = token.organizationId as string
         session.user.role = token.role as string
@@ -157,6 +158,5 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: '/login',
-    signUp: '/signup',
   },
 }
