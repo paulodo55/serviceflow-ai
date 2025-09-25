@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     const { priceId } = await request.json()
 
     // Get user's organization
-    const user = await prisma.user.findUnique({
+    const user = await (prisma as any).user.findUnique({
       where: { email: session.user.email! },
       include: { organization: true }
     })

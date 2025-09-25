@@ -74,7 +74,7 @@ export const authOptions: NextAuthOptions = {
           }
         } else {
           // Sign in flow
-          const user = await prisma.user.findUnique({
+          const user = await (prisma as any).user.findUnique({
             where: { email: credentials.email },
             include: { organization: true }
           })
