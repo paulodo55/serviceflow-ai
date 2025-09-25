@@ -46,13 +46,13 @@ export async function POST(request: NextRequest) {
 }
 
 async function handleSubscriptionUpdate(subscription: Stripe.Subscription) {
-  const organization = await prisma.organization.findUnique({
+  const organization = await (prisma as any).organization.findUnique({
     where: { stripeCustomerId: subscription.customer as string }
   })
 
   if (!organization) return
 
-  await prisma.organization.update({
+  await (prisma as any).organization.update({
     where: { id: organization.id },
     data: {
       subscriptionId: subscription.id,
@@ -65,13 +65,13 @@ async function handleSubscriptionUpdate(subscription: Stripe.Subscription) {
 }
 
 async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
-  const organization = await prisma.organization.findUnique({
+  const organization = await (prisma as any).organization.findUnique({
     where: { stripeCustomerId: subscription.customer as string }
   })
 
   if (!organization) return
 
-  await prisma.organization.update({
+  await (prisma as any).organization.update({
     where: { id: organization.id },
     data: {
       subscriptionId: null,

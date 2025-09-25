@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
       customerId = customer.id
 
       // Update organization with Stripe customer ID
-      await prisma.organization.update({
+      await (prisma as any).organization.update({
         where: { id: user.organization.id },
         data: { stripeCustomerId: customerId }
       })
@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
     const subscription = await createSubscription(customerId, priceId)
 
     // Update organization with subscription info
-    await prisma.organization.update({
+    await (prisma as any).organization.update({
       where: { id: user.organization.id },
       data: {
         subscriptionId: subscription.id,
