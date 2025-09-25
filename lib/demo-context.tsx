@@ -25,6 +25,13 @@ export function DemoProvider({ children }: { children: ReactNode }) {
   const [isDemoMode, setIsDemoMode] = useState(false);
   const [demoUser, setDemoUser] = useState<DemoUser | null>(null);
 
+  const exitDemo = () => {
+    setIsDemoMode(false);
+    setDemoUser(null);
+    localStorage.removeItem('demoMode');
+    localStorage.removeItem('demoUser');
+  };
+
   useEffect(() => {
     // Check if demo mode is enabled on mount
     const demoModeEnabled = localStorage.getItem('demoMode') === 'true';
@@ -51,13 +58,6 @@ export function DemoProvider({ children }: { children: ReactNode }) {
       localStorage.removeItem('demoUser');
       setDemoUser(null);
     }
-  };
-
-  const exitDemo = () => {
-    setIsDemoMode(false);
-    setDemoUser(null);
-    localStorage.removeItem('demoMode');
-    localStorage.removeItem('demoUser');
   };
 
   return (
