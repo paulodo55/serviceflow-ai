@@ -3,8 +3,15 @@ import { constructWebhookEvent } from '@/lib/stripe'
 import { prisma } from '@/lib/prisma'
 import Stripe from 'stripe'
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: NextRequest) {
   try {
+    // Check if we're in a build environment
+    if (process.env.NODE_ENV === 'production' && !process.env.DATABASE_URL) {
+      return NextResponse.json({ error: 'Service unavailable' }, { status: 503 })
+    }
     const body = await request.text()
     const signature = request.headers.get('stripe-signature')!
 
