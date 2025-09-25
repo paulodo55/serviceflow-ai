@@ -4,7 +4,7 @@ Copy these to your `.env.local` file:
 
 ```bash
 # Database
-DATABASE_URL="postgresql://postgres:wKTLnvKktIKBSGVlxRRquukCfaVQbALT@nozomi.proxy.rlwy.net:48306/railway"
+DATABASE_URL=
 
 # NextAuth
 NEXTAUTH_URL="http://localhost:3000"
