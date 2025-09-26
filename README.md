@@ -98,8 +98,8 @@ Production-ready CRM application with advanced dashboard, customer management, a
 ```javascript
 colors: {
   primary: "#6366F1",    // Indigo-500
-  secondary: "#8B5CF6",  // Violet-500
-  accent: "#A78BFA",     // Violet-400
+  secondary: "#818cf8",  // Indigo-400
+  accent: "#818cf8",     // Indigo-400
   dark: "#0A0A0A",
   darkGray: "#111111",
   darkCard: "#1A1A1A",

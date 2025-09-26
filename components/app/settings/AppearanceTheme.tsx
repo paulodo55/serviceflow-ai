@@ -28,11 +28,11 @@ export default function AppearanceTheme() {
     systemTheme: false,
     highContrast: false,
     fontSize: 'medium',
-    customColors: {
-      primary: '#3B82F6',
-      secondary: '#10B981',
-      accent: '#F59E0B'
-    },
+      customColors: {
+        primary: '#3B82F6',
+        secondary: '#10B981',
+        accent: '#818cf8'
+      },
     selectedPreset: 'default',
     logoUrl: '',
     companyName: 'VervidFlow'
@@ -59,14 +59,14 @@ export default function AppearanceTheme() {
       id: 'default',
       name: 'Default',
       description: 'Clean and modern',
-      colors: { primary: '#3B82F6', secondary: '#10B981', accent: '#F59E0B' },
+      colors: { primary: '#3B82F6', secondary: '#10B981', accent: '#818cf8' },
       preview: 'bg-gradient-to-r from-blue-500 to-green-500'
     },
     {
       id: 'dark',
       name: 'Dark Professional',
       description: 'Easy on the eyes',
-      colors: { primary: '#6366F1', secondary: '#8B5CF6', accent: '#EC4899' },
+      colors: { primary: '#6366F1', secondary: '#818cf8', accent: '#818cf8' },
       preview: 'bg-gradient-to-r from-indigo-600 to-purple-600'
     },
     {

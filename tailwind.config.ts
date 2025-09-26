@@ -10,8 +10,8 @@ const config: Config = {
     extend: {
       colors: {
         primary: "#6366F1",
-        secondary: "#8B5CF6", 
-        accent: "#A78BFA",
+        secondary: "#818cf8", 
+        accent: "#818cf8",
         dark: "#0A0A0A",
         darkGray: "#111111",
         darkCard: "#1A1A1A",

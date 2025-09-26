@@ -30,7 +30,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     customColors: {
       primary: '#3B82F6',
       secondary: '#10B981',
-      accent: '#F59E0B'
+      accent: '#818cf8'
     },
     companyName: 'VervidFlow',
     logoUrl: ''

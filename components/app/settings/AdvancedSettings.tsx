@@ -76,7 +76,7 @@ export default function AdvancedSettings() {
         { id: '2', name: 'Qualified', color: '#10B981', order: 2 },
         { id: '3', name: 'Proposal', color: '#F59E0B', order: 3 },
         { id: '4', name: 'Negotiation', color: '#EF4444', order: 4 },
-        { id: '5', name: 'Closed Won', color: '#8B5CF6', order: 5 }
+        { id: '5', name: 'Closed Won', color: '#818cf8', order: 5 }
       ],
       autoAdvance: true,
       probabilityTracking: true
