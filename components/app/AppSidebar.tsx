@@ -19,6 +19,8 @@ import {
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
+import { useDemo } from '@/lib/demo-context';
+import { useTheme } from '@/lib/theme-context';
 
 const navigation = [
   { name: 'Dashboard', href: '/app', icon: LayoutDashboard },
@@ -51,6 +53,10 @@ const aiFeatures = [
 export default function AppSidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const pathname = usePathname();
+  const { isDemoMode } = useDemo();
+  const { currentTheme } = useTheme();
+
+  const companyName = isDemoMode ? currentTheme.companyName : 'VervidFlow';
 
   return (
     <div className={`bg-white shadow-lg transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'}`}>
@@ -63,8 +69,9 @@ export default function AppSidebar() {
               animate={{ opacity: 1 }}
               className="flex flex-col"
             >
-              <h1 className="text-xl font-bold text-gray-900">VervidFlow</h1>
-              <p className="text-xs text-gray-500">by Vervid</p>
+              <h1 className="text-xl font-bold text-gray-900">{companyName}</h1>
+              {!isDemoMode && <p className="text-xs text-gray-500">by Vervid</p>}
+              {isDemoMode && <p className="text-xs text-blue-500">Demo Mode</p>}
             </motion.div>
           )}
           <button

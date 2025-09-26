@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   User, 
@@ -14,8 +14,11 @@ import {
 } from 'lucide-react';
 import SettingsCard from './SettingsCard';
 import ToggleSwitch from './ToggleSwitch';
+import { useDemo } from '@/lib/demo-context';
 
 export default function PersonalPreferences() {
+  const { isDemoMode, demoSettings, updateDemoSettings } = useDemo();
+  
   const [formData, setFormData] = useState({
     displayName: 'Paul Odo',
     email: 'demo@vervidai.com',
@@ -33,6 +36,18 @@ export default function PersonalPreferences() {
     emailNotifications: true,
     profileVisibility: 'team'
   });
+
+  // Load settings from demo context if in demo mode
+  useEffect(() => {
+    if (isDemoMode && demoSettings.personal) {
+      setFormData(prev => ({
+        ...prev,
+        ...demoSettings.personal,
+        emailNotifications: true,
+        profileVisibility: 'team'
+      }));
+    }
+  }, [isDemoMode, demoSettings]);
 
   const languages = [
     { value: 'en', label: 'English' },
@@ -68,6 +83,11 @@ export default function PersonalPreferences() {
 
   const handleInputChange = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    
+    // Update demo context if in demo mode
+    if (isDemoMode) {
+      updateDemoSettings('personal', { [field]: value });
+    }
   };
 
   return (

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Bell,
@@ -14,6 +15,8 @@ import {
   DollarSign,
   Star
 } from 'lucide-react';
+import { useDemo } from '@/lib/demo-context';
+import { useTheme } from '@/lib/theme-context';
 
 interface AppHeaderProps {
   user: {
@@ -24,8 +27,27 @@ interface AppHeaderProps {
 }
 
 export default function AppHeader({ user }: AppHeaderProps) {
+  const router = useRouter();
+  const { isDemoMode, exitDemo, demoSettings } = useDemo();
+  const { currentTheme } = useTheme();
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const handleSignOut = () => {
+    if (isDemoMode) {
+      exitDemo();
+      router.push('/');
+    } else {
+      signOut({ callbackUrl: '/' });
+    }
+  };
+
+  const handleSettingsClick = () => {
+    router.push('/app/settings');
+    setShowUserMenu(false);
+  };
+
+  const companyName = isDemoMode ? currentTheme.companyName : 'VervidFlow';
 
   const notifications = [
     {
@@ -180,16 +202,19 @@ export default function AppHeader({ user }: AppHeaderProps) {
                     <p className="text-sm text-gray-600">{user.email || 'paulodo55@example.com'}</p>
                   </div>
                   <div className="py-2">
-                    <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
+                    <button 
+                      onClick={handleSettingsClick}
+                      className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                    >
                       <Settings className="mr-3 h-4 w-4" />
                       Settings
                     </button>
                     <button 
-                      onClick={() => signOut({ callbackUrl: '/' })}
+                      onClick={handleSignOut}
                       className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
                     >
                       <LogOut className="mr-3 h-4 w-4" />
-                      Sign out
+                      {isDemoMode ? 'Exit Demo' : 'Sign out'}
                     </button>
                   </div>
                 </motion.div>

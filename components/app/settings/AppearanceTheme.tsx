@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { 
@@ -18,8 +18,11 @@ import {
 } from 'lucide-react';
 import SettingsCard from './SettingsCard';
 import ToggleSwitch from './ToggleSwitch';
+import { useDemo } from '@/lib/demo-context';
 
 export default function AppearanceTheme() {
+  const { isDemoMode, demoSettings, updateDemoSettings } = useDemo();
+  
   const [themeSettings, setThemeSettings] = useState({
     theme: 'light',
     systemTheme: false,
@@ -34,6 +37,22 @@ export default function AppearanceTheme() {
     logoUrl: '',
     companyName: 'VervidFlow'
   });
+
+  // Load settings from demo context if in demo mode
+  useEffect(() => {
+    if (isDemoMode && demoSettings.theme) {
+      setThemeSettings({
+        theme: demoSettings.theme.mode,
+        systemTheme: false,
+        highContrast: demoSettings.theme.highContrast,
+        fontSize: demoSettings.theme.fontSize,
+        customColors: demoSettings.theme.customColors,
+        selectedPreset: demoSettings.theme.selectedPreset,
+        logoUrl: demoSettings.theme.logoUrl,
+        companyName: demoSettings.theme.companyName
+      });
+    }
+  }, [isDemoMode, demoSettings]);
 
   const presetThemes = [
     {
@@ -81,14 +100,36 @@ export default function AppearanceTheme() {
   ];
 
   const handleThemeChange = (field: string, value: any) => {
-    setThemeSettings(prev => ({ ...prev, [field]: value }));
+    const newSettings = { ...themeSettings, [field]: value };
+    setThemeSettings(newSettings);
+    
+    // Update demo context if in demo mode
+    if (isDemoMode) {
+      const demoThemeUpdate: any = {};
+      
+      // Map local state to demo context structure
+      if (field === 'theme') demoThemeUpdate.mode = value;
+      else if (field === 'highContrast') demoThemeUpdate.highContrast = value;
+      else if (field === 'fontSize') demoThemeUpdate.fontSize = value;
+      else if (field === 'companyName') demoThemeUpdate.companyName = value;
+      else if (field === 'logoUrl') demoThemeUpdate.logoUrl = value;
+      else if (field === 'selectedPreset') demoThemeUpdate.selectedPreset = value;
+      
+      updateDemoSettings('theme', demoThemeUpdate);
+    }
   };
 
   const handleColorChange = (colorType: string, value: string) => {
+    const newColors = { ...themeSettings.customColors, [colorType]: value };
     setThemeSettings(prev => ({
       ...prev,
-      customColors: { ...prev.customColors, [colorType]: value }
+      customColors: newColors
     }));
+    
+    // Update demo context if in demo mode
+    if (isDemoMode) {
+      updateDemoSettings('theme', { customColors: newColors });
+    }
   };
 
   const handlePresetSelect = (presetId: string) => {
@@ -99,6 +140,14 @@ export default function AppearanceTheme() {
         selectedPreset: presetId,
         customColors: preset.colors
       }));
+      
+      // Update demo context if in demo mode
+      if (isDemoMode) {
+        updateDemoSettings('theme', {
+          selectedPreset: presetId,
+          customColors: preset.colors
+        });
+      }
     }
   };
 

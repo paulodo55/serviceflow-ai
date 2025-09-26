@@ -27,48 +27,48 @@ export const PLANS = {
       'Mobile responsive'
     ]
   },
-  basic: {
-    name: 'Basic',
-    priceId: process.env.STRIPE_BASIC_PRICE_ID!,
-    price: 29,
+  starter: {
+    name: 'Starter',
+    priceId: process.env.STRIPE_STARTER_PRICE_ID!,
+    price: 199,
     duration: 'month',
     features: [
-      'Up to 3 technicians',
-      'Unlimited customers',
-      'Advanced scheduling',
-      'SMS & Email notifications',
-      'Basic reporting',
-      'Google Calendar sync'
+      'Up to 500 appointments/month',
+      'Basic automated reminders',
+      'Email & SMS notifications',
+      'Standard analytics dashboard',
+      '8/5 support'
     ]
   },
   pro: {
     name: 'Professional',
     priceId: process.env.STRIPE_PRO_PRICE_ID!,
-    price: 79,
+    price: 499,
     duration: 'month',
     features: [
-      'Up to 10 technicians',
-      'Everything in Basic',
-      'Advanced analytics',
-      'Custom branding',
-      'QuickBooks integration',
-      'Priority support',
-      'Mobile app access'
+      'Up to 2,000 appointments/month',
+      'Advanced automated reminders',
+      'Multi-channel communications',
+      'Real-time status updates',
+      'Performance analytics',
+      '24/7 AI phone support',
+      'Priority support'
     ]
   },
   enterprise: {
     name: 'Enterprise',
     priceId: process.env.STRIPE_ENTERPRISE_PRICE_ID!,
-    price: 149,
-    duration: 'month',
+    price: 'Custom',
+    duration: '',
     features: [
-      'Unlimited technicians',
-      'Everything in Pro',
-      'White-label solution',
+      'Unlimited appointments',
+      'All premium features',
+      'ROI reporting & analytics',
       'Custom integrations',
-      'Dedicated support',
-      'Advanced security',
-      'Custom training'
+      'Dedicated account manager',
+      'White-label options',
+      'Advanced API access',
+      '24/7 priority support'
     ]
   }
 }

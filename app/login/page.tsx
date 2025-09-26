@@ -424,16 +424,33 @@ export default function LoginPage() {
             {/* VervidFlow Demo Access */}
             <div className="mt-6 pt-6 border-t border-neutral-700 text-center">
               <p className="text-neutral-400 text-sm mb-3">Quick Demo Access</p>
-              <Link href="/demo">
+              <div className="space-y-3">
+                <Link href="/demo">
+                  <motion.button
+                    type="button"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
+                  >
+                    Interactive Demo
+                  </motion.button>
+                </Link>
                 <motion.button
                   type="button"
+                  onClick={() => {
+                    setFormData({
+                      email: 'demo@vervidai.com',
+                      password: 'demo123',
+                      rememberMe: false
+                    });
+                  }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 mb-4"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 text-sm"
                 >
-                  View VervidFlow Demo
+                  Quick Demo Login
                 </motion.button>
-              </Link>
+              </div>
             </div>
 
             {/* Sign Up Link */}

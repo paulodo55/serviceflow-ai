@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import Providers from "./providers";
 import { DemoProvider } from '@/lib/demo-context';
+import { ThemeProvider } from '@/lib/theme-context';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,9 +37,11 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <DemoProvider>
-          <Providers>
-            {children}
-          </Providers>
+          <ThemeProvider>
+            <Providers>
+              {children}
+            </Providers>
+          </ThemeProvider>
         </DemoProvider>
       </body>
     </html>
