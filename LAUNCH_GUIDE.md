@@ -316,11 +316,11 @@ POSTHOG_KEY="phc_xxxxx"
 ## 💡 COMPETITIVE POSITIONING & PRICING
 
 ### **Your Pricing Strategy**
-- **Basic Plan**: $199/month - Core CRM, messaging, calendar
+- **Starter Plan**: $199/month - Core CRM, messaging, calendar
 - **Premium Plan**: $499/month - Advanced analytics, AI features, integrations
 
 ### **Professional Pricing Strategy**
-- **Basic Plan**: $199/month - Complete CRM with core features
+- **Starter Plan**: $199/month - Complete CRM with core features
 - **Premium Plan**: $499/month - Advanced analytics and integrations
 - **Enterprise**: Custom pricing for large organizations
 - **Value**: Premium features at accessible pricing

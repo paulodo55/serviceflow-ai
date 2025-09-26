@@ -255,26 +255,26 @@ export default function SignupPage() {
                   )}
                 </div>
 
-                {/* Basic Plan */}
+                {/* Starter Plan */}
                 <div 
                   className={`relative border-2 rounded-lg p-4 cursor-pointer transition-all ${
-                    formData.plan === 'basic' 
+                    formData.plan === 'starter' 
                       ? 'border-blue-500 bg-blue-50' 
                       : 'border-gray-200 hover:border-gray-300'
                   }`}
-                  onClick={() => handleInputChange('plan', 'basic')}
+                  onClick={() => handleInputChange('plan', 'starter')}
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="font-semibold text-gray-900">Basic Plan</h3>
-                      <p className="text-sm text-gray-600">Perfect for small teams</p>
+                      <h3 className="font-semibold text-gray-900">Starter Plan</h3>
+                      <p className="text-sm text-gray-600">Perfect for small businesses</p>
                     </div>
                     <div className="text-right">
-                      <div className="text-2xl font-bold text-gray-900">$29</div>
+                      <div className="text-2xl font-bold text-gray-900">$199</div>
                       <div className="text-sm text-gray-500">/month</div>
                     </div>
                   </div>
-                  {formData.plan === 'basic' && (
+                  {formData.plan === 'starter' && (
                     <CheckCircle className="absolute top-2 right-2 h-5 w-5 text-blue-500" />
                   )}
                 </div>

@@ -181,11 +181,11 @@ STRIPE_WEBHOOK_SECRET="whsec_xxxxx"
 ## 💰 **REVENUE STRATEGY**
 
 ### **Your Pricing (Competitive Advantage):**
-- **Basic Plan**: $199/month
+- **Starter Plan**: $199/month
 - **Premium Plan**: $499/month
 
 ### **Professional Pricing:**
-- **Basic Plan**: $199/month - Complete CRM solution
+- **Starter Plan**: $199/month - Complete CRM solution
 - **Premium Plan**: $499/month - Advanced features and analytics
 
 ### **Revenue Projections:**

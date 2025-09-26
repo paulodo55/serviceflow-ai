@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
         subscriptionStatus: subscription.status,
         currentPeriodStart: new Date((subscription as any).current_period_start * 1000),
         currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
-        plan: priceId.includes('basic') ? 'basic' : 
+        plan: priceId.includes('starter') ? 'starter' : 
               priceId.includes('pro') ? 'pro' : 'enterprise'
       }
     })

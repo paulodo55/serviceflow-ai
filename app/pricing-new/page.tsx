@@ -167,7 +167,7 @@ export default function PricingPage() {
             </div>
           </motion.div>
 
-          {/* Basic Plan */}
+          {/* Starter Plan */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -176,10 +176,10 @@ export default function PricingPage() {
           >
             <div className="text-center">
               <Building className="h-12 w-12 text-green-600 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">{PLANS.basic.name}</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">{PLANS.starter.name}</h3>
               <div className="mb-6">
                 <span className="text-4xl font-bold text-gray-900">
-                  ${billingPeriod === 'annually' ? Math.round(PLANS.basic.price * 0.8) : PLANS.basic.price}
+                  ${billingPeriod === 'annually' ? Math.round(PLANS.starter.price * 0.8) : PLANS.starter.price}
                 </span>
                 <span className="text-gray-600 ml-2">/{billingPeriod === 'annually' ? 'month' : 'month'}</span>
                 {billingPeriod === 'annually' && (
@@ -188,7 +188,7 @@ export default function PricingPage() {
               </div>
               
               <ul className="space-y-3 mb-8 text-left">
-                {PLANS.basic.features.map((feature, index) => (
+                {PLANS.starter.features.map((feature, index) => (
                   <li key={index} className="flex items-start">
                     <Check className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
                     <span className="text-gray-600">{feature}</span>
@@ -197,11 +197,11 @@ export default function PricingPage() {
               </ul>
 
               <button
-                onClick={() => handleSubscribe(PLANS.basic.priceId, 'basic')}
-                disabled={isLoading === 'basic'}
+                onClick={() => handleSubscribe(PLANS.starter.priceId, 'starter')}
+                disabled={isLoading === 'starter'}
                 className="w-full bg-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors disabled:opacity-50"
               >
-                {isLoading === 'basic' ? 'Processing...' : 'Get Started'}
+                {isLoading === 'starter' ? 'Processing...' : 'Get Started'}
               </button>
             </div>
           </motion.div>
@@ -263,12 +263,9 @@ export default function PricingPage() {
               <h3 className="text-2xl font-bold text-gray-900 mb-2">{PLANS.enterprise.name}</h3>
               <div className="mb-6">
                 <span className="text-4xl font-bold text-gray-900">
-                  ${billingPeriod === 'annually' ? Math.round(PLANS.enterprise.price * 0.8) : PLANS.enterprise.price}
+                  {PLANS.enterprise.price}
                 </span>
-                <span className="text-gray-600 ml-2">/{billingPeriod === 'annually' ? 'month' : 'month'}</span>
-                {billingPeriod === 'annually' && (
-                  <div className="text-sm text-green-600">Billed annually</div>
-                )}
+                <span className="text-gray-600 ml-2">pricing</span>
               </div>
               
               <ul className="space-y-3 mb-8 text-left">
