@@ -9,7 +9,7 @@ const createTemplateSchema = z.object({
   description: z.string().optional(),
   category: z.string().optional(),
   content: z.string().min(1, 'Content is required'),
-  variables: z.record(z.any()).optional(),
+  variables: z.record(z.string(), z.any()).optional(),
   isActive: z.boolean().default(true),
   isDefault: z.boolean().default(false),
 });

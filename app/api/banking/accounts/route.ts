@@ -195,9 +195,9 @@ export async function PATCH(request: NextRequest) {
     }
 
     // Create bank accounts from Plaid data
-    const createdAccounts = [];
+    const createdAccounts: any[] = [];
     for (const accountData of plaidResponse.accounts) {
-      const account = await prisma.bankAccount.create({
+      const account: any = await prisma.bankAccount.create({
         data: {
           organizationId: user.organization.id,
           bankName: metadata.institution?.name || 'Unknown Bank',

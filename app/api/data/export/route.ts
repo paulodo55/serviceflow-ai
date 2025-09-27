@@ -266,7 +266,7 @@ async function processDataExport(exportId: string) {
       where: { id: exportId },
       data: { 
         status: 'FAILED',
-        errorMessage: error.message || 'Unknown error occurred',
+        errorMessage: error instanceof Error ? error.message : 'Unknown error occurred',
       },
     });
   }

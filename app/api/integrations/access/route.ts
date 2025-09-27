@@ -9,7 +9,7 @@ const createAccessSchema = z.object({
   groupId: z.string().optional(),
   integrationType: z.enum(['SOCIAL_MEDIA', 'CALENDAR', 'EMAIL', 'SMS', 'PAYMENT', 'BANKING', 'CRYPTO', 'CRM', 'ANALYTICS', 'STORAGE', 'OTHER']),
   accessLevel: z.enum(['READ', 'WRITE', 'ADMIN', 'FULL']),
-  permissions: z.record(z.any()).optional(),
+  permissions: z.record(z.string(), z.any()).optional(),
 });
 
 export async function GET(request: NextRequest) {

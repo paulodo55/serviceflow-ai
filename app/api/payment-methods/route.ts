@@ -12,7 +12,7 @@ const addPaymentMethodSchema = z.object({
   expiryMonth: z.number().min(1).max(12),
   expiryYear: z.number().min(new Date().getFullYear()),
   billingName: z.string().optional(),
-  billingAddress: z.record(z.any()).optional(),
+  billingAddress: z.record(z.string(), z.any()).optional(),
   isDefault: z.boolean().default(false),
 });
 

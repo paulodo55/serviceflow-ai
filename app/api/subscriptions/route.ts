@@ -162,7 +162,7 @@ export async function POST(request: NextRequest) {
               type: 'EXPIRATION',
               scheduledFor,
               subject: `Subscription Expiring in ${days} Days`,
-              message: `Your subscription "${subscription.name}" will expire on ${subscription.endDate.toLocaleDateString()}.`,
+              message: `Your subscription "${subscription.name}" will expire on ${subscription.endDate?.toLocaleDateString() || 'N/A'}.`,
               recipientEmail: subscription.customer?.email,
               recipientPhone: subscription.customer?.phone,
             },

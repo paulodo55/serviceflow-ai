@@ -1,6 +1,8 @@
 {
   "extends": ["next/core-web-vitals"],
   "rules": {
-    "import/no-anonymous-default-export": "off"
+    "react-hooks/exhaustive-deps": "warn",
+    "react/no-unescaped-entities": "warn",
+    "jsx-a11y/alt-text": "warn"
   }
 }

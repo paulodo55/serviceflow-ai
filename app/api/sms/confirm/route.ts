@@ -15,7 +15,7 @@ const sendSMSSchema = z.object({
   phoneNumber: z.string().min(1, 'Phone number is required'),
   purpose: z.enum(['PAYMENT_CONFIRMATION', 'ACCOUNT_VERIFICATION', 'TWO_FACTOR_AUTH', 'APPOINTMENT_REMINDER', 'MARKETING', 'SUPPORT']),
   relatedId: z.string().optional(),
-  metadata: z.record(z.any()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
 });
 
 export async function POST(request: NextRequest) {

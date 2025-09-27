@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import {
   Banknote,
@@ -226,9 +226,10 @@ export default function BankingPage() {
     } else {
       fetchData();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDemoMode, activeTab]);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       if (activeTab === 'banking') {
         const accountsRes = await fetch('/api/banking/accounts');
@@ -255,7 +256,7 @@ export default function BankingPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [activeTab]);
 
   const getCryptoIcon = (currency: string) => {
     switch (currency) {

@@ -7,7 +7,7 @@ import { z } from 'zod';
 const createGroupSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   description: z.string().optional(),
-  permissions: z.record(z.any()).default({}),
+  permissions: z.record(z.string(), z.any()).default({}),
   priority: z.number().default(0),
   memberIds: z.array(z.string()).default([]),
 });

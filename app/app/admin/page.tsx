@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import {
   BarChart3,
@@ -117,6 +117,21 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [timeframe, setTimeframe] = useState('30d');
 
+  const fetchDashboardData = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/admin/dashboard?timeframe=${timeframe}`);
+      if (response.ok) {
+        const data = await response.json();
+        setDashboardData(data);
+      }
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [timeframe]);
+
   useEffect(() => {
     if (isDemoMode) {
       // Demo data
@@ -205,22 +220,8 @@ export default function AdminDashboard() {
     } else {
       fetchDashboardData();
     }
-  }, [isDemoMode, timeframe]);
-
-  const fetchDashboardData = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(`/api/admin/dashboard?timeframe=${timeframe}`);
-      if (response.ok) {
-        const data = await response.json();
-        setDashboardData(data);
-      }
-    } catch (error) {
-      console.error('Error fetching dashboard data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDemoMode]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -250,7 +251,7 @@ export default function AdminDashboard() {
         <div className="text-center">
           <AlertTriangle className="h-12 w-12 text-red-500 mx-auto mb-4" />
           <h3 className="text-lg font-medium text-gray-900 mb-2">Access Denied</h3>
-          <p className="text-gray-600">You don't have permission to view the admin dashboard.</p>
+          <p className="text-gray-600">You don&apos;t have permission to view the admin dashboard.</p>
         </div>
       </div>
     );

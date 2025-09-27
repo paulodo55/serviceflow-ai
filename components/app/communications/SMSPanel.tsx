@@ -100,7 +100,7 @@ export default function SMSPanel({ customerId, appointmentId }: SMSPanelProps) {
     setIsSending(false);
   };
 
-  const useTemplate = (template: string) => {
+  const selectTemplate = (template: string) => {
     setNewMessage(templates[template as keyof typeof templates]);
   };
 
@@ -201,7 +201,7 @@ export default function SMSPanel({ customerId, appointmentId }: SMSPanelProps) {
               {Object.keys(templates).map((template) => (
                 <button
                   key={template}
-                  onClick={() => useTemplate(template)}
+                  onClick={() => selectTemplate(template)}
                   className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded hover:bg-gray-200 capitalize"
                 >
                   {template}

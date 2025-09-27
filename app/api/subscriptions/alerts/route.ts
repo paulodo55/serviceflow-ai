@@ -272,7 +272,7 @@ export async function PATCH(request: NextRequest) {
               where: { id: alert.id },
               data: { status: 'FAILED' },
             });
-            return { success: false, alertId: alert.id, error: error.message };
+            return { success: false, alertId: alert.id, error: error instanceof Error ? error.message : 'Unknown error' };
           }
         } else {
           // Mark as sent for non-email channels (would implement SMS/WhatsApp here)
