@@ -1,6 +1,7 @@
 // Security utilities for VervidFlow
 import { NextRequest } from 'next/server';
 import { RateLimitConfig, RateLimitResult, PasswordValidation } from '@/types';
+import crypto from 'crypto';
 
 // Rate limiting storage
 const rateLimitStore = new Map<string, { 
@@ -256,6 +257,37 @@ export const cleanupExpiredData = (): void => {
   });
 };
 
+// Twilio signature validation
+export const validateTwilioSignature = (
+  body: string,
+  signature: string,
+  url?: string
+): boolean => {
+  try {
+    if (!process.env.TWILIO_AUTH_TOKEN) {
+      console.error('TWILIO_AUTH_TOKEN not configured');
+      return false;
+    }
+
+    const webhookUrl = url || process.env.TWILIO_WEBHOOK_BASE_URL || '';
+    
+    // Create the expected signature
+    const expectedSignature = crypto
+      .createHmac('sha1', process.env.TWILIO_AUTH_TOKEN)
+      .update(webhookUrl + body)
+      .digest('base64');
+
+    // Compare signatures
+    return crypto.timingSafeEqual(
+      Buffer.from(signature),
+      Buffer.from(expectedSignature)
+    );
+  } catch (error) {
+    console.error('Error validating Twilio signature:', error);
+    return false;
+  }
+};
+
 // Run cleanup every hour
 if (typeof window === 'undefined') {
   setInterval(cleanupExpiredData, 60 * 60 * 1000);
@@ -284,6 +316,7 @@ const securityUtils = {
   isValidCompanyName,
   isValidName,
   getClientId,
+  validateTwilioSignature,
   RATE_LIMITS,
   SECURITY_HEADERS,
 };

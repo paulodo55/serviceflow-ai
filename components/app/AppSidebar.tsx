@@ -17,7 +17,12 @@ import {
   Mail,
   Zap,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  RefreshCw,
+  FileText,
+  Globe,
+  Banknote,
+  Shield
 } from 'lucide-react';
 import { useDemo } from '@/lib/demo-context';
 import { useTheme } from '@/lib/theme-context';
@@ -27,10 +32,20 @@ const navigation = [
   { name: 'Calendar', href: '/app/calendar', icon: Calendar },
   { name: 'Customers', href: '/app/customers', icon: Users },
   { name: 'Messages', href: '/app/messages', icon: MessageSquare },
+  { name: 'Communications', href: '/app/communications', icon: Phone },
   { name: 'Invoices', href: '/app/invoices', icon: CreditCard },
   { name: 'Reviews', href: '/app/reviews', icon: Star },
   { name: 'Analytics', href: '/app/analytics', icon: BarChart3 },
   { name: 'Settings', href: '/app/settings', icon: Settings },
+];
+
+const crmFeatures = [
+  { name: 'Subscriptions', href: '/app/subscriptions', icon: RefreshCw },
+  { name: 'Contracts', href: '/app/contracts', icon: FileText },
+  { name: 'Social Inbox', href: '/app/social', icon: MessageSquare },
+  { name: 'Integrations', href: '/app/integrations', icon: Globe },
+  { name: 'Banking', href: '/app/banking', icon: Banknote },
+  { name: 'Privacy & Data', href: '/app/privacy', icon: Shield },
 ];
 
 const aiFeatures = [
@@ -114,7 +129,7 @@ export default function AppSidebar() {
             );
           })}
 
-          {/* AI Features Section */}
+          {/* CRM Features Section */}
           {!collapsed && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -123,7 +138,43 @@ export default function AppSidebar() {
               className="pt-6"
             >
               <div className="flex items-center mb-3">
-                <Zap className="h-4 w-4 text-purple-600 mr-2" />
+                <RefreshCw className="h-4 w-4 text-indigo-600 mr-2" />
+                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  Enterprise CRM
+                </h3>
+              </div>
+              <div className="space-y-1">
+                {crmFeatures.map((item) => {
+                  const isActive = pathname === item.href;
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                        isActive
+                          ? 'bg-indigo-50 text-indigo-700 border-r-2 border-indigo-700'
+                          : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                      }`}
+                    >
+                      <item.icon className="mr-3 h-4 w-4 flex-shrink-0" />
+                      {item.name}
+                    </Link>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+
+          {/* AI Features Section */}
+          {!collapsed && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              className="pt-6"
+            >
+              <div className="flex items-center mb-3">
+                <Zap className="h-4 w-4 text-indigo-600 mr-2" />
                 <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
                   AI Features
                 </h3>
