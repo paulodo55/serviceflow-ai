@@ -10,7 +10,8 @@ import {
   isValidEmail
 } from "@/lib/security";
 import { findTrialUserByEmail } from "@/lib/trial-users";
-import { createPasswordResetEmail, sendEmail } from "@/lib/email-service";
+import emailService from "@/lib/email-service-enhanced";
+const { createPasswordResetEmail, sendEmail } = emailService;
 
 export async function POST(request: NextRequest) {
   try {

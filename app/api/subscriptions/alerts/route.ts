@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { sendEmail } from '@/lib/email-service';
+import emailService from '@/lib/email-service-enhanced';
+const { sendEmail } = emailService;
 import { z } from 'zod';
 
 const sendAlertSchema = z.object({

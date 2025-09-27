@@ -1,6 +1,7 @@
 // API endpoint for sending emails
 import { NextRequest, NextResponse } from 'next/server';
-import { sendEmail, sendBatchEmails, createAppointmentReminderEmail } from '@/lib/email-service-enhanced';
+import emailService from '@/lib/email-service-enhanced';
+const { sendEmail, sendBatchEmails, createAppointmentReminderEmail } = emailService;
 import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';

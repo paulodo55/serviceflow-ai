@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { trialUsers, addTrialUser, findTrialUserByEmail } from '@/lib/trial-users';
-import { createWelcomeEmail, sendEmail } from '@/lib/email-service';
+import emailService from '@/lib/email-service-enhanced';
+const { createWelcomeEmail, sendEmail } = emailService;
 import { 
   checkRateLimit, 
   recordFailedAttempt, 
