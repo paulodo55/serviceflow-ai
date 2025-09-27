@@ -1,6 +1,8 @@
 // Notification service for VervidFlow - handles automated SMS and email notifications
-import { sendSMS, createAppointmentReminder, createBookingConfirmation, createPaymentConfirmation, createSubscriptionAlert } from './sms-service';
-import { sendEmail, createAppointmentReminderEmail } from './email-service-enhanced';
+import smsService from './sms-service';
+import emailService from './email-service-enhanced';
+import { renderEmailTemplate } from './email-templates';
+import { renderSMSTemplate } from './sms-templates';
 import { prisma } from './prisma';
 
 export interface NotificationPreferences {
