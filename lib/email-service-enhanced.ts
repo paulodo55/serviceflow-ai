@@ -454,10 +454,12 @@ export const createAppointmentReminderEmail = (customerName: string, appointment
   };
 };
 
-export default {
+const emailService = {
   sendEmail,
   sendBatchEmails,
   createWelcomeEmail,
   createPasswordResetEmail,
   createAppointmentReminderEmail
 };
+
+export default emailService;

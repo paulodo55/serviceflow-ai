@@ -230,7 +230,7 @@ export const handleOptIn = async (phoneNumber: string, message: string): Promise
   return false;
 };
 
-export default {
+const smsService = {
   sendSMS,
   sendBatchSMS,
   verifyPhoneNumber,
@@ -244,3 +244,5 @@ export default {
   createPasswordResetSMS,
   createSubscriptionAlert
 };
+
+export default smsService;

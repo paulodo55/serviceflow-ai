@@ -12,10 +12,17 @@ export async function GET(request: NextRequest) {
 
     const user = await prisma.user.findUnique({
       where: { email: session.user.email },
-      include: { organization: true },
     });
 
-    if (!user?.organization) {
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    const organization = await prisma.organization.findUnique({
+      where: { id: user.organizationId },
+    });
+
+    if (!organization) {
       return NextResponse.json({ error: 'Organization not found' }, { status: 404 });
     }
 
@@ -94,13 +101,13 @@ export async function GET(request: NextRequest) {
       
     ] = await Promise.all([
       // Core metrics
-      prisma.user.count({ where: { organizationId: user.organization.id } }),
-      prisma.customer.count({ where: { organizationId: user.organization.id } }),
-      prisma.appointment.count({ where: { organizationId: user.organization.id } }),
-      prisma.invoice.count({ where: { organizationId: user.organization.id } }),
+      prisma.user.count({ where: { organizationId: organization.id } }),
+      prisma.customer.count({ where: { organizationId: organization.id } }),
+      prisma.appointment.count({ where: { organizationId: organization.id } }),
+      prisma.invoice.count({ where: { organizationId: organization.id } }),
       prisma.invoice.aggregate({
         where: { 
-          organizationId: user.organization.id,
+          organizationId: organization.id,
           status: 'PAID',
         },
         _sum: { total: true },
@@ -109,99 +116,99 @@ export async function GET(request: NextRequest) {
       // Recent activity (last 7 days)
       prisma.user.count({
         where: {
-          organizationId: user.organization.id,
+          organizationId: organization.id,
           createdAt: { gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) },
         },
       }),
       prisma.customer.count({
         where: {
-          organizationId: user.organization.id,
+          organizationId: organization.id,
           createdAt: { gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) },
         },
       }),
       prisma.appointment.count({
         where: {
-          organizationId: user.organization.id,
+          organizationId: organization.id,
           createdAt: { gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) },
         },
       }),
       prisma.invoice.count({
         where: {
-          organizationId: user.organization.id,
+          organizationId: organization.id,
           createdAt: { gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) },
         },
       }),
       
       // CRM metrics
-      prisma.subscription.count({ where: { organizationId: user.organization.id } }),
+      prisma.subscription.count({ where: { organizationId: organization.id } }),
       prisma.subscription.count({
         where: {
-          organizationId: user.organization.id,
+          organizationId: organization.id,
           status: 'ACTIVE',
         },
       }),
       prisma.subscription.count({
         where: {
-          organizationId: user.organization.id,
+          organizationId: organization.id,
           status: 'ACTIVE',
           endDate: {
             lte: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // Next 30 days
           },
         },
       }),
-      prisma.contract.count({ where: { organizationId: user.organization.id } }),
+      prisma.contract.count({ where: { organizationId: organization.id } }),
       prisma.contract.count({
         where: {
-          organizationId: user.organization.id,
+          organizationId: organization.id,
           status: 'SIGNED',
         },
       }),
       
       // Communication metrics
-      prisma.message.count({ where: { organizationId: user.organization.id } }),
-      prisma.socialMessage.count({ where: { organizationId: user.organization.id } }),
-      prisma.voicemail.count({ where: { organizationId: user.organization.id } }),
+      prisma.message.count({ where: { organizationId: organization.id } }),
+      prisma.socialMessage.count({ where: { organizationId: organization.id } }),
+      prisma.voicemail.count({ where: { organizationId: organization.id } }),
       prisma.voicemail.count({
         where: {
-          organizationId: user.organization.id,
+          organizationId: organization.id,
           isRead: false,
         },
       }),
       
       // Training & Support
-      prisma.trainingSession.count({ where: { organizationId: user.organization.id } }),
+      prisma.trainingSession.count({ where: { organizationId: organization.id } }),
       prisma.trainingSession.count({
         where: {
-          organizationId: user.organization.id,
+          organizationId: organization.id,
           status: 'IN_PROGRESS',
         },
       }),
       
       // Banking & Crypto
-      prisma.bankAccount.count({ where: { organizationId: user.organization.id } }),
+      prisma.bankAccount.count({ where: { organizationId: organization.id } }),
       prisma.bankAccount.count({
         where: {
-          organizationId: user.organization.id,
+          organizationId: organization.id,
           isActive: true,
         },
       }),
-      prisma.cryptoWallet.count({ where: { organizationId: user.organization.id } }),
-      prisma.cryptoPayment.count({ where: { organizationId: user.organization.id } }),
+      prisma.cryptoWallet.count({ where: { organizationId: organization.id } }),
+      prisma.cryptoPayment.count({ where: { organizationId: organization.id } }),
       
       // Privacy & Data
-      prisma.dataExportRequest.count({ where: { organizationId: user.organization.id } }),
+      prisma.dataExportRequest.count({ where: { organizationId: organization.id } }),
       prisma.dataExportRequest.count({
         where: {
-          organizationId: user.organization.id,
+          organizationId: organization.id,
           status: 'PENDING',
         },
       }),
-      prisma.privacySetting.count({ where: { organizationId: user.organization.id } }),
+      prisma.privacySetting.count({ where: { organizationId: organization.id } }),
       
       // System health
       prisma.language.count({ where: { isActive: true } }),
       prisma.translation.count(),
-      prisma.integrationAccess.count({ where: { organizationId: user.organization.id } }),
+      prisma.integrationAccess.count({ where: { organizationId: organization.id } }),
     ]);
 
     // Calculate growth rates
@@ -214,7 +221,7 @@ export async function GET(request: NextRequest) {
     const revenueByMonth = await prisma.invoice.groupBy({
       by: ['createdAt'],
       where: {
-        organizationId: user.organization.id,
+        organizationId: organization.id,
         status: 'PAID',
         createdAt: { gte: startDate },
       },
@@ -226,7 +233,7 @@ export async function GET(request: NextRequest) {
     const appointmentsByStatus = await prisma.appointment.groupBy({
       by: ['status'],
       where: {
-        organizationId: user.organization.id,
+        organizationId: organization.id,
         createdAt: { gte: startDate },
       },
       _count: { status: true },
@@ -234,7 +241,7 @@ export async function GET(request: NextRequest) {
 
     // Get top customers by revenue
     const topCustomers = await prisma.customer.findMany({
-      where: { organizationId: user.organization.id },
+      where: { organizationId: organization.id },
       select: {
         id: true,
         name: true,
@@ -250,19 +257,19 @@ export async function GET(request: NextRequest) {
     const systemHealth = {
       activeIntegrations: await prisma.integrationAccess.count({
         where: {
-          organizationId: user.organization.id,
+          organizationId: organization.id,
           isActive: true,
         },
       }),
       failedExports: await prisma.dataExportRequest.count({
         where: {
-          organizationId: user.organization.id,
+          organizationId: organization.id,
           status: 'FAILED',
         },
       }),
       pendingAlerts: await prisma.subscriptionAlert.count({
         where: {
-          subscription: { organizationId: user.organization.id },
+          subscription: { organizationId: organization.id },
           status: 'PENDING',
         },
       }),
@@ -348,8 +355,8 @@ export async function GET(request: NextRequest) {
       metadata: {
         timeframe,
         generatedAt: new Date().toISOString(),
-        organizationId: user.organization.id,
-        organizationName: user.organization.name,
+        organizationId: organization.id,
+        organizationName: organization.name,
       },
     };
 

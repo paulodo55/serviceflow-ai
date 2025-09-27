@@ -483,7 +483,7 @@ export const processScheduledNotifications = async (): Promise<{ processed: numb
   }
 };
 
-export default {
+const notificationService = {
   sendAppointmentReminder,
   sendBookingConfirmation,
   sendPaymentConfirmation,
@@ -491,3 +491,5 @@ export default {
   sendBatchNotifications,
   processScheduledNotifications
 };
+
+export default notificationService;
