@@ -49,3 +49,4 @@ credentials*.json
 *.backup
 *.bak
 *.old
+.env.local
