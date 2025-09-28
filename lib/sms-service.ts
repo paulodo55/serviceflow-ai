@@ -1,11 +1,22 @@
 // SMS service for VervidFlow using Twilio
 import { Twilio } from 'twilio';
 
-// Initialize Twilio client
-const twilioClient = new Twilio(
-  process.env.TWILIO_ACCOUNT_SID!,
-  process.env.TWILIO_AUTH_TOKEN!
-);
+// Initialize Twilio client conditionally
+let twilioClient: Twilio | null = null;
+
+function getTwilioClient(): Twilio {
+  if (!twilioClient) {
+    const accountSid = process.env.TWILIO_ACCOUNT_SID;
+    const authToken = process.env.TWILIO_AUTH_TOKEN;
+    
+    if (!accountSid || !authToken || !accountSid.startsWith('AC')) {
+      throw new Error('Twilio credentials not properly configured');
+    }
+    
+    twilioClient = new Twilio(accountSid, authToken);
+  }
+  return twilioClient;
+}
 
 export interface SMSTemplate {
   to: string;
@@ -81,6 +92,18 @@ export const sendSMS = async (template: SMSTemplate): Promise<SMSResponse> => {
       };
     }
 
+    // Try to get Twilio client
+    let client;
+    try {
+      client = getTwilioClient();
+    } catch (error) {
+      console.error('Failed to initialize Twilio client:', error);
+      return {
+        success: false,
+        error: 'Twilio client initialization failed'
+      };
+    }
+
     // Validate phone number format
     if (!template.to || !template.to.match(/^\+?[1-9]\d{1,14}$/)) {
       return {
@@ -97,7 +120,7 @@ export const sendSMS = async (template: SMSTemplate): Promise<SMSResponse> => {
     console.log('=== END SMS LOG ===');
 
     // Send SMS via Twilio
-    const message = await twilioClient.messages.create({
+    const message = await client.messages.create({
       body: template.message,
       from: process.env.TWILIO_PHONE_NUMBER,
       to: template.to,
@@ -156,7 +179,8 @@ export const sendBatchSMS = async (templates: SMSTemplate[]): Promise<{ sent: nu
 // Verify phone number function
 export const verifyPhoneNumber = async (phoneNumber: string): Promise<{ valid: boolean; formatted?: string; error?: string }> => {
   try {
-    const lookup = await twilioClient.lookups.v2.phoneNumbers(phoneNumber).fetch();
+    const client = getTwilioClient();
+    const lookup = await client.lookups.v2.phoneNumbers(phoneNumber).fetch();
     
     return {
       valid: lookup.valid,
@@ -173,7 +197,8 @@ export const verifyPhoneNumber = async (phoneNumber: string): Promise<{ valid: b
 // Get SMS delivery status
 export const getSMSStatus = async (messageId: string): Promise<{ status: string; error?: string }> => {
   try {
-    const message = await twilioClient.messages(messageId).fetch();
+    const client = getTwilioClient();
+    const message = await client.messages(messageId).fetch();
     
     return {
       status: message.status

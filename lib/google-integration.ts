@@ -461,7 +461,7 @@ export class StripeService {
         data: {
           status: 'PAID',
           paidDate: new Date(),
-          paymentMethod: 'CARD',
+          paymentMethods: { card: 'CARD' },
           paymentReference: paymentIntent.id
         }
       });

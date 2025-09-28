@@ -51,14 +51,12 @@ export const sendAppointmentReminder = async (context: NotificationContext): Pro
     // Send SMS reminder if enabled and phone number available
     if (preferences.smsEnabled && preferences.appointmentReminders && context.customerPhone && context.appointmentDate) {
       try {
-        const smsTemplate = createAppointmentReminder(
-          context.customerName,
-          context.appointmentDate,
-          context.businessName
-        );
-        smsTemplate.to = context.customerPhone;
+        const smsTemplate = {
+          to: context.customerPhone,
+          message: `Hi ${context.customerName}, this is a reminder for your appointment on ${context.appointmentDate} with ${context.businessName}.`
+        };
 
-        const smsResult = await sendSMS(smsTemplate);
+        const smsResult = await smsService.sendSMS(smsTemplate);
         results.sms = smsResult.success;
 
         // Log the notification
@@ -81,14 +79,23 @@ export const sendAppointmentReminder = async (context: NotificationContext): Pro
     // Send email reminder if enabled and email available
     if (preferences.emailEnabled && preferences.appointmentReminders && context.customerEmail && context.appointmentDate) {
       try {
-        const emailTemplate = createAppointmentReminderEmail(
-          context.customerName,
-          context.appointmentDate,
-          context.businessName,
-          context.customerEmail
-        );
+        const emailTemplate = renderEmailTemplate('appointmentReminder', {
+          customerName: context.customerName,
+          appointmentDate: context.appointmentDate,
+          businessName: context.businessName,
+          serviceName: context.serviceName || 'Service',
+          technician: 'TBD',
+          location: 'TBD',
+          estimatedDuration: 60,
+          notes: ''
+        });
 
-        const emailResult = await sendEmail(emailTemplate);
+        const emailResult = await emailService.sendEmail({
+          to: context.customerEmail,
+          subject: emailTemplate.subject,
+          html: emailTemplate.html,
+          text: emailTemplate.text
+        });
         results.email = emailResult;
 
         // Log the notification
@@ -122,14 +129,12 @@ export const sendBookingConfirmation = async (context: NotificationContext): Pro
   try {
     // Send SMS confirmation
     if (context.customerPhone && context.appointmentDate) {
-      const smsTemplate = createBookingConfirmation(
-        context.customerName,
-        context.appointmentDate,
-        context.businessName
-      );
-      smsTemplate.to = context.customerPhone;
+      const smsTemplate = {
+        to: context.customerPhone,
+        message: `Hi ${context.customerName}, your appointment with ${context.businessName} on ${context.appointmentDate} has been confirmed.`
+      };
 
-      const smsResult = await sendSMS(smsTemplate);
+      const smsResult = await smsService.sendSMS(smsTemplate);
       results.sms = smsResult.success;
     }
 
@@ -153,7 +158,7 @@ export const sendBookingConfirmation = async (context: NotificationContext): Pro
         text: `Appointment Confirmed! Hi ${context.customerName}, your appointment with ${context.businessName} is confirmed for ${context.appointmentDate}.`
       };
 
-      const emailResult = await sendEmail(emailTemplate);
+      const emailResult = await emailService.sendEmail(emailTemplate);
       results.email = emailResult;
     }
 
@@ -173,14 +178,12 @@ export const sendPaymentConfirmation = async (context: NotificationContext): Pro
 
     // Send SMS confirmation
     if (context.customerPhone) {
-      const smsTemplate = createPaymentConfirmation(
-        context.customerName,
-        context.amount,
-        context.businessName
-      );
-      smsTemplate.to = context.customerPhone;
+      const smsTemplate = {
+        to: context.customerPhone,
+        message: `Hi ${context.customerName}, your payment of $${context.amount} to ${context.businessName} has been confirmed. Thank you!`
+      };
 
-      const smsResult = await sendSMS(smsTemplate);
+      const smsResult = await smsService.sendSMS(smsTemplate);
       results.sms = smsResult.success;
     }
 
@@ -204,7 +207,7 @@ export const sendPaymentConfirmation = async (context: NotificationContext): Pro
         text: `Payment Receipt: Hi ${context.customerName}, thank you for your payment of $${context.amount} to ${context.businessName}.`
       };
 
-      const emailResult = await sendEmail(emailTemplate);
+      const emailResult = await emailService.sendEmail(emailTemplate);
       results.email = emailResult;
     }
 
@@ -224,14 +227,12 @@ export const sendSubscriptionAlert = async (context: NotificationContext): Promi
 
     // Send SMS alert
     if (context.customerPhone) {
-      const smsTemplate = createSubscriptionAlert(
-        context.businessName,
-        context.subscriptionName,
-        context.daysUntilExpiration
-      );
-      smsTemplate.to = context.customerPhone;
+      const smsTemplate = {
+        to: context.customerPhone,
+        message: `Hi! Your ${context.subscriptionName} subscription with ${context.businessName} expires in ${context.daysUntilExpiration} days. Please renew to continue service.`
+      };
 
-      const smsResult = await sendSMS(smsTemplate);
+      const smsResult = await smsService.sendSMS(smsTemplate);
       results.sms = smsResult.success;
     }
 
@@ -254,7 +255,7 @@ export const sendSubscriptionAlert = async (context: NotificationContext): Promi
         text: `Subscription Alert: Your ${context.subscriptionName} subscription expires in ${context.daysUntilExpiration} days. Renew now to avoid service interruption.`
       };
 
-      const emailResult = await sendEmail(emailTemplate);
+      const emailResult = await emailService.sendEmail(emailTemplate);
       results.email = emailResult;
     }
 

@@ -14,137 +14,139 @@ datasource db {
 model Organization {
   id        String   @id @default(cuid())
   name      String
-  domain    String?   @unique
+  domain    String?  @unique
   plan      String   @default("trial") // trial, starter, pro, enterprise
   status    String   @default("active") // active, suspended, cancelled
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+
   // Subscription info
-  stripeCustomerId    String?  @unique
-  subscriptionId      String?  @unique
-  subscriptionStatus  String?  // active, past_due, canceled, etc.
+  stripeCustomerId   String?   @unique
+  subscriptionId     String?   @unique
+  subscriptionStatus String? // active, past_due, canceled, etc.
   trialEndsAt        DateTime?
   currentPeriodStart DateTime?
   currentPeriodEnd   DateTime?
-  
+
   // Business info (moved from BusinessSettings)
-  businessPhone     String?
-  businessAddress   String?
-  businessEmail     String?
-  website           String?
-  logo              String?
-  
+  businessPhone   String?
+  businessAddress String?
+  businessEmail   String?
+  website         String?
+  logo            String?
+
   // Operating hours
-  mondayOpen        String?
-  mondayClose       String?
-  tuesdayOpen       String?
-  tuesdayClose      String?
-  wednesdayOpen     String?
-  wednesdayClose    String?
-  thursdayOpen      String?
-  thursdayClose     String?
-  fridayOpen        String?
-  fridayClose       String?
-  saturdayOpen      String?
-  saturdayClose     String?
-  sundayOpen        String?
-  sundayClose       String?
-  
+  mondayOpen     String?
+  mondayClose    String?
+  tuesdayOpen    String?
+  tuesdayClose   String?
+  wednesdayOpen  String?
+  wednesdayClose String?
+  thursdayOpen   String?
+  thursdayClose  String?
+  fridayOpen     String?
+  fridayClose    String?
+  saturdayOpen   String?
+  saturdayClose  String?
+  sundayOpen     String?
+  sundayClose    String?
+
   // Branding
-  primaryColor      String  @default("#3B82F6")
-  secondaryColor    String  @default("#10B981")
-  accentColor       String  @default("#F59E0B")
-  
+  primaryColor   String @default("#3B82F6")
+  secondaryColor String @default("#10B981")
+  accentColor    String @default("#F59E0B")
+
   // Integrations
-  stripeAccountId   String?
-  twilioAccountSid  String?
-  sendgridApiKey    String?
-  googleCalendarId  String?
-  
+  stripeAccountId  String?
+  twilioAccountSid String?
+  sendgridApiKey   String?
+  googleCalendarId String?
+
   // Additional settings
-  settings              Json?
-  
+  settings Json?
+
   // Relationships
-  users            User[]
-  customers        Customer[]
-  appointments     Appointment[]
-  services         Service[]
-  invoices         Invoice[]
-  messages         Message[]
-  reviews          Review[]
-  
+  users        User[]
+  customers    Customer[]
+  appointments Appointment[]
+  services     Service[]
+  invoices     Invoice[]
+  messages     Message[]
+  reviews      Review[]
+
   // New CRM relationships
-  subscriptions    Subscription[]
-  contracts        Contract[]
-  contractTemplates ContractTemplate[]
-  socialAccounts   SocialMediaAccount[]
-  socialMessages   SocialMessage[]
-  employeeGroups   EmployeeGroup[]
-  integrationAccess IntegrationAccess[]
+  subscriptions        Subscription[]
+  contracts            Contract[]
+  contractTemplates    ContractTemplate[]
+  socialAccounts       SocialMediaAccount[]
+  socialMessages       SocialMessage[]
+  employeeGroups       EmployeeGroup[]
+  integrationAccess    IntegrationAccess[]
   calendarIntegrations CalendarIntegration[]
-  calendarEvents   CalendarEvent[]
-  languages        OrganizationLanguage[]
-  bankAccounts     BankAccount[]
-  bankTransactions BankTransaction[]
-  cryptoWallets    CryptoWallet[]
-  cryptoTransactions CryptoTransaction[]
-  cryptoPayments   CryptoPayment[]
+  calendarEvents       CalendarEvent[]
+  languages            OrganizationLanguage[]
+  bankAccounts         BankAccount[]
+  bankTransactions     BankTransaction[]
+  cryptoWallets        CryptoWallet[]
+  cryptoTransactions   CryptoTransaction[]
+  cryptoPayments       CryptoPayment[]
   storedPaymentMethods StoredPaymentMethod[]
-  smsConfirmations SMSConfirmation[]
-  voicemails       Voicemail[]
-  trainingSessions TrainingSession[]
-  dataExportRequests DataExportRequest[]
-  dataImportJobs   DataImportJob[]
-  privacySettings  PrivacySetting[]
-  
+  smsConfirmations     SMSConfirmation[]
+  voicemails           Voicemail[]
+  trainingSessions     TrainingSession[]
+  dataExportRequests   DataExportRequest[]
+  dataImportJobs       DataImportJob[]
+  privacySettings      PrivacySetting[]
+  dataDeletionRequests DataDeletionRequest[]
+
   @@map("organizations")
 }
 
 model User {
-  id             String   @id @default(cuid())
-  email          String   @unique
+  id             String       @id @default(cuid())
+  email          String       @unique
   name           String
-  role           UserRole @default(STAFF)
+  role           UserRole     @default(STAFF)
   phone          String?
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  
+
   // Auth fields
-  emailVerified           DateTime?
-  emailVerificationToken  String?
+  emailVerified          DateTime?
+  emailVerificationToken String?
   hashedPassword         String?
   image                  String?
-  
+
   // Additional fields
-  department     String?
-  status         UserStatus @default(ACTIVE)
-  preferences    Json?
-  isDemo         Boolean @default(false)
-  skills         Json?
-  
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  lastLoginAt    DateTime?
-  
+  department  String?
+  status      UserStatus @default(ACTIVE)
+  preferences Json?
+  isDemo      Boolean    @default(false)
+  skills      Json?
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  lastLoginAt DateTime?
+
   // NextAuth relations
-  accounts       Account[]
-  sessions       Session[]
-  
+  accounts Account[]
+  sessions Session[]
+
   // Appointment relations
-  assignedAppointments  Appointment[] @relation("AssignedAppointments")
-  createdAppointments   Appointment[] @relation("CreatedAppointments")
-  
+  assignedAppointments Appointment[] @relation("AssignedAppointments")
+  createdAppointments  Appointment[] @relation("CreatedAppointments")
+
   // New CRM relationships
-  employeeGroups EmployeeGroupMember[]
-  integrationAccess IntegrationAccess[]
+  employeeGroups       EmployeeGroupMember[]
+  integrationAccess    IntegrationAccess[]
   calendarIntegrations CalendarIntegration[]
-  trainingSessions TrainingSession[] @relation("TrainingSessions")
-  trainerSessions TrainingSession[] @relation("TrainerSessions")
-  dataExportRequests DataExportRequest[] @relation("DataExportRequests")
-  dataImportJobs DataImportJob[] @relation("DataImportJobs")
-  privacySettings PrivacySetting[] @relation("PrivacySettings")
-  
+  trainingSessions     TrainingSession[]     @relation("TrainingSessions")
+  trainerSessions      TrainingSession[]     @relation("TrainerSessions")
+  dataExportRequests   DataExportRequest[]   @relation("DataExportRequests")
+  dataImportJobs       DataImportJob[]       @relation("DataImportJobs")
+  privacySettings      PrivacySetting[]      @relation("PrivacySettings")
+  dataDeletionRequests DataDeletionRequest[] @relation("DataDeletionRequests")
+
   @@map("users")
 }
 
@@ -175,7 +177,7 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+
   @@map("sessions")
 }
 
@@ -188,249 +190,250 @@ model VerificationToken {
   @@map("verification_tokens")
 }
 
-
 model Customer {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  
-  name              String
-  email             String?
-  phone             String?
-  address           String?
-  notes             String?
-  tags              String[] @default([])
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  name    String
+  email   String?
+  phone   String?
+  address String?
+  notes   String?
+  tags    String[] @default([])
+
   // Additional fields
-  customerType      CustomerType @default(RESIDENTIAL)
-  source           String?
-  preferences      Json?
-  customFields     Json?
-  createdBy        String?
-  deletedAt        DateTime?
-  gdprAnonymized   Boolean @default(false)
-  gdprDeleted      Boolean @default(false)
-  gdprProcessed    Boolean @default(false)
-  
+  customerType   CustomerType @default(RESIDENTIAL)
+  source         String?
+  preferences    Json?
+  customFields   Json?
+  createdBy      String?
+  deletedAt      DateTime?
+  gdprAnonymized Boolean      @default(false)
+  gdprDeleted    Boolean      @default(false)
+  gdprProcessed  Boolean      @default(false)
+
   // Customer analytics
-  lifetimeValue     Float    @default(0)
-  appointmentCount  Int      @default(0)
-  lastAppointment   DateTime?
-  averageRating     Float?
-  
+  lifetimeValue    Float     @default(0)
+  appointmentCount Int       @default(0)
+  lastAppointment  DateTime?
+  averageRating    Float?
+
   // Status
-  status            CustomerStatus @default(ACTIVE)
-  isVip             Boolean  @default(false)
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  status CustomerStatus @default(ACTIVE)
+  isVip  Boolean        @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Relationships
-  appointments      Appointment[]
-  invoices          Invoice[]
-  messages          Message[]
-  reviews           Review[]
-  
+  appointments         Appointment[]
+  invoices             Invoice[]
+  messages             Message[]
+  reviews              Review[]
+  dataExportRequests   DataExportRequest[]
+  dataDeletionRequests DataDeletionRequest[]
+
   // New CRM relationships
-  subscriptions     Subscription[]
-  contracts         Contract[]
-  socialMessages    SocialMessage[]
-  cryptoPayments    CryptoPayment[]
+  subscriptions        Subscription[]
+  contracts            Contract[]
+  socialMessages       SocialMessage[]
+  cryptoPayments       CryptoPayment[]
   storedPaymentMethods StoredPaymentMethod[]
-  smsConfirmations  SMSConfirmation[]
-  voicemails        Voicemail[]
-  
+  smsConfirmations     SMSConfirmation[]
+  voicemails           Voicemail[]
+
   @@map("customers")
 }
 
 model Service {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  
-  name              String
-  description       String?
-  price             Float
-  duration          Int      // in minutes
-  category          String?
-  isActive          Boolean  @default(true)
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  name        String
+  description String?
+  price       Float
+  duration    Int // in minutes
+  category    String?
+  isActive    Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Relationships
-  appointments      Appointment[]
-  
+  appointments Appointment[]
+
   @@map("services")
 }
 
 model Appointment {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  customerId        String
-  customer          Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  serviceId         String?
-  service           Service? @relation(fields: [serviceId], references: [id], onDelete: SetNull)
-  
-  title             String
-  description       String?
-  startTime         DateTime
-  endTime           DateTime
-  status            AppointmentStatus @default(SCHEDULED)
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  customerId     String
+  customer       Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  serviceId      String?
+  service        Service?     @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+
+  title       String
+  description String?
+  startTime   DateTime
+  endTime     DateTime
+  status      AppointmentStatus @default(SCHEDULED)
+
   // Additional fields
-  type              String?
-  location          String?
-  assignedUserId    String?
-  assignedUser      User? @relation("AssignedAppointments", fields: [assignedUserId], references: [id], onDelete: SetNull)
-  createdBy         String?
-  createdByUser     User? @relation("CreatedAppointments", fields: [createdBy], references: [id], onDelete: SetNull)
-  estimatedDuration Int?
-  completedAt       DateTime?
+  type                  String?
+  location              String?
+  assignedUserId        String?
+  assignedUser          User?     @relation("AssignedAppointments", fields: [assignedUserId], references: [id], onDelete: SetNull)
+  createdBy             String?
+  createdByUser         User?     @relation("CreatedAppointments", fields: [createdBy], references: [id], onDelete: SetNull)
+  estimatedDuration     Int?
+  completedAt           DateTime?
   googleCalendarEventId String?
-  
+
   // Pricing
-  price             Float?
-  notes             String?
-  
+  price Float?
+  notes String?
+
   // Recurring appointments
-  isRecurring       Boolean  @default(false)
-  recurringType     RecurringType?
-  recurringEnd      DateTime?
+  isRecurring         Boolean        @default(false)
+  recurringType       RecurringType?
+  recurringEnd        DateTime?
   parentAppointmentId String?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Relationships
-  invoices          Invoice[]
-  calendarEvents    CalendarEvent[]
-  
+  invoices       Invoice[]
+  calendarEvents CalendarEvent[]
+
   @@map("appointments")
 }
 
 model Invoice {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  customerId        String
-  customer          Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  appointmentId     String?
-  appointment       Appointment? @relation(fields: [appointmentId], references: [id], onDelete: SetNull)
-  
-  invoiceNumber     String   @unique
-  amount            Float
-  tax               Float    @default(0)
-  total             Float
-  description       String?
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  customerId     String
+  customer       Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  appointmentId  String?
+  appointment    Appointment? @relation(fields: [appointmentId], references: [id], onDelete: SetNull)
+
+  invoiceNumber String  @unique
+  amount        Float
+  tax           Float   @default(0)
+  total         Float
+  description   String?
+
   // Additional fields
-  items             Json?
-  notes             String?
-  terms             String?
-  paidDate          DateTime?
-  paymentMethods    Json?
-  paymentReference  String?
-  
-  status            InvoiceStatus @default(UNPAID)
-  dueDate           DateTime
-  paidAt            DateTime?
-  
+  items            Json?
+  notes            String?
+  terms            String?
+  paidDate         DateTime?
+  paymentMethods   Json?
+  paymentReference String?
+
+  status  InvoiceStatus @default(UNPAID)
+  dueDate DateTime
+  paidAt  DateTime?
+
   // Stripe integration
   stripePaymentIntentId String?
-  stripeInvoiceId   String?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  stripeInvoiceId       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // New CRM relationships
-  cryptoPayments    CryptoPayment[]
-  
+  cryptoPayments CryptoPayment[]
+
   @@map("invoices")
 }
 
 model Message {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  customerId        String
-  customer          Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  
-  content           String
-  subject           String?
-  channel           MessageChannel @default(SMS)
-  direction         MessageDirection @default(OUTBOUND)
-  status            MessageStatus @default(SENT)
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  customerId     String
+  customer       Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  content   String
+  subject   String?
+  channel   MessageChannel   @default(SMS)
+  direction MessageDirection @default(OUTBOUND)
+  status    MessageStatus    @default(SENT)
+
   // Additional fields
   twilioMessageId   String?
   sendgridMessageId String?
   metadata          Json?
-  
+
   // Template info
-  templateCategory  String?
-  isAutomated       Boolean  @default(false)
-  
-  sentAt            DateTime @default(now())
-  readAt            DateTime?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  templateCategory String?
+  isAutomated      Boolean @default(false)
+
+  sentAt DateTime  @default(now())
+  readAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("messages")
 }
 
 model Review {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  customerId        String
-  customer          Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  
-  rating            Int      // 1-5 stars
-  content           String?
-  platform          ReviewPlatform @default(GOOGLE)
-  status            ReviewStatus @default(PENDING)
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  customerId     String
+  customer       Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  rating   Int // 1-5 stars
+  content  String?
+  platform ReviewPlatform @default(GOOGLE)
+  status   ReviewStatus   @default(PENDING)
+
   // External info
-  externalId        String?
-  externalUrl       String?
-  
+  externalId  String?
+  externalUrl String?
+
   // Response
-  response          String?
-  respondedAt       DateTime?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  response    String?
+  respondedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("reviews")
 }
 
 // Future AI features (placeholders)
 model AICallbackSession {
-  id                String   @id @default(cuid())
-  customerId        String
-  phoneNumber       String
-  status            String   @default("PENDING")
-  transcript        String?
-  summary           String?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  id          String   @id @default(cuid())
+  customerId  String
+  phoneNumber String
+  status      String   @default("PENDING")
+  transcript  String?
+  summary     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
   @@map("ai_callback_sessions")
 }
 
 model AICallTranscript {
-  id                String   @id @default(cuid())
-  sessionId         String
-  content           String
-  speaker           String   // "CUSTOMER" or "AI"
-  timestamp         DateTime
-  confidence        Float?
-  
-  createdAt         DateTime @default(now())
-  
+  id         String   @id @default(cuid())
+  sessionId  String
+  content    String
+  speaker    String // "CUSTOMER" or "AI"
+  timestamp  DateTime
+  confidence Float?
+
+  createdAt DateTime @default(now())
+
   @@map("ai_call_transcripts")
 }
 
@@ -438,799 +441,827 @@ model AICallTranscript {
 
 // Subscription Management
 model Subscription {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  customerId        String?
-  customer          Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
-  
-  name              String
-  description       String?
-  type              SubscriptionType @default(SERVICE)
-  status            SubscriptionStatus @default(ACTIVE)
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  customerId     String?
+  customer       Customer?    @relation(fields: [customerId], references: [id], onDelete: SetNull)
+
+  name        String
+  description String?
+  type        SubscriptionType   @default(SERVICE)
+  status      SubscriptionStatus @default(ACTIVE)
+
   // Pricing
-  amount            Float
-  billingCycle      BillingCycle @default(MONTHLY)
-  currency          String @default("USD")
-  
+  amount       Float
+  billingCycle BillingCycle @default(MONTHLY)
+  currency     String       @default("USD")
+
   // Dates
-  startDate         DateTime
-  endDate           DateTime?
-  nextBillingDate   DateTime?
-  lastBilledDate    DateTime?
-  
+  startDate       DateTime
+  endDate         DateTime?
+  nextBillingDate DateTime?
+  lastBilledDate  DateTime?
+
   // Renewal settings
-  autoRenew         Boolean @default(true)
-  renewalTerms      Int @default(12) // months
-  
+  autoRenew    Boolean @default(true)
+  renewalTerms Int     @default(12) // months
+
   // Alert settings
-  alertDays         Int[] @default([30, 15, 7]) // days before expiration
-  lastAlertSent     DateTime?
-  
+  alertDays     Int[]     @default([30, 15, 7]) // days before expiration
+  lastAlertSent DateTime?
+
   // External references
   stripeSubscriptionId String?
-  externalId        String?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  externalId           String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Relationships
-  alerts            SubscriptionAlert[]
-  contracts         Contract[]
-  
+  alerts    SubscriptionAlert[]
+  contracts Contract[]
+
   @@map("subscriptions")
 }
 
 model SubscriptionAlert {
-  id                String   @id @default(cuid())
-  subscriptionId    String
-  subscription      Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
-  
-  type              AlertType @default(EXPIRATION)
-  status            AlertStatus @default(PENDING)
-  scheduledFor      DateTime
-  sentAt            DateTime?
-  
+  id             String       @id @default(cuid())
+  subscriptionId String
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  type         AlertType   @default(EXPIRATION)
+  status       AlertStatus @default(PENDING)
+  scheduledFor DateTime
+  sentAt       DateTime?
+
   // Content
-  subject           String
-  message           String
-  channel           MessageChannel @default(EMAIL)
-  
+  subject String
+  message String
+  channel MessageChannel @default(EMAIL)
+
   // Recipients
-  recipientEmail    String?
-  recipientPhone    String?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  recipientEmail String?
+  recipientPhone String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("subscription_alerts")
 }
 
 // Contract Management
 model Contract {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  customerId        String?
-  customer          Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
-  subscriptionId    String?
-  subscription      Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
-  templateId        String?
-  template          ContractTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
-  
-  title             String
-  content           String @db.Text
-  status            ContractStatus @default(DRAFT)
-  version           Int @default(1)
-  
+  id             String            @id @default(cuid())
+  organizationId String
+  organization   Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  customerId     String?
+  customer       Customer?         @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  subscriptionId String?
+  subscription   Subscription?     @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
+  templateId     String?
+  template       ContractTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+
+  title   String
+  content String         @db.Text
+  status  ContractStatus @default(DRAFT)
+  version Int            @default(1)
+
   // Signature info
-  requiresSignature Boolean @default(true)
+  requiresSignature Boolean   @default(true)
   signedAt          DateTime?
   signedBy          String?
   signatureData     Json?
-  
+
   // Dates
-  effectiveDate     DateTime?
-  expirationDate    DateTime?
-  
+  effectiveDate  DateTime?
+  expirationDate DateTime?
+
   // External integration
   docusignEnvelopeId String?
-  hellosignId       String?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  hellosignId        String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Relationships
-  versions          ContractVersion[]
-  
+  versions ContractVersion[]
+
   @@map("contracts")
 }
 
 model ContractTemplate {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  
-  name              String
-  description       String?
-  category          String?
-  content           String @db.Text
-  variables         Json? // template variables
-  
-  isActive          Boolean @default(true)
-  isDefault         Boolean @default(false)
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  name        String
+  description String?
+  category    String?
+  content     String  @db.Text
+  variables   Json? // template variables
+
+  isActive  Boolean @default(true)
+  isDefault Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Relationships
-  contracts         Contract[]
-  
+  contracts Contract[]
+
   @@unique([organizationId, name])
   @@map("contract_templates")
 }
 
 model ContractVersion {
-  id                String   @id @default(cuid())
-  contractId        String
-  contract          Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
-  
-  version           Int
-  content           String @db.Text
-  changes           String? @db.Text
-  createdBy         String
-  
-  createdAt         DateTime @default(now())
-  
+  id         String   @id @default(cuid())
+  contractId String
+  contract   Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+
+  version   Int
+  content   String  @db.Text
+  changes   String? @db.Text
+  createdBy String
+
+  createdAt DateTime @default(now())
+
   @@unique([contractId, version])
   @@map("contract_versions")
 }
 
 // Social Media Integration
 model SocialMediaAccount {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  
-  platform          SocialPlatform
-  accountId         String // platform-specific ID
-  accountName       String
-  accessToken       String @db.Text
-  refreshToken      String? @db.Text
-  tokenExpiresAt    DateTime?
-  
-  isActive          Boolean @default(true)
-  lastSyncAt        DateTime?
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  platform       SocialPlatform
+  accountId      String // platform-specific ID
+  accountName    String
+  accessToken    String         @db.Text
+  refreshToken   String?        @db.Text
+  tokenExpiresAt DateTime?
+
+  isActive   Boolean   @default(true)
+  lastSyncAt DateTime?
+
   // Webhook info
-  webhookUrl        String?
-  webhookSecret     String?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  webhookUrl    String?
+  webhookSecret String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Relationships
-  messages          SocialMessage[]
-  
+  messages SocialMessage[]
+
   @@unique([organizationId, platform, accountId])
   @@map("social_media_accounts")
 }
 
 model SocialMessage {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  accountId         String
-  account           SocialMediaAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
-  customerId        String?
-  customer          Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
-  
+  id             String             @id @default(cuid())
+  organizationId String
+  organization   Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  accountId      String
+  account        SocialMediaAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  customerId     String?
+  customer       Customer?          @relation(fields: [customerId], references: [id], onDelete: SetNull)
+
   // Message data
-  externalId        String // platform message ID
-  threadId          String? // conversation thread
-  content           String @db.Text
-  mediaUrls         String[]
-  
+  externalId String // platform message ID
+  threadId   String? // conversation thread
+  content    String   @db.Text
+  mediaUrls  String[]
+
   // Sender info
-  senderName        String
-  senderHandle      String?
-  senderProfileUrl  String?
-  
+  senderName       String
+  senderHandle     String?
+  senderProfileUrl String?
+
   // Message metadata
-  platform          SocialPlatform
-  messageType       SocialMessageType @default(TEXT)
-  direction         MessageDirection
-  status            MessageStatus @default(DELIVERED)
-  
+  platform    SocialPlatform
+  messageType SocialMessageType @default(TEXT)
+  direction   MessageDirection
+  status      MessageStatus     @default(DELIVERED)
+
   // Response tracking
-  parentMessageId   String?
-  isResponse        Boolean @default(false)
-  respondedAt       DateTime?
-  respondedBy       String?
-  
+  parentMessageId String?
+  isResponse      Boolean   @default(false)
+  respondedAt     DateTime?
+  respondedBy     String?
+
   // Timestamps
   platformCreatedAt DateTime
   readAt            DateTime?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@unique([externalId, platform])
   @@map("social_messages")
 }
 
 // Access Control & Employee Management
 model EmployeeGroup {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  
-  name              String
-  description       String?
-  permissions       Json // integration permissions
-  priority          Int @default(0) // higher priority overrides lower
-  
-  isActive          Boolean @default(true)
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  name        String
+  description String?
+  permissions Json // integration permissions
+  priority    Int     @default(0) // higher priority overrides lower
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Relationships
-  members           EmployeeGroupMember[]
-  integrations      IntegrationAccess[]
-  
+  members      EmployeeGroupMember[]
+  integrations IntegrationAccess[]
+
   @@map("employee_groups")
 }
 
 model EmployeeGroupMember {
-  id                String   @id @default(cuid())
-  groupId           String
-  group             EmployeeGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  userId            String
-  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  addedAt           DateTime @default(now())
-  addedBy           String
-  
+  id      String        @id @default(cuid())
+  groupId String
+  group   EmployeeGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  userId  String
+  user    User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  addedAt DateTime @default(now())
+  addedBy String
+
   @@unique([groupId, userId])
   @@map("employee_group_members")
 }
 
 model IntegrationAccess {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  userId            String?
-  user              User? @relation(fields: [userId], references: [id], onDelete: Cascade)
-  groupId           String?
-  group             EmployeeGroup? @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  
-  integrationType   IntegrationType
-  accessLevel       AccessLevel @default(READ)
-  permissions       Json? // specific permissions
-  
-  isActive          Boolean @default(true)
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  id             String         @id @default(cuid())
+  organizationId String
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId         String?
+  user           User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  groupId        String?
+  group          EmployeeGroup? @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  integrationType IntegrationType
+  accessLevel     AccessLevel     @default(READ)
+  permissions     Json? // specific permissions
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("integration_access")
 }
 
 // Calendar Integration
 model CalendarIntegration {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  userId            String?
-  user              User? @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  provider          CalendarProvider
-  accountEmail      String
-  calendarId        String
-  calendarName      String
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId         String?
+  user           User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  provider     CalendarProvider
+  accountEmail String
+  calendarId   String
+  calendarName String
+
   // Sync settings
-  syncDirection     SyncDirection @default(BIDIRECTIONAL)
-  syncEnabled       Boolean @default(true)
-  lastSyncAt        DateTime?
-  
+  syncDirection SyncDirection @default(BIDIRECTIONAL)
+  syncEnabled   Boolean       @default(true)
+  lastSyncAt    DateTime?
+
   // Access tokens
-  accessToken       String @db.Text
-  refreshToken      String? @db.Text
-  tokenExpiresAt    DateTime?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  accessToken    String    @db.Text
+  refreshToken   String?   @db.Text
+  tokenExpiresAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Relationships
-  events            CalendarEvent[]
-  
+  events CalendarEvent[]
+
   @@map("calendar_integrations")
 }
 
 model CalendarEvent {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  integrationId     String
-  integration       CalendarIntegration @relation(fields: [integrationId], references: [id], onDelete: Cascade)
-  appointmentId     String?
-  appointment       Appointment? @relation(fields: [appointmentId], references: [id], onDelete: SetNull)
-  
+  id             String              @id @default(cuid())
+  organizationId String
+  organization   Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  integrationId  String
+  integration    CalendarIntegration @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+  appointmentId  String?
+  appointment    Appointment?        @relation(fields: [appointmentId], references: [id], onDelete: SetNull)
+
   // Event data
-  externalId        String // calendar provider event ID
-  title             String
-  description       String?
-  location          String?
-  
+  externalId  String // calendar provider event ID
+  title       String
+  description String?
+  location    String?
+
   // Timing
-  startTime         DateTime
-  endTime           DateTime
-  isAllDay          Boolean @default(false)
-  timezone          String?
-  
+  startTime DateTime
+  endTime   DateTime
+  isAllDay  Boolean  @default(false)
+  timezone  String?
+
   // Recurrence
-  isRecurring       Boolean @default(false)
-  recurrenceRule    String? // RRULE format
-  
+  isRecurring    Boolean @default(false)
+  recurrenceRule String? // RRULE format
+
   // Status
-  status            CalendarEventStatus @default(CONFIRMED)
-  lastSyncAt        DateTime?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  status     CalendarEventStatus @default(CONFIRMED)
+  lastSyncAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@unique([integrationId, externalId])
   @@map("calendar_events")
 }
 
 // Multi-language Support
 model Language {
-  id                String   @id @default(cuid())
-  code              String   @unique // ISO 639-1 code (e.g., 'ms', 'ta')
-  name              String   // Display name
-  nativeName        String   // Name in native language
-  
-  isActive          Boolean @default(true)
-  isRTL             Boolean @default(false) // Right-to-left language
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  id         String @id @default(cuid())
+  code       String @unique // ISO 639-1 code (e.g., 'ms', 'ta')
+  name       String // Display name
+  nativeName String // Name in native language
+
+  isActive Boolean @default(true)
+  isRTL    Boolean @default(false) // Right-to-left language
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Relationships
-  translations      Translation[]
-  organizations     OrganizationLanguage[]
-  
+  translations  Translation[]
+  organizations OrganizationLanguage[]
+
   @@map("languages")
 }
 
 model Translation {
-  id                String   @id @default(cuid())
-  languageId        String
-  language          Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  
-  key               String   // translation key
-  value             String @db.Text // translated text
-  context           String?  // context for translators
-  
-  isApproved        Boolean @default(false)
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  id         String   @id @default(cuid())
+  languageId String
+  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
+
+  key     String // translation key
+  value   String  @db.Text // translated text
+  context String? // context for translators
+
+  isApproved Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@unique([languageId, key])
   @@map("translations")
 }
 
 model OrganizationLanguage {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  languageId        String
-  language          Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  
-  isDefault         Boolean @default(false)
-  isActive          Boolean @default(true)
-  
-  createdAt         DateTime @default(now())
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  languageId     String
+  language       Language     @relation(fields: [languageId], references: [id], onDelete: Cascade)
+
+  isDefault Boolean @default(false)
+  isActive  Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
   @@unique([organizationId, languageId])
   @@map("organization_languages")
 }
 
 // Banking & Crypto Integration
 model BankAccount {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  
-  bankName          String
-  accountName       String
-  accountNumber     String @db.VarChar(255) // encrypted
-  routingNumber     String? @db.VarChar(255) // encrypted
-  accountType       BankAccountType @default(CHECKING)
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  bankName      String
+  accountName   String
+  accountNumber String          @db.VarChar(255) // encrypted
+  routingNumber String?         @db.VarChar(255) // encrypted
+  accountType   BankAccountType @default(CHECKING)
+
   // Integration data
-  plaidAccountId    String?
-  plaidAccessToken  String? @db.Text
-  lastSyncAt        DateTime?
-  
-  isActive          Boolean @default(true)
-  isPrimary         Boolean @default(false)
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  plaidAccountId   String?
+  plaidAccessToken String?   @db.Text
+  lastSyncAt       DateTime?
+
+  isActive  Boolean @default(true)
+  isPrimary Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Relationships
-  transactions      BankTransaction[]
-  
+  transactions BankTransaction[]
+
   @@map("bank_accounts")
 }
 
 model BankTransaction {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  accountId         String
-  account           BankAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  accountId      String
+  account        BankAccount  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
   // Transaction data
-  externalId        String? // bank/plaid transaction ID
-  amount            Float
-  currency          String @default("USD")
-  description       String
-  category          String?
-  
+  externalId  String? // bank/plaid transaction ID
+  amount      Float
+  currency    String  @default("USD")
+  description String
+  category    String?
+
   // Classification
-  type              TransactionType
-  status            TransactionStatus @default(COMPLETED)
-  
+  type   TransactionType
+  status TransactionStatus @default(COMPLETED)
+
   // Dates
-  transactionDate   DateTime
-  postedDate        DateTime?
-  
+  transactionDate DateTime
+  postedDate      DateTime?
+
   // Reconciliation
-  isReconciled      Boolean @default(false)
-  reconciledAt      DateTime?
-  reconciledBy      String?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  isReconciled Boolean   @default(false)
+  reconciledAt DateTime?
+  reconciledBy String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("bank_transactions")
 }
 
 model CryptoWallet {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  
-  currency          CryptoCurrency
-  address           String
-  label             String?
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  currency CryptoCurrency
+  address  String
+  label    String?
+
   // Integration settings
-  provider          CryptoProvider @default(COINBASE)
-  apiKey            String? @db.Text
-  apiSecret         String? @db.Text
-  
-  isActive          Boolean @default(true)
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  provider  CryptoProvider @default(COINBASE)
+  apiKey    String?        @db.Text
+  apiSecret String?        @db.Text
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Relationships
-  transactions      CryptoTransaction[]
-  payments          CryptoPayment[]
-  
+  transactions CryptoTransaction[]
+  payments     CryptoPayment[]
+
   @@unique([organizationId, currency, address])
   @@map("crypto_wallets")
 }
 
 model CryptoTransaction {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  walletId          String
-  wallet            CryptoWallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  walletId       String
+  wallet         CryptoWallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+
   // Transaction data
-  txHash            String @unique
-  amount            String // stored as string for precision
-  currency          CryptoCurrency
-  
+  txHash   String         @unique
+  amount   String // stored as string for precision
+  currency CryptoCurrency
+
   // Addresses
-  fromAddress       String
-  toAddress         String
-  
+  fromAddress String
+  toAddress   String
+
   // Status
-  status            CryptoTransactionStatus @default(PENDING)
-  confirmations     Int @default(0)
-  
+  status        CryptoTransactionStatus @default(PENDING)
+  confirmations Int                     @default(0)
+
   // Pricing
-  usdValue          Float?
-  exchangeRate      Float?
-  
+  usdValue     Float?
+  exchangeRate Float?
+
   // Timestamps
-  blockTime         DateTime?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  blockTime DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("crypto_transactions")
 }
 
 model CryptoPayment {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  walletId          String
-  wallet            CryptoWallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
-  customerId        String?
-  customer          Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
-  invoiceId         String?
-  invoice           Invoice? @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  walletId       String
+  wallet         CryptoWallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  customerId     String?
+  customer       Customer?    @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  invoiceId      String?
+  invoice        Invoice?     @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
+
   // Payment data
-  amount            String // crypto amount
-  currency          CryptoCurrency
-  usdAmount         Float
-  exchangeRate      Float
-  
+  amount       String // crypto amount
+  currency     CryptoCurrency
+  usdAmount    Float
+  exchangeRate Float
+
   // Payment request
-  paymentAddress    String
-  qrCode            String? // base64 QR code
-  
+  paymentAddress String
+  qrCode         String? // base64 QR code
+
   // Status
-  status            CryptoPaymentStatus @default(PENDING)
-  txHash            String?
-  confirmations     Int @default(0)
-  
+  status        CryptoPaymentStatus @default(PENDING)
+  txHash        String?
+  confirmations Int                 @default(0)
+
   // Expiration
-  expiresAt         DateTime
-  paidAt            DateTime?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  expiresAt DateTime
+  paidAt    DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("crypto_payments")
 }
 
 // Client Portal Enhancements
 model StoredPaymentMethod {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  customerId        String
-  customer          Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  customerId     String
+  customer       Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
   // Card data (tokenized)
   stripePaymentMethodId String @unique
-  last4             String
-  brand             String
-  expiryMonth       Int
-  expiryYear        Int
-  
+  last4                 String
+  brand                 String
+  expiryMonth           Int
+  expiryYear            Int
+
   // Billing address
-  billingName       String?
-  billingAddress    Json?
-  
+  billingName    String?
+  billingAddress Json?
+
   // Settings
-  isDefault         Boolean @default(false)
-  isActive          Boolean @default(true)
-  
+  isDefault Boolean @default(false)
+  isActive  Boolean @default(true)
+
   // Confirmation
-  isConfirmed       Boolean @default(false)
+  isConfirmed        Boolean   @default(false)
   confirmationSentAt DateTime?
-  confirmedAt       DateTime?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  confirmedAt        DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("stored_payment_methods")
 }
 
 model SMSConfirmation {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  customerId        String
-  customer          Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  
-  phoneNumber       String
-  confirmationCode  String
-  purpose           SMSPurpose @default(PAYMENT_CONFIRMATION)
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  customerId     String
+  customer       Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  phoneNumber      String
+  confirmationCode String
+  purpose          SMSPurpose @default(PAYMENT_CONFIRMATION)
+
   // Status
-  status            SMSStatus @default(SENT)
-  sentAt            DateTime @default(now())
-  confirmedAt       DateTime?
-  expiresAt         DateTime
-  
+  status      SMSStatus @default(SENT)
+  sentAt      DateTime  @default(now())
+  confirmedAt DateTime?
+  expiresAt   DateTime
+
   // Attempts
-  attempts          Int @default(0)
-  maxAttempts       Int @default(3)
-  
+  attempts    Int @default(0)
+  maxAttempts Int @default(3)
+
   // Related data
-  relatedId         String? // payment method ID, etc.
-  metadata          Json?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  relatedId String? // payment method ID, etc.
+  metadata  Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("sms_confirmations")
 }
 
 // Communication Features
 model Voicemail {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  customerId        String?
-  customer          Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  customerId     String?
+  customer       Customer?    @relation(fields: [customerId], references: [id], onDelete: SetNull)
+
   // Voicemail data
-  phoneNumber       String
-  callerName        String?
-  duration          Int // seconds
-  audioUrl          String
-  
+  phoneNumber String
+  callerName  String?
+  duration    Int // seconds
+  audioUrl    String
+
   // Transcription
-  transcript        String?
+  transcript          String?
   transcriptionStatus TranscriptionStatus @default(PENDING)
-  confidence        Float?
-  
+  confidence          Float?
+
   // Status
-  isRead            Boolean @default(false)
-  readAt            DateTime?
-  
+  isRead Boolean   @default(false)
+  readAt DateTime?
+
   // External IDs
-  twilioSid         String?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  twilioSid String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("voicemails")
 }
 
 model TrainingSession {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  traineeId         String
-  trainee           User @relation("TrainingSessions", fields: [traineeId], references: [id], onDelete: Cascade)
-  trainerId         String?
-  trainer           User? @relation("TrainerSessions", fields: [trainerId], references: [id], onDelete: SetNull)
-  
-  title             String
-  description       String?
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  traineeId      String
+  trainee        User         @relation("TrainingSessions", fields: [traineeId], references: [id], onDelete: Cascade)
+  trainerId      String?
+  trainer        User?        @relation("TrainerSessions", fields: [trainerId], references: [id], onDelete: SetNull)
+
+  title       String
+  description String?
+
   // Session data
-  status            TrainingStatus @default(SCHEDULED)
-  startTime         DateTime
-  endTime           DateTime?
-  duration          Int? // actual duration in minutes
-  
+  status    TrainingStatus @default(SCHEDULED)
+  startTime DateTime
+  endTime   DateTime?
+  duration  Int? // actual duration in minutes
+
   // Recording
-  recordingUrl      String?
-  recordingEnabled  Boolean @default(true)
-  
+  recordingUrl     String?
+  recordingEnabled Boolean @default(true)
+
   // Progress tracking
-  completedSteps    Json? // array of completed step IDs
-  totalSteps        Int?
-  progressPercent   Float @default(0)
-  
+  completedSteps  Json? // array of completed step IDs
+  totalSteps      Int?
+  progressPercent Float @default(0)
+
   // Knowledge base
-  knowledgeBaseIds  String[] @default([])
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  knowledgeBaseIds String[] @default([])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("training_sessions")
 }
 
 // Privacy & Data Management
 model DataExportRequest {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  requestedBy       String
-  user              User @relation("DataExportRequests", fields: [requestedBy], references: [id], onDelete: Cascade)
-  
-  exportType        DataExportType
-  format            ExportFormat @default(CSV)
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  requestedBy    String
+  user           User         @relation("DataExportRequests", fields: [requestedBy], references: [id], onDelete: Cascade)
+  customerId     String?
+  customer       Customer?    @relation(fields: [customerId], references: [id], onDelete: SetNull)
+
+  exportType DataExportType
+  format     ExportFormat   @default(CSV)
+
   // Filters
-  dateFrom          DateTime?
-  dateTo            DateTime?
-  includeDeleted    Boolean @default(false)
-  dataTypes         String[] // which data types to include
-  
-  // Status
-  status            ExportStatus @default(PENDING)
-  downloadUrl       String?
-  expiresAt         DateTime?
-  
-  // Processing
-  processedAt       DateTime?
-  errorMessage      String?
-  recordCount       Int?
-  fileSize          Int? // bytes
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  dateFrom        DateTime?
+  dateTo          DateTime?
+  includeDeleted  Boolean   @default(false)
+  dataTypes       String[] // which data types to include
+  includeHistory  Boolean   @default(false)
+  includeMessages Boolean   @default(false)
+  includePayments Boolean   @default(false)
+
+  status       ExportStatus @default(PENDING)
+  completedAt  DateTime?
+  filePath     String?
+  fileSize     Int?
+  processedAt  DateTime?
+  downloadUrl  String?
+  expiresAt    DateTime?
+  recordCount  Int?
+  errorMessage String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("data_export_requests")
 }
 
 model DataImportJob {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  createdBy         String
-  user              User @relation("DataImportJobs", fields: [createdBy], references: [id], onDelete: Cascade)
-  
-  fileName          String
-  fileUrl           String
-  fileSize          Int
-  format            ImportFormat
-  dataType          DataType
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdBy      String
+  user           User         @relation("DataImportJobs", fields: [createdBy], references: [id], onDelete: Cascade)
+
+  fileName String
+  fileUrl  String
+  fileSize Int
+  format   ImportFormat
+  dataType DataType
+
   // Mapping
-  fieldMapping      Json // maps CSV columns to database fields
-  
+  fieldMapping Json // maps CSV columns to database fields
+
   // Validation settings
-  validateData      Boolean @default(true)
-  skipDuplicates    Boolean @default(true)
-  updateExisting    Boolean @default(false)
-  
+  validateData   Boolean @default(true)
+  skipDuplicates Boolean @default(true)
+  updateExisting Boolean @default(false)
+
   // Status
-  status            ImportStatus @default(PENDING)
-  
+  status ImportStatus @default(PENDING)
+
   // Results
   totalRecords      Int?
-  processedRecords  Int @default(0)
-  successfulRecords Int @default(0)
-  failedRecords     Int @default(0)
-  duplicateRecords  Int @default(0)
-  
+  processedRecords  Int  @default(0)
+  successfulRecords Int  @default(0)
+  failedRecords     Int  @default(0)
+  duplicateRecords  Int  @default(0)
+
   // Error tracking
-  errorLog          String? @db.Text
-  validationErrors  Json?
-  
+  errorLog         String? @db.Text
+  validationErrors Json?
+
   // Processing
-  startedAt         DateTime?
-  completedAt       DateTime?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  startedAt   DateTime?
+  completedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("data_import_jobs")
 }
 
 model PrivacySetting {
-  id                String   @id @default(cuid())
-  organizationId    String
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  userId            String?
-  user              User? @relation("PrivacySettings", fields: [userId], references: [id], onDelete: Cascade)
-  
-  settingKey        String
-  settingValue      Json
-  description       String?
-  
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId         String?
+  user           User?        @relation("PrivacySettings", fields: [userId], references: [id], onDelete: Cascade)
+
+  settingKey   String
+  settingValue Json
+  description  String?
+
   // GDPR compliance
-  isGDPRRelated     Boolean @default(false)
-  requiresConsent   Boolean @default(false)
-  consentGivenAt    DateTime?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  isGDPRRelated   Boolean   @default(false)
+  requiresConsent Boolean   @default(false)
+  consentGivenAt  DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@unique([organizationId, userId, settingKey])
   @@map("privacy_settings")
+}
+
+model DataDeletionRequest {
+  id             String             @id @default(cuid())
+  organizationId String
+  organization   Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  requestedBy    String
+  user           User               @relation("DataDeletionRequests", fields: [requestedBy], references: [id], onDelete: Cascade)
+  customerId     String?
+  customer       Customer?          @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  reason         String
+  status         DataDeletionStatus @default(PENDING)
+  completedAt    DateTime?
+  deletedRecords Int?
+  details        Json?
+  anonymized     Boolean @default(false)
+  recordsDeleted Int?
+  recordsAnonymized Int?
+  recordsRetained Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("data_deletion_requests")
 }
 
 // Enums
@@ -1579,6 +1610,13 @@ enum DataType {
 enum ImportStatus {
   PENDING
   PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum DataDeletionStatus {
+  PENDING
   COMPLETED
   FAILED
   CANCELLED

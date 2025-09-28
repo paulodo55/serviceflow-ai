@@ -23,7 +23,7 @@ export const smsTemplates = {
     technician: string;
     location: string;
   }): SMSTemplate => ({
-    message: `Hi {{customerName}}! Reminder: Your {{appointmentTitle}} appointment is scheduled for {{appointmentDate}} at {{appointmentTime}} with {{technician}}. Location: {{location}}. Reply STOP to opt out.`
+    message: `Hi ${data.customerName}! Reminder: Your ${data.appointmentTitle} appointment is scheduled for ${data.appointmentDate} at ${data.appointmentTime} with ${data.technician}. Location: ${data.location}. Reply STOP to opt out.`
   }),
 
   // Appointment confirmation SMS
@@ -34,7 +34,7 @@ export const smsTemplates = {
     appointmentTime: string;
     technician: string;
   }): SMSTemplate => ({
-    message: `Hi {{customerName}}! Your {{appointmentTitle}} appointment is confirmed for {{appointmentDate}} at {{appointmentTime}} with {{technician}}. We'll send a reminder 24hrs before. Reply STOP to opt out.`
+    message: `Hi ${data.customerName}! Your ${data.appointmentTitle} appointment is confirmed for ${data.appointmentDate} at ${data.appointmentTime} with ${data.technician}. We'll send a reminder 24hrs before. Reply STOP to opt out.`
   }),
 
   // Technician on the way SMS
@@ -44,7 +44,7 @@ export const smsTemplates = {
     eta: string;
     phone: string;
   }): SMSTemplate => ({
-    message: `Hi {{customerName}}! {{technician}} is on the way to your location. ETA: {{eta}}. Contact: {{phone}}. Reply STOP to opt out.`
+    message: `Hi ${data.customerName}! ${data.technician} is on the way to your location. ETA: ${data.eta}. Contact: ${data.phone}. Reply STOP to opt out.`
   }),
 
   // Service completed SMS
@@ -54,7 +54,7 @@ export const smsTemplates = {
     technician: string;
     invoiceNumber?: string;
   }): SMSTemplate => ({
-    message: `Hi {{customerName}}! Your {{serviceType}} service has been completed by {{technician}}. ${data.invoiceNumber ? 'Invoice {{invoiceNumber}} will be sent via email.' : 'Thank you for choosing our services!'} Reply STOP to opt out.`
+    message: `Hi ${data.customerName}! Your ${data.serviceType} service has been completed by ${data.technician}. ${data.invoiceNumber ? 'Invoice ${data.invoiceNumber} will be sent via email.' : 'Thank you for choosing our services!'} Reply STOP to opt out.`
   }),
 
   // Payment reminder SMS
@@ -64,7 +64,7 @@ export const smsTemplates = {
     amount: string;
     dueDate: string;
   }): SMSTemplate => ({
-    message: `Hi {{customerName}}! Payment reminder: Invoice {{invoiceNumber}} for ${{amount}} is due {{dueDate}}. Please submit payment to avoid late fees. Reply STOP to opt out.`
+    message: `Hi ${data.customerName}! Payment reminder: Invoice ${data.invoiceNumber} for $${data.amount} is due ${data.dueDate}. Please submit payment to avoid late fees. Reply STOP to opt out.`
   }),
 
   // Payment confirmation SMS
@@ -73,7 +73,7 @@ export const smsTemplates = {
     amount: string;
     invoiceNumber: string;
   }): SMSTemplate => ({
-    message: `Hi {{customerName}}! Payment of ${{amount}} received for invoice {{invoiceNumber}}. Thank you! Reply STOP to opt out.`
+    message: `Hi ${data.customerName}! Payment of $${data.amount} received for invoice ${data.invoiceNumber}. Thank you! Reply STOP to opt out.`
   }),
 
   // Welcome SMS for new customers
@@ -81,7 +81,7 @@ export const smsTemplates = {
     customerName: string;
     organizationName: string;
   }): SMSTemplate => ({
-    message: `Welcome {{customerName}}! Thank you for choosing {{organizationName}}. We're committed to providing excellent service. Reply STOP to opt out.`
+    message: `Welcome ${data.customerName}! Thank you for choosing ${data.organizationName}. We're committed to providing excellent service. Reply STOP to opt out.`
   }),
 
   // Appointment reschedule SMS
@@ -92,7 +92,7 @@ export const smsTemplates = {
     newTime: string;
     technician: string;
   }): SMSTemplate => ({
-    message: `Hi {{customerName}}! Your {{appointmentTitle}} appointment has been rescheduled to {{newDate}} at {{newTime}} with {{technician}}. Reply STOP to opt out.`
+    message: `Hi ${data.customerName}! Your ${data.appointmentTitle} appointment has been rescheduled to ${data.newDate} at ${data.newTime} with ${data.technician}. Reply STOP to opt out.`
   }),
 
   // Appointment cancelled SMS
@@ -102,7 +102,7 @@ export const smsTemplates = {
     appointmentDate: string;
     reason?: string;
   }): SMSTemplate => ({
-    message: `Hi {{customerName}}! Your {{appointmentTitle}} appointment on {{appointmentDate}} has been cancelled${data.reason ? ` due to {{reason}}` : ''}. We'll contact you to reschedule. Reply STOP to opt out.`
+    message: `Hi ${data.customerName}! Your ${data.appointmentTitle} appointment on ${data.appointmentDate} has been cancelled${data.reason ? ` due to ${data.reason}` : ''}. We'll contact you to reschedule. Reply STOP to opt out.`
   }),
 
   // Emergency service SMS
@@ -112,7 +112,7 @@ export const smsTemplates = {
     eta: string;
     phone: string;
   }): SMSTemplate => ({
-    message: `Hi {{customerName}}! Emergency service dispatched. {{technician}} will arrive in {{eta}}. Contact: {{phone}}. Reply STOP to opt out.`
+    message: `Hi ${data.customerName}! Emergency service dispatched. ${data.technician} will arrive in ${data.eta}. Contact: ${data.phone}. Reply STOP to opt out.`
   }),
 
   // Follow-up SMS
@@ -121,7 +121,7 @@ export const smsTemplates = {
     serviceType: string;
     daysAgo: string;
   }): SMSTemplate => ({
-    message: `Hi {{customerName}}! How was your {{serviceType}} service {{daysAgo}} days ago? We value your feedback. Rate us or reply with comments. Reply STOP to opt out.`
+    message: `Hi ${data.customerName}! How was your ${data.serviceType} service ${data.daysAgo} days ago? We value your feedback. Rate us or reply with comments. Reply STOP to opt out.`
   }),
 
   // Promotional SMS
@@ -131,7 +131,7 @@ export const smsTemplates = {
     validUntil: string;
     code?: string;
   }): SMSTemplate => ({
-    message: `Hi {{customerName}}! Special offer: {{offer}} valid until {{validUntil}}${data.code ? '. Use code {{code}}' : ''}. Book now! Reply STOP to opt out.`
+    message: `Hi ${data.customerName}! Special offer: ${data.offer} valid until ${data.validUntil}${data.code ? '. Use code ${data.code}' : ''}. Book now! Reply STOP to opt out.`
   }),
 
   // Maintenance reminder SMS
@@ -141,7 +141,7 @@ export const smsTemplates = {
     lastServiceDate: string;
     recommendedInterval: string;
   }): SMSTemplate => ({
-    message: `Hi {{customerName}}! Maintenance reminder: Your {{serviceType}} was last serviced on {{lastServiceDate}}. We recommend service every {{recommendedInterval}}. Schedule today! Reply STOP to opt out.`
+    message: `Hi ${data.customerName}! Maintenance reminder: Your ${data.serviceType} was last serviced on ${data.lastServiceDate}. We recommend service every ${data.recommendedInterval}. Schedule today! Reply STOP to opt out.`
   }),
 
   // Quote ready SMS
@@ -150,7 +150,7 @@ export const smsTemplates = {
     serviceType: string;
     validFor: string;
   }): SMSTemplate => ({
-    message: `Hi {{customerName}}! Your quote for {{serviceType}} is ready. Quote valid for {{validFor}}. Check your email or call us to review. Reply STOP to opt out.`
+    message: `Hi ${data.customerName}! Your quote for ${data.serviceType} is ready. Quote valid for ${data.validFor}. Check your email or call us to review. Reply STOP to opt out.`
   }),
 
   // Weather alert SMS
@@ -159,7 +159,7 @@ export const smsTemplates = {
     appointmentDate: string;
     weatherCondition: string;
   }): SMSTemplate => ({
-    message: `Hi {{customerName}}! Weather alert for your appointment on {{appointmentDate}}: {{weatherCondition}} expected. We'll contact you if rescheduling is needed. Reply STOP to opt out.`
+    message: `Hi ${data.customerName}! Weather alert for your appointment on ${data.appointmentDate}: ${data.weatherCondition} expected. We'll contact you if rescheduling is needed. Reply STOP to opt out.`
   }),
 
   // Customer satisfaction survey SMS
@@ -168,7 +168,7 @@ export const smsTemplates = {
     technician: string;
     surveyUrl: string;
   }): SMSTemplate => ({
-    message: `Hi {{customerName}}! How did {{technician}} do? Please rate your service experience: {{surveyUrl}}. Your feedback helps us improve! Reply STOP to opt out.`
+    message: `Hi ${data.customerName}! How did ${data.technician} do? Please rate your service experience: ${data.surveyUrl}. Your feedback helps us improve! Reply STOP to opt out.`
   })
 };
 
@@ -177,7 +177,7 @@ export function renderSMSTemplate(
   templateName: keyof typeof smsTemplates,
   data: TemplateData
 ): SMSTemplate {
-  const template = smsTemplates[templateName](data);
+  const template = (smsTemplates as any)[templateName](data);
   
   return {
     message: renderTemplate(template.message, data)

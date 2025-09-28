@@ -82,7 +82,7 @@ export class SchedulingAI {
         select: { settings: true }
       });
 
-      const schedulingPrefs = organization?.settings?.scheduling as SchedulingPreferences || this.getDefaultPreferences();
+      const schedulingPrefs = (organization?.settings as any)?.scheduling as SchedulingPreferences || this.getDefaultPreferences();
 
       const suggestions: AppointmentSuggestion[] = [];
 
@@ -240,19 +240,20 @@ export class SchedulingAI {
       const adjacentAppointments = await this.getAdjacentAppointments(technicianId, startTime, endTime, excludeAppointmentId);
 
       for (const adjacent of adjacentAppointments) {
-        const travelTime = await this.calculateTravelTime(adjacent.location, startTime.toString());
+        const travelTime = await this.calculateTravelTime((adjacent as any).location || '', startTime.toString());
         
-        if (adjacent.type === 'before' && adjacent.endTime.getTime() + travelTime * 60000 > startTime.getTime()) {
+        const adjacentAny = adjacent as any;
+        if (adjacentAny.type === 'before' && adjacentAny.endTime.getTime() + travelTime * 60000 > startTime.getTime()) {
           conflicts.push({
-            appointmentId: adjacent.id,
+            appointmentId: adjacentAny.id,
             conflict: `Insufficient travel time from previous appointment (need ${Math.ceil(travelTime)} minutes)`,
             severity: 'medium'
           });
         }
         
-        if (adjacent.type === 'after' && endTime.getTime() + travelTime * 60000 > adjacent.startTime.getTime()) {
+        if (adjacentAny.type === 'after' && endTime.getTime() + travelTime * 60000 > adjacentAny.startTime.getTime()) {
           conflicts.push({
-            appointmentId: adjacent.id,
+            appointmentId: adjacentAny.id,
             conflict: `Insufficient travel time to next appointment (need ${Math.ceil(travelTime)} minutes)`,
             severity: 'medium'
           });
@@ -295,8 +296,8 @@ export class SchedulingAI {
 
       const suggestions = await this.findOptimalSlots(
         appointment.customerId,
-        duration,
-        appointment.type,
+        duration || 60,
+        appointment.type || 'service',
         preferredDates,
         'normal'
       );
@@ -368,7 +369,7 @@ export class SchedulingAI {
     urgency: string
   ): Promise<AppointmentSuggestion[]> {
     const suggestions: AppointmentSuggestion[] = [];
-    const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'lowercase' });
+    const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
     const workingHours = preferences.workingHours[dayOfWeek];
 
     if (!workingHours || workingHours.closed) {
@@ -490,7 +491,7 @@ export class SchedulingAI {
         thursday: { start: '09:00', end: '17:00' },
         friday: { start: '09:00', end: '17:00' },
         saturday: { start: '10:00', end: '14:00' },
-        sunday: { closed: true }
+        sunday: { start: '00:00', end: '00:00', closed: true }
       },
       bufferTime: 15,
       maxDailyAppointments: 8,
