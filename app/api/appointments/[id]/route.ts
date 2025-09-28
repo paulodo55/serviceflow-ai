@@ -63,7 +63,7 @@ export async function GET(
             address: true,
           }
         },
-        invoice: {
+        invoices: {
           select: {
             id: true,
             invoiceNumber: true,
@@ -241,7 +241,7 @@ export async function PUT(
             email: true
           }
         },
-        invoice: {
+        invoices: {
           select: {
             id: true,
             invoiceNumber: true,
@@ -351,7 +351,7 @@ export async function DELETE(
       },
       include: {
         customer: true,
-        invoice: true
+        invoices: true
       }
     });
 
@@ -360,7 +360,7 @@ export async function DELETE(
     }
 
     // Prevent deletion of completed appointments with invoices
-    if (appointment.status === 'COMPLETED' && appointment.invoice) {
+    if (appointment.status === 'COMPLETED' && appointment.invoices && appointment.invoices.length > 0) {
       return NextResponse.json(
         { error: 'Cannot delete completed appointment with associated invoice' },
         { status: 400 }
