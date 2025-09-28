@@ -63,14 +63,6 @@ export async function GET(
             address: true,
           }
         },
-        assignedUser: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            phone: true
-          }
-        },
         invoice: {
           select: {
             id: true,
