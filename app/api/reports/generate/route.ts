@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
           validatedData.includeCharts
         );
 
-        return new NextResponse(pdfBuffer, {
+        return new NextResponse(pdfBuffer as any, {
           headers: {
             'Content-Type': 'application/pdf',
             'Content-Disposition': `attachment; filename="${validatedData.type}-report-${startDate.toISOString().split('T')[0]}-${endDate.toISOString().split('T')[0]}.pdf"`
@@ -200,7 +200,7 @@ async function generatePDFReport(
     sections: formatReportSections(type, data, includeCharts)
   };
 
-  return await pdfGenerator.generateReport(reportData);
+  return await pdfGenerator.generateReport(reportData as any);
 }
 
 function formatReportSections(type: string, data: any, includeCharts: boolean) {

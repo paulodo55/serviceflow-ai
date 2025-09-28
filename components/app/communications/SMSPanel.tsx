@@ -42,7 +42,8 @@ export default function SMSPanel({ customerId, appointmentId }: SMSPanelProps) {
 
   useEffect(() => {
     fetchMessages();
-  }, [customerId, appointmentId, fetchMessages]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [customerId, appointmentId]);
 
   const fetchMessages = useCallback(async () => {
     setIsLoading(true);

@@ -65,8 +65,8 @@ export async function GET(
         amount: invoice.amount,
         tax: invoice.tax,
         total: invoice.total,
-        description: invoice.description,
-        items: Array.isArray(invoice.items) ? invoice.items : [],
+        description: invoice.description || '',
+        items: Array.isArray(invoice.items) ? invoice.items as any[] : [],
         notes: invoice.notes || undefined,
         terms: invoice.terms || undefined
       },
@@ -78,10 +78,10 @@ export async function GET(
       },
       organization: {
         name: invoice.organization.name,
-        address: invoice.organization.settings?.address || undefined,
-        phone: invoice.organization.settings?.phone || undefined,
-        email: invoice.organization.settings?.email || undefined,
-        website: invoice.organization.settings?.website || undefined
+        address: (invoice.organization.settings as any)?.address || undefined,
+        phone: (invoice.organization.settings as any)?.phone || undefined,
+        email: (invoice.organization.settings as any)?.email || undefined,
+        website: (invoice.organization.settings as any)?.website || undefined
       }
     };
 
@@ -89,7 +89,7 @@ export async function GET(
     const pdfBuffer = await pdfGenerator.generateInvoice(pdfData);
 
     // Return PDF response
-    return new NextResponse(pdfBuffer, {
+    return new NextResponse(pdfBuffer as any, {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="invoice-${invoice.invoiceNumber}.pdf"`

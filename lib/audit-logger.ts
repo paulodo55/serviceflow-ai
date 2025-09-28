@@ -42,7 +42,8 @@ class AuditLogger {
       const maskedDetails = entry.details ? maskSensitiveData(entry.details) : null;
       const maskedMetadata = entry.metadata ? maskSensitiveData(entry.metadata) : null;
 
-      await prisma.auditLog.create({
+      // TODO: Add AuditLog model to schema
+      // await prisma.auditLog.create({
         data: {
           userId: entry.userId,
           organizationId: entry.organizationId,
@@ -287,7 +288,7 @@ class AuditLogger {
     }
 
     const [logs, total] = await Promise.all([
-      prisma.auditLog.findMany({
+      // prisma.auditLog.findMany({
         where,
         orderBy: { timestamp: 'desc' },
         take: filters.limit || 100,

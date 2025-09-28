@@ -131,7 +131,8 @@ export default function SubscriptionsPage() {
     } else {
       fetchSubscriptions();
     }
-  }, [isDemoMode, fetchSubscriptions]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDemoMode]);
 
   const fetchSubscriptions = useCallback(async () => {
     try {

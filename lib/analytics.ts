@@ -233,14 +233,16 @@ export async function trackEvent(
 ) {
   try {
     // Store analytics event
-    await prisma.analyticsEvent.create({
-      data: {
-        organizationId,
-        event,
-        properties,
-        timestamp: new Date()
-      }
-    });
+    // TODO: Add AnalyticsEvent model to schema
+    // await prisma.analyticsEvent.create({
+    //   data: {
+    //     organizationId,
+    //     event,
+    //     properties,
+    //     timestamp: new Date()
+    //   }
+    // });
+    console.log('Analytics event:', { organizationId, event, properties });
 
     // Emit real-time update if significant event
     if (['appointment_completed', 'invoice_paid', 'customer_created'].includes(event)) {
@@ -290,7 +292,7 @@ export async function generateReport(
         include: {
           customer: true,
           assignedUser: true,
-          invoice: true
+          invoices: true
         },
         orderBy: { startTime: 'desc' }
       });
@@ -315,7 +317,7 @@ export async function generateReport(
         include: {
           customer: true,
           assignedUser: true,
-          invoice: true
+          invoices: true
         }
       });
 

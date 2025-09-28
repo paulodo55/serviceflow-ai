@@ -61,6 +61,7 @@ export async function GET(
             email: true,
             phone: true,
             address: true,
+            preferences: true,
           }
         },
         invoices: {
@@ -232,6 +233,7 @@ export async function PUT(
             email: true,
             phone: true,
             address: true,
+            preferences: true,
           }
         },
         assignedUser: {
@@ -283,7 +285,7 @@ export async function PUT(
         };
 
         const message = statusMessages[validatedData.status as keyof typeof statusMessages];
-        if (message && customer.preferences?.communication) {
+        if (message && customer.preferences && typeof customer.preferences === 'object' && customer.preferences !== null && 'communication' in customer.preferences) {
           // Send status update notification
           // Implementation would depend on customer's preferred communication method
         }

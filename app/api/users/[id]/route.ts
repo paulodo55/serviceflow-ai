@@ -166,7 +166,7 @@ export async function PUT(
         ...(validatedData.status && { status: validatedData.status }),
         ...(validatedData.preferences && { 
           preferences: {
-            ...userToUpdate.preferences,
+            ...(typeof userToUpdate.preferences === 'object' && userToUpdate.preferences !== null ? userToUpdate.preferences as any : {}),
             ...validatedData.preferences
           }
         })

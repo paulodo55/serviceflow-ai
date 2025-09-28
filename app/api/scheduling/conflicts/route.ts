@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
         medium: conflicts.filter(c => c.severity === 'medium').length,
         low: conflicts.filter(c => c.severity === 'low').length
       },
-      recommendation: this.getRecommendation(conflicts)
+      recommendation: getRecommendation(conflicts)
     });
 
   } catch (error) {

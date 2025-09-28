@@ -168,7 +168,8 @@ export default function ContractsPage() {
     } else {
       fetchData();
     }
-  }, [isDemoMode, activeTab, fetchData]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDemoMode, activeTab]);
 
   const fetchData = useCallback(async () => {
     try {

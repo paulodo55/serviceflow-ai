@@ -298,12 +298,9 @@ export async function POST(request: NextRequest) {
           customerName: appointment.customer.name,
           customerEmail: appointment.customer.email || '',
           customerPhone: appointment.customer.phone || '',
+          businessName: 'VervidFlow', // TODO: Get from organization
           appointmentDate: appointment.startTime.toISOString(),
-          serviceType: appointment.title,
-          technician: appointment.assignedUser?.name || 'TBD',
-          location: appointment.location,
-          estimatedDuration: validatedData.estimatedDuration,
-          notes: appointment.notes || ''
+          serviceName: appointment.title
         });
       } catch (notificationError) {
         console.error('Failed to send appointment confirmation:', notificationError);
