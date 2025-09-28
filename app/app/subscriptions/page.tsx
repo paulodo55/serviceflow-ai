@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import {
   Calendar,
@@ -131,9 +131,9 @@ export default function SubscriptionsPage() {
     } else {
       fetchSubscriptions();
     }
-  }, [isDemoMode]);
+  }, [isDemoMode, fetchSubscriptions]);
 
-  const fetchSubscriptions = async () => {
+  const fetchSubscriptions = useCallback(async () => {
     try {
       const params = new URLSearchParams();
       if (statusFilter) params.append('status', statusFilter);
@@ -149,7 +149,7 @@ export default function SubscriptionsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [statusFilter, typeFilter]);
 
   const filteredSubscriptions = subscriptions.filter((subscription) =>
     subscription.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

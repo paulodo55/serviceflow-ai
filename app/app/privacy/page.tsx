@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import {
   Shield,
@@ -134,9 +134,9 @@ export default function PrivacyPage() {
     } else {
       fetchData();
     }
-  }, [isDemoMode, activeTab]);
+  }, [isDemoMode, activeTab, fetchData]);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       if (activeTab === 'settings') {
         const response = await fetch('/api/privacy/settings');
@@ -156,7 +156,7 @@ export default function PrivacyPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [activeTab]);
 
   const initializeDefaultSettings = async () => {
     try {

@@ -61,7 +61,6 @@ export async function GET(
             email: true,
             phone: true,
             address: true,
-            preferences: true
           }
         },
         assignedUser: {
@@ -241,7 +240,6 @@ export async function PUT(
             email: true,
             phone: true,
             address: true,
-            preferences: true
           }
         },
         assignedUser: {

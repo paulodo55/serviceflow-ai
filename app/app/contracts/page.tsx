@@ -168,9 +168,9 @@ export default function ContractsPage() {
     } else {
       fetchData();
     }
-  }, [isDemoMode, activeTab]);
+  }, [isDemoMode, activeTab, fetchData]);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       if (activeTab === 'contracts') {
         const params = new URLSearchParams();
@@ -193,7 +193,7 @@ export default function ContractsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [activeTab, statusFilter]);
 
   const createDefaultTemplates = async () => {
     try {

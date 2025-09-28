@@ -8,7 +8,7 @@ import {
   Search,
   Filter,
   Send,
-  Image,
+  Image as ImageIcon,
   Video,
   Paperclip,
   Smile,
@@ -525,7 +525,7 @@ export default function SocialInboxPage() {
                             <Paperclip className="h-4 w-4" />
                           </button>
                           <button className="p-1 text-gray-400 hover:text-gray-600 rounded">
-                            <Image className="h-4 w-4" />
+                            <ImageIcon className="h-4 w-4" />
                           </button>
                           <button className="p-1 text-gray-400 hover:text-gray-600 rounded">
                             <Smile className="h-4 w-4" />

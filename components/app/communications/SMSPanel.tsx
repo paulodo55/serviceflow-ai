@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { MessageSquare, Send, Phone, Clock, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 
 interface SMSMessage {
@@ -42,9 +42,9 @@ export default function SMSPanel({ customerId, appointmentId }: SMSPanelProps) {
 
   useEffect(() => {
     fetchMessages();
-  }, [customerId, appointmentId]);
+  }, [customerId, appointmentId, fetchMessages]);
 
-  const fetchMessages = async () => {
+  const fetchMessages = useCallback(async () => {
     setIsLoading(true);
     try {
       const params = new URLSearchParams();
@@ -60,7 +60,7 @@ export default function SMSPanel({ customerId, appointmentId }: SMSPanelProps) {
       console.error('Error fetching SMS messages:', error);
     }
     setIsLoading(false);
-  };
+  }, [customerId, appointmentId]);
 
   const sendSMS = async () => {
     if (!phoneNumber || !newMessage) return;
