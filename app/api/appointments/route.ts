@@ -104,7 +104,7 @@ export async function GET(request: NextRequest) {
               email: true
             }
           },
-          invoice: {
+          invoices: {
             select: {
               id: true,
               invoiceNumber: true,
@@ -298,7 +298,7 @@ export async function POST(request: NextRequest) {
           customerName: appointment.customer.name,
           customerEmail: appointment.customer.email || '',
           customerPhone: appointment.customer.phone || '',
-          appointmentDate: appointment.startTime,
+          appointmentDate: appointment.startTime.toISOString(),
           serviceType: appointment.title,
           technician: appointment.assignedUser?.name || 'TBD',
           location: appointment.location,

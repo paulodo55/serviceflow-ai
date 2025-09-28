@@ -62,6 +62,9 @@ model Organization {
   sendgridApiKey    String?
   googleCalendarId  String?
   
+  // Additional settings
+  settings              Json?
+  
   // Relationships
   users            User[]
   customers        Customer[]
@@ -108,8 +111,17 @@ model User {
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   
   // Auth fields
-  emailVerified  DateTime?
-  image          String?
+  emailVerified           DateTime?
+  emailVerificationToken  String?
+  hashedPassword         String?
+  image                  String?
+  
+  // Additional fields
+  department     String?
+  status         UserStatus @default(ACTIVE)
+  preferences    Json?
+  isDemo         Boolean @default(false)
+  skills         Json?
   
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
@@ -118,6 +130,10 @@ model User {
   // NextAuth relations
   accounts       Account[]
   sessions       Session[]
+  
+  // Appointment relations
+  assignedAppointments  Appointment[] @relation("AssignedAppointments")
+  createdAppointments   Appointment[] @relation("CreatedAppointments")
   
   // New CRM relationships
   employeeGroups EmployeeGroupMember[]
@@ -184,6 +200,17 @@ model Customer {
   address           String?
   notes             String?
   tags              String[] @default([])
+  
+  // Additional fields
+  customerType      CustomerType @default(RESIDENTIAL)
+  source           String?
+  preferences      Json?
+  customFields     Json?
+  createdBy        String?
+  deletedAt        DateTime?
+  gdprAnonymized   Boolean @default(false)
+  gdprDeleted      Boolean @default(false)
+  gdprProcessed    Boolean @default(false)
   
   // Customer analytics
   lifetimeValue     Float    @default(0)
@@ -252,6 +279,17 @@ model Appointment {
   endTime           DateTime
   status            AppointmentStatus @default(SCHEDULED)
   
+  // Additional fields
+  type              String?
+  location          String?
+  assignedUserId    String?
+  assignedUser      User? @relation("AssignedAppointments", fields: [assignedUserId], references: [id], onDelete: SetNull)
+  createdBy         String?
+  createdByUser     User? @relation("CreatedAppointments", fields: [createdBy], references: [id], onDelete: SetNull)
+  estimatedDuration Int?
+  completedAt       DateTime?
+  googleCalendarEventId String?
+  
   // Pricing
   price             Float?
   notes             String?
@@ -287,6 +325,14 @@ model Invoice {
   total             Float
   description       String?
   
+  // Additional fields
+  items             Json?
+  notes             String?
+  terms             String?
+  paidDate          DateTime?
+  paymentMethods    Json?
+  paymentReference  String?
+  
   status            InvoiceStatus @default(UNPAID)
   dueDate           DateTime
   paidAt            DateTime?
@@ -312,17 +358,19 @@ model Message {
   customer          Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
   
   content           String
+  subject           String?
   channel           MessageChannel @default(SMS)
   direction         MessageDirection @default(OUTBOUND)
   status            MessageStatus @default(SENT)
   
+  // Additional fields
+  twilioMessageId   String?
+  sendgridMessageId String?
+  metadata          Json?
+  
   // Template info
   templateCategory  String?
   isAutomated       Boolean  @default(false)
-  
-  // External IDs
-  twilioMessageId   String?
-  sendgridMessageId String?
   
   sentAt            DateTime @default(now())
   readAt            DateTime?
@@ -1190,12 +1238,26 @@ enum UserRole {
   ADMIN
   MANAGER
   STAFF
+  USER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
 }
 
 enum CustomerStatus {
   ACTIVE
   INACTIVE
   BLOCKED
+  LEAD
+  DELETED
+}
+
+enum CustomerType {
+  RESIDENTIAL
+  COMMERCIAL
 }
 
 enum AppointmentStatus {
@@ -1217,6 +1279,7 @@ enum RecurringType {
 enum InvoiceStatus {
   DRAFT
   SENT
+  PENDING
   UNPAID
   PAID
   OVERDUE
@@ -1241,6 +1304,7 @@ enum MessageStatus {
   PENDING
   SENT
   DELIVERED
+  RECEIVED
   READ
   FAILED
 }

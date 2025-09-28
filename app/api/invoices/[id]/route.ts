@@ -92,13 +92,7 @@ export async function GET(
             settings: true
           }
         },
-        createdByUser: {
-          select: {
-            id: true,
-            name: true,
-            email: true
-          }
-        }
+        // createdByUser field not in schema
       }
     });
 

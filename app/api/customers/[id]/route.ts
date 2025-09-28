@@ -57,7 +57,7 @@ export async function GET(
             assignedUser: {
               select: { id: true, name: true, email: true }
             },
-            invoice: true
+            invoices: true
           }
         },
         invoices: {

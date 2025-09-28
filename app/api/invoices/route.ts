@@ -272,7 +272,7 @@ export async function POST(request: NextRequest) {
         invoiceNumber,
         dueDate: new Date(validatedData.dueDate),
         organizationId: user.organizationId,
-        createdBy: user.id,
+        // createdBy: user.id, // Field not in schema
         status: 'PENDING'
       },
       include: {
