@@ -298,11 +298,11 @@ Questions? Contact support@vervidflow.com
     items: Array<{ description: string; quantity: number; rate: number; amount: number }>;
     paymentUrl?: string;
   }): EmailTemplate => ({
-    subject: 'Invoice {{invoiceNumber}} - Payment Due',
+    subject: `Invoice ${data.invoiceNumber} - Payment Due`,
     html: `
       <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif;">
         <div style="text-align: center; margin-bottom: 30px;">
-          <h1 style="color: #3B82F6; margin: 0;">Invoice {{invoiceNumber}}</h1>
+          <h1 style="color: #3B82F6; margin: 0;">Invoice ${data.invoiceNumber}</h1>
         </div>
         
         <div style="background: #f8fafc; padding: 30px; border-radius: 10px; margin-bottom: 30px;">
@@ -314,10 +314,10 @@ Questions? Contact support@vervidflow.com
           <div style="background: #e0f2fe; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <h3 style="color: #0277bd; margin-top: 0;">Invoice Summary:</h3>
             <table style="width: 100%; color: #64748b;">
-              <tr><td><strong>Invoice #:</strong></td><td>{{invoiceNumber}}</td></tr>
-              <tr><td><strong>Description:</strong></td><td>{{description}}</td></tr>
-              <tr><td><strong>Amount:</strong></td><td>${{amount}}</td></tr>
-              <tr><td><strong>Due Date:</strong></td><td>{{dueDate}}</td></tr>
+              <tr><td><strong>Invoice #:</strong></td><td>${data.invoiceNumber}</td></tr>
+              <tr><td><strong>Description:</strong></td><td>${data.description}</td></tr>
+              <tr><td><strong>Amount:</strong></td><td>$${data.amount}</td></tr>
+              <tr><td><strong>Due Date:</strong></td><td>${data.dueDate}</td></tr>
             </table>
           </div>
           
@@ -369,7 +369,7 @@ Hi {{customerName}}!
 Invoice Summary:
 - Invoice #: {{invoiceNumber}}
 - Description: {{description}}
-- Amount: ${{amount}}
+- Amount: $${data.amount}
 - Due Date: {{dueDate}}
 
 Service Details:
@@ -388,7 +388,7 @@ export function renderEmailTemplate(
   templateName: keyof typeof emailTemplates,
   data: TemplateData
 ): EmailTemplate {
-  const template = emailTemplates[templateName](data);
+  const template = (emailTemplates as any)[templateName](data);
   
   return {
     subject: renderTemplate(template.subject, data),

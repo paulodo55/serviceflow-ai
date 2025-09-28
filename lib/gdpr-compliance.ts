@@ -68,7 +68,9 @@ class GDPRComplianceService {
       const decryptedCustomer = decryptPII(customer);
 
       // Get consent records
-      const consents = await prisma.consentRecord.findMany({
+      // TODO: Add ConsentRecord model to schema
+      const consents: any[] = [];
+      // const consents = await prisma.consentRecord.findMany({
         where: {
           customerId: request.customerId,
           organizationId: request.organizationId

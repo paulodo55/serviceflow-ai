@@ -44,21 +44,22 @@ class AuditLogger {
 
       // TODO: Add AuditLog model to schema
       // await prisma.auditLog.create({
-        data: {
-          userId: entry.userId,
-          organizationId: entry.organizationId,
-          action: entry.action,
-          resource: entry.resource,
-          resourceId: entry.resourceId,
-          details: maskedDetails,
-          ipAddress: entry.ipAddress,
-          userAgent: entry.userAgent,
-          success: entry.success,
-          error: entry.error,
-          metadata: maskedMetadata,
-          timestamp: new Date()
-        }
-      });
+      //   data: {
+      //     userId: entry.userId,
+      //     organizationId: entry.organizationId,
+      //     action: entry.action,
+      //     resource: entry.resource,
+      //     resourceId: entry.resourceId,
+      //     details: maskedDetails,
+      //     ipAddress: entry.ipAddress,
+      //     userAgent: entry.userAgent,
+      //     success: entry.success,
+      //     error: entry.error,
+      //     metadata: maskedMetadata,
+      //     timestamp: new Date()
+      //   }
+      // });
+      console.log('Audit log entry:', { ...entry, details: maskedDetails, metadata: maskedMetadata });
 
       // Log to console in development
       if (process.env.NODE_ENV === 'development') {
@@ -274,33 +275,47 @@ class AuditLogger {
       offset?: number;
     } = {}
   ) {
-    const where: any = { organizationId };
-
-    if (filters.userId) where.userId = filters.userId;
-    if (filters.action) where.action = filters.action;
-    if (filters.resource) where.resource = filters.resource;
-    if (filters.success !== undefined) where.success = filters.success;
+    // TODO: Add AuditLog model to schema
+    return {
+      logs: [],
+      total: 0,
+      summary: {
+        totalActions: 0,
+        successRate: 100,
+        topActions: [],
+        recentActivity: []
+      }
+    };
     
-    if (filters.startDate || filters.endDate) {
-      where.timestamp = {};
-      if (filters.startDate) where.timestamp.gte = filters.startDate;
-      if (filters.endDate) where.timestamp.lte = filters.endDate;
-    }
+    // const where: any = { organizationId };
 
-    const [logs, total] = await Promise.all([
-      // prisma.auditLog.findMany({
-        where,
-        orderBy: { timestamp: 'desc' },
-        take: filters.limit || 100,
-        skip: filters.offset || 0,
-        include: {
-          user: {
-            select: { id: true, name: true, email: true }
-          }
-        }
-      }),
-      prisma.auditLog.count({ where })
-    ]);
+    // if (filters.userId) where.userId = filters.userId;
+    // if (filters.action) where.action = filters.action;
+    // if (filters.resource) where.resource = filters.resource;
+    // if (filters.success !== undefined) where.success = filters.success;
+
+    // if (filters.startDate || filters.endDate) {
+    //   where.timestamp = {};
+    //   if (filters.startDate) where.timestamp.gte = filters.startDate;
+    //   if (filters.endDate) where.timestamp.lte = filters.endDate;
+    // }
+
+    const logs: any[] = [];
+    const total = 0;
+    // const [logs, total] = await Promise.all([
+    //   prisma.auditLog.findMany({
+    //     where,
+    //     orderBy: { timestamp: 'desc' },
+    //     take: filters.limit || 100,
+    //     skip: filters.offset || 0,
+    //     include: {
+    //       user: {
+    //         select: { id: true, name: true, email: true }
+    //       }
+    //     }
+    //   }),
+    //   prisma.auditLog.count({ where })
+    // ]);
 
     return { logs, total };
   }
@@ -313,62 +328,66 @@ class AuditLogger {
     startDate: Date,
     endDate: Date
   ) {
-    const stats = await prisma.auditLog.groupBy({
-      by: ['action', 'resource', 'success'],
-      where: {
-        organizationId,
-        timestamp: {
-          gte: startDate,
-          lte: endDate
-        }
-      },
-      _count: { _all: true }
-    });
+    // TODO: Add AuditLog model to schema
+    return [];
+    // const stats = await prisma.auditLog.groupBy({
+    //   by: ['action', 'resource', 'success'],
+    //   where: {
+    //     organizationId,
+    //     timestamp: {
+    //       gte: startDate,
+    //       lte: endDate
+    //     }
+    //   },
+    //   _count: { _all: true }
+    // });
 
-    const summary = {
-      totalEvents: 0,
-      successfulEvents: 0,
-      failedEvents: 0,
-      byAction: {} as Record<string, number>,
-      byResource: {} as Record<string, number>,
-      byUser: {} as Record<string, number>
-    };
+    // const summary = {
+    //   totalEvents: 0,
+    //   successfulEvents: 0,
+    //   failedEvents: 0,
+    //   byAction: {} as Record<string, number>,
+    //   byResource: {} as Record<string, number>,
+    //   byUser: {} as Record<string, number>
+    // };
 
-    stats.forEach(stat => {
-      const count = stat._count._all;
-      summary.totalEvents += count;
-      
-      if (stat.success) {
-        summary.successfulEvents += count;
-      } else {
-        summary.failedEvents += count;
-      }
-      
-      summary.byAction[stat.action] = (summary.byAction[stat.action] || 0) + count;
-      summary.byResource[stat.resource] = (summary.byResource[stat.resource] || 0) + count;
-    });
+    // stats.forEach(stat => {
+    //   const count = stat._count._all;
+    //   summary.totalEvents += count;
+    //   
+    //   if (stat.success) {
+    //     summary.successfulEvents += count;
+    //   } else {
+    //     summary.failedEvents += count;
+    //   }
+    //   
+    //   summary.byAction[stat.action] = (summary.byAction[stat.action] || 0) + count;
+    //   summary.byResource[stat.resource] = (summary.byResource[stat.resource] || 0) + count;
+    // });
 
     // Get user activity
-    const userActivity = await prisma.auditLog.groupBy({
-      by: ['userId'],
-      where: {
-        organizationId,
-        timestamp: {
-          gte: startDate,
-          lte: endDate
-        },
-        userId: { not: null }
-      },
-      _count: { _all: true }
-    });
+    // TODO: Add AuditLog model to schema
+    return [];
+    // const userActivity = await prisma.auditLog.groupBy({
+    //   by: ['userId'],
+    //   where: {
+    //     organizationId,
+    //     timestamp: {
+    //       gte: startDate,
+    //       lte: endDate
+    //     },
+    //     userId: { not: null }
+    //   },
+    //   _count: { _all: true }
+    // });
 
-    userActivity.forEach(activity => {
-      if (activity.userId) {
-        summary.byUser[activity.userId] = activity._count._all;
-      }
-    });
+    // userActivity.forEach(activity => {
+    //   if (activity.userId) {
+    //     summary.byUser[activity.userId] = activity._count._all;
+    //   }
+    // });
 
-    return summary;
+    // return summary;
   }
 
   /**
@@ -378,12 +397,14 @@ class AuditLogger {
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - retentionDays);
 
-    const result = await prisma.auditLog.deleteMany({
-      where: {
-        organizationId,
-        timestamp: { lt: cutoffDate }
-      }
-    });
+    // TODO: Add AuditLog model to schema
+    const result = { count: 0 };
+    // const result = await prisma.auditLog.deleteMany({
+    //   where: {
+    //     organizationId,
+    //     timestamp: { lt: cutoffDate }
+    //   }
+    // });
 
     return result.count;
   }
