@@ -4,6 +4,11 @@ import Stripe from 'stripe'
 let stripeClient: Stripe | null = null
 
 function getStripeClient(): Stripe {
+  // Skip during build phase
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    throw new Error('Stripe not available during build')
+  }
+  
   if (!stripeClient) {
     if (!process.env.STRIPE_SECRET_KEY) {
       throw new Error('STRIPE_SECRET_KEY is not configured')

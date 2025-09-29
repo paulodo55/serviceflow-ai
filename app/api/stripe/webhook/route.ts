@@ -1,15 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { stripeService } from '@/lib/google-integration'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
   try {
-    // Check if we're in a build environment
-    if (process.env.NODE_ENV === 'production' && !process.env.DATABASE_URL) {
-      return NextResponse.json({ error: 'Service unavailable' }, { status: 503 })
+    // Skip during build phase to prevent Stripe initialization
+    if (process.env.NEXT_PHASE === 'phase-production-build') {
+      return NextResponse.json({ received: true })
     }
+    
+    // Dynamically import to prevent build-time initialization
+    const { stripeService } = await import('@/lib/google-integration')
     
     const body = await request.text()
     const signature = request.headers.get('stripe-signature')

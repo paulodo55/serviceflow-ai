@@ -350,11 +350,24 @@ export class GoogleCalendarService {
 
 // Stripe Integration
 export class StripeService {
-  private stripe: any;
+  private stripe: any = null;
 
-  constructor() {
-    const Stripe = require('stripe');
-    this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+  private getStripe() {
+    // Skip during build phase
+    if (process.env.NEXT_PHASE === 'phase-production-build') {
+      throw new Error('Stripe not available during build');
+    }
+    
+    if (!this.stripe) {
+      if (!process.env.STRIPE_SECRET_KEY) {
+        throw new Error('STRIPE_SECRET_KEY is not configured');
+      }
+      const Stripe = require('stripe');
+      this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+        apiVersion: '2025-08-27.basil',
+      });
+    }
+    return this.stripe;
   }
 
   // Create a customer
@@ -365,7 +378,8 @@ export class StripeService {
     address?: any;
   }): Promise<any> {
     try {
-      return await this.stripe.customers.create({
+      const stripe = this.getStripe();
+      return await stripe.customers.create({
         email: customerData.email,
         name: customerData.name,
         phone: customerData.phone,
@@ -393,7 +407,8 @@ export class StripeService {
         paymentIntentData.customer = customerId;
       }
 
-      return await this.stripe.paymentIntents.create(paymentIntentData);
+      const stripe = this.getStripe();
+      return await stripe.paymentIntents.create(paymentIntentData);
 
     } catch (error) {
       console.error('Error creating payment intent:', error);
@@ -404,7 +419,8 @@ export class StripeService {
   // Create a subscription
   async createSubscription(customerId: string, priceId: string): Promise<any> {
     try {
-      return await this.stripe.subscriptions.create({
+      const stripe = this.getStripe();
+      return await stripe.subscriptions.create({
         customer: customerId,
         items: [{ price: priceId }],
         payment_behavior: 'default_incomplete',
@@ -420,7 +436,8 @@ export class StripeService {
   // Handle webhook events
   async handleWebhook(signature: string, payload: string): Promise<void> {
     try {
-      const event = this.stripe.webhooks.constructEvent(
+      const stripe = this.getStripe();
+      const event = stripe.webhooks.constructEvent(
         payload,
         signature,
         process.env.STRIPE_WEBHOOK_SECRET
