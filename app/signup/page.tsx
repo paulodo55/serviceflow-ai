@@ -294,7 +294,7 @@ export default function SignupPage() {
                       <p className="text-sm text-gray-600">Advanced features & analytics</p>
                     </div>
                     <div className="text-right">
-                      <div className="text-2xl font-bold text-gray-900">$79</div>
+                      <div className="text-2xl font-bold text-gray-900">$499</div>
                       <div className="text-sm text-gray-500">/month</div>
                     </div>
                   </div>

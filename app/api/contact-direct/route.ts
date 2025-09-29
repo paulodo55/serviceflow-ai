@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import emailService from '@/lib/email-service-enhanced';
 
+// Alternative contact endpoint that sends directly to your iCloud email
+// Use this if Cloudflare email routing isn't working
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -23,16 +25,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create email template for you to receive
+    // Create email template sent directly to your iCloud email
     const contactNotification = {
-      to: 'hello@vervidflow.com', // Your email where you want to receive contact form submissions
-      subject: `New Contact Form Submission from ${name}`,
+      to: 'odopaul55@icloud.com', // Direct to your iCloud email
+      subject: `🚨 URGENT: Contact Form Submission from ${name}`,
       html: `
         <!DOCTYPE html>
         <html>
         <head>
           <meta charset="utf-8">
-          <title>New Contact Form Submission</title>
+          <title>Contact Form Submission - VervidFlow</title>
           <style>
             body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 20px; background-color: #f8fafc; }
             .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
@@ -42,16 +44,22 @@ export async function POST(request: NextRequest) {
             .label { font-weight: 600; color: #374151; margin-bottom: 5px; display: block; }
             .value { background-color: #f1f5f9; padding: 12px; border-radius: 6px; border-left: 4px solid #6366f1; }
             .message-content { background-color: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e5e7eb; white-space: pre-wrap; }
+            .urgent { background-color: #fee2e2; border: 2px solid #ef4444; padding: 15px; border-radius: 8px; margin: 20px 0; }
             .footer { background-color: #f8fafc; padding: 20px; text-align: center; color: #6b7280; font-size: 14px; }
           </style>
         </head>
         <body>
           <div class="container">
             <div class="header">
-              <h1 style="margin: 0; font-size: 24px;">New Contact Form Submission</h1>
-              <p style="margin: 10px 0 0 0; opacity: 0.9;">From VervidFlow.com</p>
+              <h1 style="margin: 0; font-size: 24px;">🚨 New Contact Form Submission</h1>
+              <p style="margin: 10px 0 0 0; opacity: 0.9;">From VervidFlow.com - DIRECT DELIVERY</p>
             </div>
             <div class="content">
+              <div class="urgent">
+                <h3 style="margin: 0 0 10px 0; color: #dc2626;">⚡ DIRECT EMAIL - BYPASSING CLOUDFLARE</h3>
+                <p style="margin: 0; color: #dc2626;">This email was sent directly to odopaul55@icloud.com to ensure delivery.</p>
+              </div>
+              
               <div class="field">
                 <span class="label">Name:</span>
                 <div class="value">${name}</div>
@@ -75,12 +83,16 @@ export async function POST(request: NextRequest) {
               </div>
               
               <div style="margin-top: 30px; padding: 20px; background-color: #eff6ff; border-radius: 8px; border: 1px solid #dbeafe;">
-                <h3 style="margin: 0 0 10px 0; color: #1e40af;">Next Steps:</h3>
-                <p style="margin: 0; color: #1e40af;">Reply directly to this email to respond to ${name} at ${email}</p>
+                <h3 style="margin: 0 0 10px 0; color: #1e40af;">📞 Quick Actions:</h3>
+                <p style="margin: 0; color: #1e40af;">
+                  <strong>Reply to:</strong> <a href="mailto:${email}">${email}</a><br>
+                  <strong>Time:</strong> ${new Date().toLocaleString()}<br>
+                  <strong>Source:</strong> VervidFlow Contact Form
+                </p>
               </div>
             </div>
             <div class="footer">
-              <p>This email was sent from the contact form on VervidFlow.com</p>
+              <p>This email was sent directly from the VervidFlow contact form</p>
               <p>Submitted on ${new Date().toLocaleString()}</p>
             </div>
           </div>
@@ -88,7 +100,7 @@ export async function POST(request: NextRequest) {
         </html>
       `,
       text: `
-New Contact Form Submission from VervidFlow.com
+🚨 URGENT: New Contact Form Submission from VervidFlow.com
 
 Name: ${name}
 Email: ${email}
@@ -97,13 +109,14 @@ ${company ? `Company: ${company}` : ''}
 Message:
 ${message}
 
-Submitted on: ${new Date().toLocaleString()}
+Reply to: ${email}
+Submitted: ${new Date().toLocaleString()}
 
-Reply directly to this email to respond to ${name}.
+This email was sent directly to odopaul55@icloud.com to bypass Cloudflare routing issues.
       `
     };
 
-    // Create auto-reply email for the person who submitted the form
+    // Create auto-reply for the customer
     const autoReply = {
       to: email,
       subject: 'Thank you for contacting VervidFlow',
@@ -186,8 +199,8 @@ https://vervidflow.com
       `
     };
 
-    // Send both emails using your existing SendGrid setup
-    console.log('🔄 Attempting to send contact form emails...');
+    // Send both emails
+    console.log('🚨 DIRECT EMAIL: Sending contact form emails directly to odopaul55@icloud.com');
     
     const [notificationSent, autoReplySent] = await Promise.all([
       emailService.sendEmail(contactNotification),
@@ -195,12 +208,10 @@ https://vervidflow.com
     ]);
 
     if (notificationSent) {
-      console.log(`✅ Contact form notification sent successfully for: ${name} (${email})`);
-      console.log(`📧 Email sent TO: hello@vervidflow.com`);
-      console.log(`📧 Should be forwarded to: odopaul55@icloud.com via Cloudflare`);
+      console.log(`✅ DIRECT: Contact form notification sent successfully to odopaul55@icloud.com`);
+      console.log(`📧 From: ${name} (${email})`);
     } else {
-      console.error('❌ Failed to send contact form notification');
-      console.error('🔍 Check SendGrid configuration and domain authentication');
+      console.error('❌ DIRECT: Failed to send contact form notification');
     }
 
     if (autoReplySent) {
@@ -209,16 +220,16 @@ https://vervidflow.com
       console.error('❌ Failed to send auto-reply');
     }
 
-    // Return success even if auto-reply fails (notification is more important)
     return NextResponse.json({
       success: true,
       message: 'Thank you for your message! We\'ll get back to you soon.',
       notificationSent,
-      autoReplySent
+      autoReplySent,
+      deliveryMethod: 'direct-to-icloud'
     });
 
   } catch (error) {
-    console.error('Contact form API error:', error);
+    console.error('Direct contact form API error:', error);
     return NextResponse.json(
       { error: 'Failed to send message. Please try again.' },
       { status: 500 }
