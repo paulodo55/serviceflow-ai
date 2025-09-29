@@ -5,7 +5,7 @@ import { EmailTemplate, WelcomeEmailData, PasswordResetData } from '@/types';
 export const createWelcomeEmail = (data: WelcomeEmailData): EmailTemplate => {
   const { fullName, email, companyName, tempPassword } = data;
   const loginUrl = 'https://vervidflow.com/login';
-  const supportEmail = 'hello@vervidai.com';
+  const supportEmail = 'hello@vervidflow.com';
   const supportPhone = '(214) 973-3761';
 
   const html = `
@@ -45,11 +45,11 @@ export const createWelcomeEmail = (data: WelcomeEmailData): EmailTemplate => {
                 <p>Your 14-day free trial is now active! We're excited to help <strong>${companyName}</strong> streamline your CRM experience with our AI-powered automation platform.</p>
                 
                 <div class="credentials">
-                    <h3>🔐 Your Login Credentials</h3>
-                    <p><strong>Email:</strong> ${email}</p>
-                    <p><strong>Temporary Password:</strong> <code style="background: #e2e8f0; padding: 4px 8px; border-radius: 4px; font-weight: bold;">${tempPassword}</code></p>
+                    <h3>🔐 Your Demo Login Credentials</h3>
+                    <p><strong>Demo Email:</strong> <code style="background: #e2e8f0; padding: 4px 8px; border-radius: 4px; font-weight: bold;">demo@vervidai.com</code></p>
+                    <p><strong>Demo Password:</strong> <code style="background: #e2e8f0; padding: 4px 8px; border-radius: 4px; font-weight: bold;">Demo123</code></p>
                     <p style="font-size: 14px; color: #64748b; margin-top: 15px;">
-                        <em>⚠️ For security, please change your password after your first login.</em>
+                        <em>💡 Use these credentials to explore the full CRM with sample data. Your personal account with ${email} will be set up shortly.</em>
                     </p>
                 </div>
                 
@@ -120,9 +120,11 @@ export const createWelcomeEmail = (data: WelcomeEmailData): EmailTemplate => {
 
     Your 14-day free trial is now active for ${companyName}.
 
-    Login Credentials:
-    Email: ${email}
-    Temporary Password: ${tempPassword}
+    Demo Login Credentials:
+    Demo Email: demo@vervidai.com
+    Demo Password: Demo123
+    
+    Use these credentials to explore the full CRM with sample data. Your personal account with ${email} will be set up shortly.
 
     Access your dashboard: ${loginUrl}
 
@@ -147,7 +149,7 @@ export const createWelcomeEmail = (data: WelcomeEmailData): EmailTemplate => {
 export const createPasswordResetEmail = (data: PasswordResetData): EmailTemplate => {
   const { fullName, email, resetToken } = data;
   const resetUrl = `https://vervidflow.com/reset-password?token=${resetToken}`;
-  const supportEmail = 'hello@vervidai.com';
+  const supportEmail = 'hello@vervidflow.com';
 
   const html = `
     <!DOCTYPE html>

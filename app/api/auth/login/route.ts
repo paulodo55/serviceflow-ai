@@ -17,7 +17,7 @@ const users = [
   {
     id: "1",
     email: "demo@vervidai.com",
-    password: "$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj2ukD5/rO4W", // "password123"
+    password: "$2a$12$5SgLzJZTOKEQzBGjjcxOV.6YQGhKG5DjGGG2ZmXE3xGN8qGHV2oKW", // "Demo123"
     name: "Demo User",
     type: "demo",
   },
