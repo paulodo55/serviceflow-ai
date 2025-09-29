@@ -118,7 +118,16 @@ export async function PUT(
         id: appointmentId,
         organizationId: user.organizationId
       },
-      include: {
+      select: {
+        id: true,
+        customerId: true,
+        startTime: true,
+        endTime: true,
+        status: true,
+        assignedUserId: true,
+        completedAt: true,
+        estimatedDuration: true,
+        price: true,
         customer: true
       }
     });
