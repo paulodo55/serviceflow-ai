@@ -319,7 +319,7 @@ export default function Home() {
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4">Contact</h4>
-              <p className="text-neutral-400">hello@vervidai.com</p>
+              <p className="text-neutral-400">hello@vervidflow.com</p>
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4">Solutions</h4>

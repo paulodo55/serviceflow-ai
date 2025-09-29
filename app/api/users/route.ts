@@ -245,7 +245,7 @@ export async function POST(request: NextRequest) {
               </div>
               
               <div style="text-align: center; color: #64748b; font-size: 14px;">
-                <p>Need help? Contact your administrator or support@vervidflow.com</p>
+                <p>Need help? Contact your administrator or hello@vervidflow.com</p>
                 <p style="margin: 0;">© 2024 VervidFlow. All rights reserved.</p>
               </div>
             </div>
@@ -264,7 +264,7 @@ Account Details:
 
 Complete your account setup: ${setupUrl}
 
-Need help? Contact your administrator or support@vervidflow.com
+Need help? Contact your administrator or hello@vervidflow.com
 
 © 2024 VervidFlow. All rights reserved.
           `

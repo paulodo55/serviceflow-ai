@@ -19,7 +19,7 @@ DATABASE_URL="postgresql://username:password@host:5432/database"
 
 # Optional: Email Service (SendGrid)
 SENDGRID_API_KEY="SG.YOUR_SENDGRID_API_KEY"
-FROM_EMAIL="noreply@your-domain.com"
+FROM_EMAIL="hello@vervidflow.com"
 
 # Optional: Google OAuth
 GOOGLE_CLIENT_ID="your-google-client-id"

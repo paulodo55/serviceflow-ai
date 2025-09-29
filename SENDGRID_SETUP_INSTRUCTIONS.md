@@ -10,7 +10,7 @@ Create a `.env.local` file in your project root with your SendGrid API key:
 # ⚠️  CRITICAL: NEVER COMMIT THIS FILE TO GIT
 # SendGrid Email Service
 SENDGRID_API_KEY="SG.YOUR_SENDGRID_API_KEY_HERE"
-SENDGRID_FROM_EMAIL="noreply@vervidflow.com"
+SENDGRID_FROM_EMAIL="hello@vervidflow.com"
 SENDGRID_FROM_NAME="VervidFlow"
 
 # Other required environment variables
@@ -51,7 +51,7 @@ For production deployment on Vercel:
 2. Navigate to your project settings
 3. Add these environment variables:
    - `SENDGRID_API_KEY` = Your actual API key
-   - `SENDGRID_FROM_EMAIL` = `noreply@vervidflow.com`
+   - `SENDGRID_FROM_EMAIL` = `hello@vervidflow.com`
    - `SENDGRID_FROM_NAME` = `VervidFlow`
 
 ## 🚀 **Features Now Available**

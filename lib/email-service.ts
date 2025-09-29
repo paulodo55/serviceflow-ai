@@ -262,7 +262,7 @@ export const sendEmail = async (template: EmailTemplate): Promise<boolean> => {
       port: parseInt(process.env.SMTP_PORT || '587'),
       secure: false, // Use TLS
       auth: {
-        user: process.env.SMTP_USER || 'hello@vervidai.com',
+        user: process.env.SMTP_USER || 'hello@vervidflow.com',
         pass: process.env.SMTP_PASSWORD,
       },
     });
@@ -271,7 +271,7 @@ export const sendEmail = async (template: EmailTemplate): Promise<boolean> => {
     await transporter.verify();
 
     const info = await transporter.sendMail({
-      from: `"VervidFlow by Vervid" <${process.env.SMTP_USER || 'hello@vervidai.com'}>`,
+      from: `"VervidFlow by Vervid" <${process.env.SMTP_USER || 'hello@vervidflow.com'}>`,
       to: template.to,
       subject: template.subject,
       text: template.text,

@@ -146,7 +146,7 @@ export async function POST(request: NextRequest) {
             </div>
             
             <div style="text-align: center; color: #64748b; font-size: 14px;">
-              <p>Need help? Contact our support team at support@vervidflow.com</p>
+              <p>Need help? Contact our support team at hello@vervidflow.com</p>
               <p style="margin: 0;">© 2024 VervidFlow. All rights reserved.</p>
             </div>
           </div>
@@ -166,7 +166,7 @@ ${validatedData.plan === 'trial' ?
   '- Status: Active'
 }
 
-Need help? Contact support@vervidflow.com
+Need help? Contact hello@vervidflow.com
 
 © 2024 VervidFlow. All rights reserved.
         `

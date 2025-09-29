@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
 
     // Create email template for you to receive
     const contactNotification = {
-      to: 'hello@vervidai.com', // Your email where you want to receive contact form submissions
+      to: 'hello@vervidflow.com', // Your email where you want to receive contact form submissions
       subject: `New Contact Form Submission from ${name}`,
       html: `
         <!DOCTYPE html>
@@ -147,7 +147,7 @@ Reply directly to this email to respond to ${name}.
               
               <p>If you have any urgent questions, you can reach us at:</p>
               <ul>
-                <li><strong>Email:</strong> hello@vervidai.com</li>
+                <li><strong>Email:</strong> hello@vervidflow.com</li>
                 <li><strong>Phone:</strong> (214) 973-3761</li>
               </ul>
             </div>
@@ -156,7 +156,7 @@ Reply directly to this email to respond to ${name}.
               <p>Smart CRM & Scheduling Platform for Service Businesses</p>
               <p style="margin-top: 20px; opacity: 0.8;">
                 <a href="https://vervidflow.com" style="color: #60a5fa;">vervidflow.com</a> | 
-                <a href="mailto:hello@vervidai.com" style="color: #60a5fa;">hello@vervidai.com</a>
+                <a href="mailto:hello@vervidflow.com" style="color: #60a5fa;">hello@vervidflow.com</a>
               </p>
             </div>
           </div>
@@ -174,7 +174,7 @@ ${message}
 In the meantime, feel free to explore our platform at https://vervidflow.com/demo
 
 If you have any urgent questions, you can reach us at:
-- Email: hello@vervidai.com  
+- Email: hello@vervidflow.com  
 - Phone: (214) 973-3761
 
 Best regards,

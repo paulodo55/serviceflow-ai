@@ -22,7 +22,7 @@ Your SendGrid integration is now **100% working** and ready for production!
 3. Add/Update these variables:
    ```
    SENDGRID_API_KEY = [Your working SendGrid API key]
-   SENDGRID_FROM_EMAIL = noreply@vervidflow.com
+   SENDGRID_FROM_EMAIL = hello@vervidflow.com
    SENDGRID_FROM_NAME = VervidFlow
    ```
 

@@ -156,8 +156,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="text-white font-semibold">Email</h3>
-                    <a href="mailto:hello@vervidai.com" className="text-slate-300 hover:text-blue-400 transition-colors">
-                      hello@vervidai.com
+                    <a href="mailto:hello@vervidflow.com" className="text-slate-300 hover:text-blue-400 transition-colors">
+                      hello@vervidflow.com
                     </a>
                   </div>
                 </div>
