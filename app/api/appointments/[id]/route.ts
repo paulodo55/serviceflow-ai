@@ -119,8 +119,7 @@ export async function PUT(
         organizationId: user.organizationId
       },
       include: {
-        customer: true,
-        assignedUser: true
+        customer: true
       }
     });
 
@@ -225,13 +224,6 @@ export async function PUT(
             email: true,
             phone: true,
             address: true,
-          }
-        },
-        assignedUser: {
-          select: {
-            id: true,
-            name: true,
-            email: true
           }
         },
         invoices: {
