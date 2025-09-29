@@ -71,13 +71,6 @@ export async function GET(
             total: true,
             dueDate: true
           }
-        },
-        createdByUser: {
-          select: {
-            id: true,
-            name: true,
-            email: true
-          }
         }
       }
     });
