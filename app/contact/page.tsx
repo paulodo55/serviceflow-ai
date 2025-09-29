@@ -13,19 +13,42 @@ export default function ContactPage() {
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // For now, just show success message
-    setIsSubmitted(true);
+    setIsSubmitting(true);
+    setSubmitError('');
     
-    // In production, you could send this to an API endpoint
-    console.log('Contact form submitted:', formData);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        console.log('Contact form submitted successfully:', data);
+      } else {
+        setSubmitError(data.error || 'Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      console.error('Contact form error:', error);
+      setSubmitError('Network error. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {
@@ -133,8 +156,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="text-white font-semibold">Email</h3>
-                    <a href="mailto:hello@vervidflow.com" className="text-slate-300 hover:text-blue-400 transition-colors">
-                      hello@vervidflow.com
+                    <a href="mailto:hello@vervidai.com" className="text-slate-300 hover:text-blue-400 transition-colors">
+                      hello@vervidai.com
                     </a>
                   </div>
                 </div>
@@ -244,12 +267,28 @@ export default function ContactPage() {
                 />
               </div>
 
+              {submitError && (
+                <div className="bg-red-900/50 border border-red-500 text-red-200 px-4 py-3 rounded-lg mb-4">
+                  {submitError}
+                </div>
+              )}
+
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2"
+                disabled={isSubmitting}
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2"
               >
-                <span>Send Message</span>
-                <FaArrowLeft className="rotate-180" />
+                {isSubmitting ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Sending...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Send Message</span>
+                    <FaArrowLeft className="rotate-180" />
+                  </>
+                )}
               </button>
             </form>
 
