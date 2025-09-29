@@ -1,4 +1,10 @@
-# Force cache invalidation
-.vercel/
+# Force fresh build - ignore cache directories
 .next/
-node_modules/
+node_modules/.cache/
+.vercel/
+*.log
+.env.local
+.DS_Store
+
+# Ensure fresh Prisma client generation
+node_modules/.prisma/
