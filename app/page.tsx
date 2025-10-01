@@ -75,20 +75,31 @@ export default function Home() {
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent pointer-events-none"></div>
       {/* Navbar */}
       <motion.nav 
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="fixed top-0 w-full bg-dark/90 backdrop-blur-lg shadow-sm border-b border-neutral-800 z-50"
+        className="fixed top-0 w-full bg-dark/80 backdrop-blur-xl shadow-lg border-b border-neutral-800/50 z-50"
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <motion.h1 
-            whileHover={{ scale: 1.05 }}
-            className="flex flex-col items-center"
+            whileHover={{ scale: 1.08 }}
+            className="flex flex-col items-center cursor-pointer"
           >
-            <div className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <motion.div 
+              className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+              whileHover={{
+                filter: "brightness(1.2)",
+              }}
+            >
               VervidFlow
-            </div>
-            <div className="text-xs text-neutral-400 font-normal mt-1">by Vervid</div>
+            </motion.div>
+            <motion.div 
+              className="text-xs text-neutral-400 font-normal mt-1"
+              initial={{ opacity: 0.7 }}
+              whileHover={{ opacity: 1 }}
+            >
+              by Vervid
+            </motion.div>
           </motion.h1>
           <div className="hidden md:flex items-center space-x-8">
             {[
@@ -103,29 +114,105 @@ export default function Home() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * index, duration: 0.5 }}
-                className="text-neutral-400 hover:text-primary transition-all duration-300 relative group"
+                whileHover={{ 
+                  y: -2,
+                  color: "rgba(139, 92, 246, 1)"
+                }}
+                className="text-neutral-400 transition-all duration-300 relative group"
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                <motion.span 
+                  className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-primary to-secondary"
+                  initial={{ width: 0 }}
+                  whileHover={{ width: "100%" }}
+                  transition={{ duration: 0.3 }}
+                />
               </motion.a>
             ))}
-            <Link 
-              href="/login" 
-              className="bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-lg font-medium hover:shadow-lg transition-all duration-300"
-            >
-              Sign In
-            </Link>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link 
+                href="/login" 
+                className="bg-gradient-to-r from-primary to-secondary text-white px-5 py-2.5 rounded-lg font-medium hover:shadow-lg hover:shadow-primary/30 transition-all duration-300 relative overflow-hidden group"
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0"
+                  animate={{
+                    x: ['-100%', '200%'],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatDelay: 1,
+                  }}
+                />
+                <span className="relative z-10">Sign In</span>
+              </Link>
+            </motion.div>
           </div>
         </div>
       </motion.nav>
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-32 min-h-screen flex items-center overflow-hidden">
-        {/* Animated background elements */}
+        {/* Enhanced Animated background elements */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full blur-3xl"></div>
+          <motion.div 
+            className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/20 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          <motion.div 
+            className="absolute bottom-1/4 -right-20 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.3, 1],
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1
+            }}
+          />
+          <motion.div 
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full blur-3xl"
+            animate={{
+              rotate: [0, 360],
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+          {/* Floating particles */}
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-primary/30 rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                opacity: [0, 1, 0],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
         </div>
         
         <motion.div
@@ -145,10 +232,30 @@ export default function Home() {
               transition={{ duration: 1, delay: 0.2 }}
               className="text-center"
             >
-              <h1 className="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-r from-white via-primary to-secondary bg-clip-text text-transparent leading-tight">
+              <motion.h1 
+                className="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-r from-white via-primary to-secondary bg-clip-text text-transparent leading-tight"
+                animate={{
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+                style={{
+                  backgroundSize: '200% 200%',
+                }}
+              >
                 VervidFlow
-              </h1>
-              <p className="text-lg md:text-xl text-neutral-400 font-light mb-8">by Vervid</p>
+              </motion.h1>
+              <motion.p 
+                className="text-lg md:text-xl text-neutral-400 font-light mb-8"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+              >
+                by Vervid
+              </motion.p>
             </motion.div>
             
             <motion.p 
@@ -168,20 +275,44 @@ export default function Home() {
             >
               <Link href="/free-trial">
                 <motion.div
-                  whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(139, 92, 246, 0.3)" }}
+                  whileHover={{ 
+                    scale: 1.05, 
+                    boxShadow: "0 20px 60px rgba(139, 92, 246, 0.4)",
+                    y: -2 
+                  }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 cursor-pointer"
+                  className="bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 cursor-pointer relative overflow-hidden group"
                 >
-                  Start Free Trial
-                  <FaArrowRight className="text-sm" />
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0"
+                    animate={{
+                      x: ['-100%', '200%'],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      repeatDelay: 1,
+                    }}
+                  />
+                  <span className="relative z-10">Start Free Trial</span>
+                  <motion.div
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <FaArrowRight className="text-sm relative z-10" />
+                  </motion.div>
                 </motion.div>
               </Link>
               
               <Link href="/contact">
                 <motion.div
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    borderColor: "rgba(139, 92, 246, 1)",
+                    backgroundColor: "rgba(139, 92, 246, 0.1)"
+                  }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-transparent text-white px-8 py-4 rounded-full font-semibold border-2 border-primary hover:bg-primary hover:text-white transition-all duration-300 cursor-pointer flex items-center gap-2"
+                  className="bg-transparent text-white px-8 py-4 rounded-full font-semibold border-2 border-primary/50 transition-all duration-300 cursor-pointer flex items-center gap-2 backdrop-blur-sm"
                 >
                   Contact Sales
                 </motion.div>
@@ -222,21 +353,49 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                className="group bg-gradient-to-br from-neutral-800 to-neutral-900 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-neutral-700 hover:border-primary/50 relative overflow-hidden"
+                whileHover={{ 
+                  y: -15, 
+                  scale: 1.03,
+                  boxShadow: "0 25px 50px rgba(139, 92, 246, 0.2)"
+                }}
+                className="group bg-gradient-to-br from-neutral-800 to-neutral-900 p-8 rounded-2xl shadow-lg transition-all duration-500 border border-neutral-700 hover:border-primary/50 relative overflow-hidden cursor-pointer"
               >
-                {/* Badge */}
-                <div className="absolute top-4 right-4 bg-gradient-to-r from-primary to-secondary text-white text-xs font-bold px-3 py-1 rounded-full">
-                  {feature.badge}
-                </div>
+                {/* Animated background gradient */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-primary/0 to-secondary/0 opacity-0 group-hover:opacity-10 transition-opacity duration-500"
+                  initial={false}
+                />
                 
-                <div className="text-5xl text-primary mb-6 group-hover:scale-110 transition-transform duration-300">
+                {/* Shine effect on hover */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
+                  initial={{ x: '-100%' }}
+                  whileHover={{ x: '200%' }}
+                  transition={{ duration: 0.8 }}
+                />
+                
+                {/* Badge */}
+                <motion.div 
+                  className="absolute top-4 right-4 bg-gradient-to-r from-primary to-secondary text-white text-xs font-bold px-3 py-1 rounded-full z-10"
+                  whileHover={{ scale: 1.1 }}
+                >
+                  {feature.badge}
+                </motion.div>
+                
+                <motion.div 
+                  className="text-5xl text-primary mb-6 relative z-10"
+                  whileHover={{ 
+                    scale: 1.2,
+                    rotate: [0, -10, 10, -5, 0],
+                  }}
+                  transition={{ duration: 0.5 }}
+                >
                   {feature.icon}
-                </div>
-                <h4 className="text-xl font-bold mb-4 text-white group-hover:text-primary transition-colors duration-300">
+                </motion.div>
+                <h4 className="text-xl font-bold mb-4 text-white group-hover:text-primary transition-colors duration-300 relative z-10">
                   {feature.title}
                 </h4>
-                <p className="text-neutral-200 leading-relaxed text-base">
+                <p className="text-neutral-200 leading-relaxed text-base relative z-10">
                   {feature.description}
                 </p>
               </motion.div>
