@@ -76,17 +76,58 @@ const features = [
 
 export default function FeaturesPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-dark via-darkGray to-neutral-900">
+    <div className="min-h-screen bg-gradient-to-br from-dark via-darkGray to-neutral-900 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="fixed inset-0 pointer-events-none">
+        <motion.div 
+          className="absolute top-10 right-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-10 left-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
+      </div>
+      
       {/* Header */}
-      <div className="pt-24 pb-16">
+      <div className="pt-24 pb-16 relative z-10">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-block bg-gradient-to-r from-primary/20 to-secondary/20 border border-primary/30 rounded-full px-6 py-2 mb-6"
+            whileHover={{ scale: 1.05 }}
+            className="inline-block bg-gradient-to-r from-primary/20 to-secondary/20 border border-primary/30 rounded-full px-6 py-2 mb-6 backdrop-blur-sm cursor-pointer"
           >
-            <span className="text-primary font-semibold">Why Leading Businesses Switch to VervidFlow</span>
+            <motion.span 
+              className="text-primary font-semibold"
+              animate={{
+                opacity: [0.8, 1, 0.8],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+              }}
+            >
+              Why Leading Businesses Switch to VervidFlow
+            </motion.span>
           </motion.div>
           
           <motion.h1
@@ -94,6 +135,9 @@ export default function FeaturesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-white via-primary to-secondary bg-clip-text text-transparent mb-6"
+            style={{
+              backgroundSize: '200% 200%',
+            }}
           >
             Built for Every Business,
             <br />Not Just Tech Giants
@@ -115,18 +159,97 @@ export default function FeaturesPage() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-12"
           >
-            <div className="bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 rounded-xl p-6 text-center">
-              <div className="text-4xl font-bold text-primary mb-2">5 Min</div>
+            <motion.div 
+              className="bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 rounded-xl p-6 text-center backdrop-blur-sm relative overflow-hidden group cursor-pointer"
+              whileHover={{ scale: 1.05, borderColor: "rgba(139, 92, 246, 0.5)" }}
+            >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent"
+                animate={{
+                  x: ['-100%', '200%'],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  repeatDelay: 1,
+                }}
+              />
+              <motion.div 
+                className="text-4xl font-bold text-primary mb-2"
+                animate={{
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                }}
+              >
+                5 Min
+              </motion.div>
               <div className="text-neutral-300">Setup Time vs 30 Days</div>
-            </div>
-            <div className="bg-gradient-to-br from-secondary/10 to-transparent border border-secondary/20 rounded-xl p-6 text-center">
-              <div className="text-4xl font-bold text-secondary mb-2">90%</div>
+            </motion.div>
+            <motion.div 
+              className="bg-gradient-to-br from-secondary/10 to-transparent border border-secondary/20 rounded-xl p-6 text-center backdrop-blur-sm relative overflow-hidden group cursor-pointer"
+              whileHover={{ scale: 1.05, borderColor: "rgba(16, 185, 129, 0.5)" }}
+            >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-secondary/10 to-transparent"
+                animate={{
+                  x: ['-100%', '200%'],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  repeatDelay: 1,
+                  delay: 0.5,
+                }}
+              />
+              <motion.div 
+                className="text-4xl font-bold text-secondary mb-2"
+                animate={{
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: 0.3,
+                }}
+              >
+                90%
+              </motion.div>
               <div className="text-neutral-300">Cost Savings vs Enterprise CRMs</div>
-            </div>
-            <div className="bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 rounded-xl p-6 text-center">
-              <div className="text-4xl font-bold text-primary mb-2">Any</div>
+            </motion.div>
+            <motion.div 
+              className="bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 rounded-xl p-6 text-center backdrop-blur-sm relative overflow-hidden group cursor-pointer"
+              whileHover={{ scale: 1.05, borderColor: "rgba(139, 92, 246, 0.5)" }}
+            >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent"
+                animate={{
+                  x: ['-100%', '200%'],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  repeatDelay: 1,
+                  delay: 1,
+                }}
+              />
+              <motion.div 
+                className="text-4xl font-bold text-primary mb-2"
+                animate={{
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: 0.6,
+                }}
+              >
+                Any
+              </motion.div>
               <div className="text-neutral-300">Industry, Any Scale</div>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
@@ -142,25 +265,53 @@ export default function FeaturesPage() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
               <Link href={`/features/${feature.slug}`}>
-                <div className="group bg-gradient-to-br from-neutral-800 to-neutral-900 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-neutral-700 hover:border-primary/50 cursor-pointer h-full relative overflow-hidden">
-                  {/* Competitive Badge */}
-                  <div className="absolute top-4 right-4 bg-gradient-to-r from-primary to-secondary text-white text-xs font-bold px-3 py-1 rounded-full">
-                    {feature.competitive}
-                  </div>
+                <motion.div 
+                  className="group bg-gradient-to-br from-neutral-800 to-neutral-900 p-8 rounded-2xl shadow-lg transition-all duration-500 border border-neutral-700 hover:border-primary/50 cursor-pointer h-full relative overflow-hidden"
+                  whileHover={{ 
+                    y: -10, 
+                    scale: 1.02,
+                    boxShadow: "0 25px 50px rgba(139, 92, 246, 0.3)"
+                  }}
+                >
+                  {/* Shine effect on hover */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
+                    initial={{ x: '-100%' }}
+                    whileHover={{ x: '200%' }}
+                    transition={{ duration: 0.8 }}
+                  />
                   
-                  <div className="text-5xl text-primary mb-6 group-hover:scale-110 transition-transform duration-300">
+                  {/* Competitive Badge */}
+                  <motion.div 
+                    className="absolute top-4 right-4 bg-gradient-to-r from-primary to-secondary text-white text-xs font-bold px-3 py-1 rounded-full z-10"
+                    whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
+                  >
+                    {feature.competitive}
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="text-5xl text-primary mb-6 relative z-10"
+                    whileHover={{ 
+                      scale: 1.2,
+                      rotate: [0, -10, 10, -5, 0],
+                    }}
+                    transition={{ duration: 0.5 }}
+                  >
                     {feature.icon}
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-primary transition-colors duration-300">
+                  </motion.div>
+                  <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-primary transition-colors duration-300 relative z-10">
                     {feature.title}
                   </h3>
-                  <p className="text-neutral-300 leading-relaxed mb-6">
+                  <p className="text-neutral-300 leading-relaxed mb-6 relative z-10">
                     {feature.description}
                   </p>
-                  <div className="mt-auto text-primary font-semibold group-hover:translate-x-2 transition-transform duration-300 flex items-center gap-2">
+                  <motion.div 
+                    className="mt-auto text-primary font-semibold flex items-center gap-2 relative z-10"
+                    whileHover={{ x: 5 }}
+                  >
                     See How It Works →
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               </Link>
             </motion.div>
           ))}
