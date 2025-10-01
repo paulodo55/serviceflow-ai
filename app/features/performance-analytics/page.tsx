@@ -29,10 +29,10 @@ export default function PerformanceAnalyticsPage() {
               <FaChartLine />
             </div>
             <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-primary to-secondary bg-clip-text text-transparent mb-6 leading-tight">
-              Performance Analytics & ROI Reporting
+              See Your ROI in Real-Time
             </h1>
             <p className="text-xl md:text-2xl text-neutral-200 max-w-3xl mx-auto leading-relaxed font-light">
-              Comprehensive insights and metrics that drive data-driven decisions and demonstrate clear ROI for your service department
+              <strong className="text-white">Unlike Salesforce's $25K analytics add-ons,</strong> every VervidFlow plan includes instant ROI dashboards. Track every dollar spent vs revenue generated—no consultants, no complex reports, no guesswork.
             </p>
           </motion.div>
         </div>

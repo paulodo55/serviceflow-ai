@@ -2,57 +2,75 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { FaCalendarCheck, FaTools, FaClock, FaBell, FaSync, FaChartBar, FaChartLine } from 'react-icons/fa';
+import { 
+  FaRocket, FaUsers, FaShieldAlt, FaDatabase, FaPlug, FaChartLine, 
+  FaClock, FaBuilding, FaHandshake, FaGlobeAmericas, FaBolt, FaCog 
+} from 'react-icons/fa';
 
 const features = [
   {
-    id: 'instant-booking',
-    icon: <FaCalendarCheck />,
-    title: 'Instant Online Booking',
-    description: 'Embedded website widget and standalone mobile app allow customers to book appointments in under 90 seconds.',
-    slug: 'instant-booking'
+    id: 'instant-onboarding',
+    icon: <FaRocket />,
+    title: '5-Minute Data Onboarding',
+    description: 'Import your entire customer database, employee records, and business data in minutes. Unlike Salesforce\'s weeks-long implementation, we get you operational today.',
+    slug: 'instant-booking',
+    competitive: 'vs Salesforce: Days not months'
   },
   {
-    id: 'auto-calling',
-    icon: <FaBell />,
-    title: 'Auto Calling & AI Pickups',
-    description: 'Automated calling system handles appointment confirmations and after-hours customer inquiries with intelligent AI voice responses.',
-    slug: 'auto-calling'
+    id: 'role-based-access',
+    icon: <FaShieldAlt />,
+    title: 'Advanced Role-Based Permissions',
+    description: 'Granular admin controls let you define exactly what each employee sees and does. From receptionists to managers to executives—everyone gets the right access level.',
+    slug: 'auto-calling',
+    competitive: 'Enterprise-grade security'
   },
   {
-    id: 'slot-optimization',
-    icon: <FaClock />,
-    title: 'Dynamic Slot Optimization',
-    description: 'Real-time analysis of service bay availability, parts lead times, and technician schedules ensures optimal time-slot recommendations.',
-    slug: 'slot-optimization'
+    id: 'api-grouping',
+    icon: <FaPlug />,
+    title: 'Intelligent API Grouping',
+    description: 'Separate API endpoints for different teams and departments. Sales, operations, support—each gets their own optimized data flow without interference.',
+    slug: 'slot-optimization',
+    competitive: 'vs Podium: True multi-department'
   },
   {
-    id: 'automated-reminders',
-    icon: <FaBell />,
-    title: 'Automated Reminders & Confirmations',
-    description: 'Multi-channel notifications (SMS, email, WhatsApp) confirm bookings instantly, send 48- and 4-hour reminders.',
-    slug: 'automated-reminders'
+    id: 'universal-crm',
+    icon: <FaGlobeAmericas />,
+    title: 'Universal Business CRM',
+    description: 'From dealerships to orphanages, warehouses to healthcare—one platform adapts to any business sector. No industry limitations like competitors.',
+    slug: 'automated-reminders',
+    competitive: 'Any industry, any size'
   },
   {
-    id: 'real-time-updates',
-    icon: <FaSync />,
-    title: 'Real-Time Status Updates',
-    description: 'Customers receive live updates throughout their service journey with accurate progress tracking and notifications.',
-    slug: 'real-time-updates'
+    id: 'ai-automation',
+    icon: <FaBolt />,
+    title: 'True AI Automation',
+    description: 'Not just scheduled messages—real AI that learns your business patterns, predicts customer needs, and automates complex workflows automatically.',
+    slug: 'real-time-updates',
+    competitive: 'vs Microsoft: Real AI not rules'
   },
   {
-    id: 'downtime-insights',
-    icon: <FaChartBar />,
-    title: 'Downtime Reduction Insights',
-    description: 'The dashboard highlights upcoming idle periods predicted by the AI based on scheduled jobs and parts arrival times.',
-    slug: 'downtime-insights'
+    id: 'unified-communications',
+    icon: <FaHandshake />,
+    title: 'Unified Multi-Channel Hub',
+    description: 'Every customer interaction—SMS, email, calls, social media, web chat—in one timeline. Stop juggling 5 different platforms like your competitors.',
+    slug: 'downtime-insights',
+    competitive: 'All channels, one inbox'
   },
   {
-    id: 'performance-analytics',
+    id: 'instant-roi',
     icon: <FaChartLine />,
-    title: 'Performance Analytics & ROI Reporting',
-    description: 'Advanced analytics aggregate key metrics—resource utilization, service completion rates, customer satisfaction, and revenue optimization.',
-    slug: 'performance-analytics'
+    title: 'Instant ROI Tracking',
+    description: 'See your return on investment in real-time. Track every dollar spent vs revenue generated. No complex dashboards or expensive consultants needed.',
+    slug: 'performance-analytics',
+    competitive: 'ROI visible day one'
+  },
+  {
+    id: 'scalable-pricing',
+    icon: <FaBuilding />,
+    title: 'Scalable for Any Size',
+    description: 'Single location or 500 branches—pricing and features that grow with you. No forced enterprise plans or hidden per-user fees.',
+    slug: 'roi-reporting',
+    competitive: 'Fair pricing, infinite scale'
   }
 ];
 
@@ -62,22 +80,54 @@ export default function FeaturesPage() {
       {/* Header */}
       <div className="pt-24 pb-16">
         <div className="max-w-7xl mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-block bg-gradient-to-r from-primary/20 to-secondary/20 border border-primary/30 rounded-full px-6 py-2 mb-6"
+          >
+            <span className="text-primary font-semibold">Why Enterprises Choose Us Over Salesforce, Podium & Microsoft</span>
+          </motion.div>
+          
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-primary to-secondary bg-clip-text text-transparent mb-6"
+            className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-white via-primary to-secondary bg-clip-text text-transparent mb-6"
           >
-            VervidFlow Features
+            Built for Every Business,
+            <br />Not Just Tech Giants
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl text-neutral-300 max-w-3xl mx-auto"
+            className="text-xl md:text-2xl text-neutral-300 max-w-4xl mx-auto leading-relaxed"
           >
-            Explore our comprehensive suite of intelligent tools designed to streamline your CRM experience and optimize business operations
+            From dealerships to orphanages, warehouses to healthcare—VervidFlow adapts to <strong className="text-white">any industry, any size, any workflow</strong>. 
+            Get enterprise capabilities without enterprise complexity or cost.
           </motion.p>
+          
+          {/* Stats Row */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-12"
+          >
+            <div className="bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 rounded-xl p-6 text-center">
+              <div className="text-4xl font-bold text-primary mb-2">5 Min</div>
+              <div className="text-neutral-300">Setup Time vs 30 Days</div>
+            </div>
+            <div className="bg-gradient-to-br from-secondary/10 to-transparent border border-secondary/20 rounded-xl p-6 text-center">
+              <div className="text-4xl font-bold text-secondary mb-2">90%</div>
+              <div className="text-neutral-300">Cost Savings vs Salesforce</div>
+            </div>
+            <div className="bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 rounded-xl p-6 text-center">
+              <div className="text-4xl font-bold text-primary mb-2">Any</div>
+              <div className="text-neutral-300">Industry, Any Scale</div>
+            </div>
+          </motion.div>
         </div>
       </div>
 
@@ -92,18 +142,23 @@ export default function FeaturesPage() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
               <Link href={`/features/${feature.slug}`}>
-                <div className="group bg-neutral-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-neutral-700 hover:border-primary/50 cursor-pointer h-full">
+                <div className="group bg-gradient-to-br from-neutral-800 to-neutral-900 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-neutral-700 hover:border-primary/50 cursor-pointer h-full relative overflow-hidden">
+                  {/* Competitive Badge */}
+                  <div className="absolute top-4 right-4 bg-gradient-to-r from-primary to-secondary text-white text-xs font-bold px-3 py-1 rounded-full">
+                    {feature.competitive}
+                  </div>
+                  
                   <div className="text-5xl text-primary mb-6 group-hover:scale-110 transition-transform duration-300">
                     {feature.icon}
                   </div>
                   <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-primary transition-colors duration-300">
                     {feature.title}
                   </h3>
-                  <p className="text-neutral-300 leading-relaxed">
+                  <p className="text-neutral-300 leading-relaxed mb-6">
                     {feature.description}
                   </p>
-                  <div className="mt-6 text-primary font-semibold group-hover:translate-x-2 transition-transform duration-300">
-                    Learn More →
+                  <div className="mt-auto text-primary font-semibold group-hover:translate-x-2 transition-transform duration-300 flex items-center gap-2">
+                    See How It Works →
                   </div>
                 </div>
               </Link>
