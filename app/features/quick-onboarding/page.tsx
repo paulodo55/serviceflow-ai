@@ -28,7 +28,7 @@ export default function QuickOnboardingPage() {
               5-Minute Data Onboarding
             </h1>
             <p className="text-xl text-neutral-300 max-w-3xl mx-auto leading-relaxed">
-              <strong className="text-white">Salesforce takes 30+ days. Microsoft Dynamics takes weeks of consulting.</strong> We get you operational in 5 minutes with zero data loss.
+              <strong className="text-white">Traditional CRMs take 30+ days and weeks of consulting.</strong> We get you operational in 5 minutes with zero data loss.
             </p>
           </motion.div>
         </div>
@@ -49,7 +49,7 @@ export default function QuickOnboardingPage() {
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
             <div>
-              <h3 className="text-xl font-bold text-primary mb-3">Traditional CRM Implementation</h3>
+              <h3 className="text-xl font-bold text-red-400 mb-3">Traditional Enterprise CRMs</h3>
               <ul className="space-y-3 text-neutral-300">
                 <li className="flex items-start gap-2">
                   <span className="text-red-500 mt-1">❌</span>
@@ -146,7 +146,7 @@ export default function QuickOnboardingPage() {
           <div className="grid md:grid-cols-3 gap-8 text-center">
             <div>
               <div className="text-5xl font-bold text-primary mb-2">$47K</div>
-              <div className="text-neutral-300">Average savings vs Salesforce implementation</div>
+              <div className="text-neutral-300">Average savings vs enterprise implementation</div>
             </div>
             <div>
               <div className="text-5xl font-bold text-secondary mb-2">85 Days</div>

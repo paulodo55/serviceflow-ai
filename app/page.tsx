@@ -2,58 +2,66 @@
 
 import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { FaArrowRight, FaCalendarCheck, FaChartBar, FaSync, FaTools, FaBell, FaClock, FaArrowLeft, FaDollarSign, FaChartLine, FaArrowUp, FaTruckLoading } from "react-icons/fa";
+import { FaArrowRight, FaCalendarCheck, FaChartBar, FaSync, FaTools, FaBell, FaClock, FaArrowLeft, FaDollarSign, FaChartLine, FaArrowUp, FaTruckLoading, FaRocket, FaShieldAlt, FaPlug, FaGlobeAmericas, FaBolt, FaHandshake, FaBuilding } from "react-icons/fa";
 import Link from 'next/link';
 
 const features = [
   {
-    icon: <FaCalendarCheck />,
-    title: "Instant Online Booking",
-    description: "Embedded website widget and standalone mobile app allow customers to book appointments in under 90 seconds. Intelligent queue management ensures multiple customers can book simultaneously with no slowdowns."
+    icon: <FaRocket />,
+    title: "5-Minute Data Onboarding",
+    description: "Import your entire customer database, employee records, and business data in minutes. While others take weeks or months to implement, we get you operational today with zero data loss.",
+    badge: "Ready in minutes"
   },
   {
-    icon: <FaBell />,
-    title: "Auto Calling & AI Pickups",
-    description: "Automated calling system handles appointment confirmations and after-hours customer inquiries with intelligent AI voice responses, ensuring 24/7 customer service availability."
+    icon: <FaShieldAlt />,
+    title: "Advanced Role-Based Permissions",
+    description: "Granular admin controls let you define exactly what each employee sees and does. From receptionists to managers to executives—everyone gets the right access level with enterprise-grade security.",
+    badge: "Enterprise security"
   },
   {
-    icon: <FaClock />,
-    title: "Dynamic Slot Optimization",
-    description: "Real-time analysis of service bay availability, parts lead times, and technician schedules ensures optimal time-slot recommendations. AI recalibrates time blocks based on historical repair durations and ongoing job progress, adjusting start times to prevent idle bays."
+    icon: <FaPlug />,
+    title: "Intelligent API Grouping",
+    description: "Separate API endpoints for different teams and departments. Sales, operations, support—each gets their own optimized data flow without interference for true multi-department design.",
+    badge: "Multi-department"
   },
   {
-    icon: <FaBell />,
-    title: "Automated Reminders & Confirmations",
-    description: "Multi-channel notifications (SMS, email, WhatsApp) confirm bookings instantly, send 48- and 4-hour reminders, and allow self-service rescheduling. Intelligent reminder timing uses customer response history to minimize no-shows (historically reducing no-shows by 40%)."
+    icon: <FaGlobeAmericas />,
+    title: "Universal Business CRM",
+    description: "From dealerships to orphanages, warehouses to healthcare—one platform adapts to any business sector. No industry limitations, any size, any workflow.",
+    badge: "Any industry"
   },
   {
-    icon: <FaSync />,
-    title: "Real-Time Status Updates",
-    description: "Customers receive live updates when their vehicle enters diagnostics, moves to repair, or is ready for pickup. AI-generated ETA predictions adjust based on actual work progress and parts availability, setting clear expectations."
+    icon: <FaBolt />,
+    title: "True AI Automation",
+    description: "Not just scheduled messages—real AI that learns your business patterns, predicts customer needs, and automates complex workflows automatically. Real intelligence, not just rules.",
+    badge: "Real AI"
   },
   {
-    icon: <FaChartBar />,
-    title: "Downtime Reduction Insights",
-    description: "The dashboard highlights upcoming idle periods predicted by the AI based on scheduled jobs and parts arrival times. Service managers receive push alerts suggesting proactive upsell or minor maintenance tasks to fill short gaps."
-  },
-  {
-    icon: <FaTruckLoading />,
-    title: "Parts Lead-Time Predictor",
-    description: "Integrates with OEM APIs and local supplier databases to forecast parts delivery dates. When parts delays exceed acceptable thresholds, AI automatically offers alternative genuine or certified aftermarket options to avoid extended bay downtime."
+    icon: <FaHandshake />,
+    title: "Unified Multi-Channel Hub",
+    description: "Every customer interaction—SMS, email, calls, social media, web chat—in one timeline. Stop juggling multiple platforms with all channels in one inbox.",
+    badge: "All channels"
   },
   {
     icon: <FaChartLine />,
-    title: "Performance Analytics & ROI Reporting",
-    description: "AI aggregates key metrics—bay utilization, average repair time variance, no-show rate, and revenue per bay. Interactive dashboards project monthly profit improvements and calculate time saved per service advisor (target: 2+ hours per day)."
+    title: "Instant ROI Tracking",
+    description: "See your return on investment in real-time. Track every dollar spent vs revenue generated. No complex dashboards or expensive consultants needed—ROI visible day one.",
+    badge: "Real-time ROI"
+  },
+  {
+    icon: <FaBuilding />,
+    title: "Scalable for Any Size",
+    description: "Single location or 500 branches—pricing and features that grow with you. No forced enterprise plans or hidden per-user fees with fair pricing at infinite scale.",
+    badge: "Fair pricing"
   }
 ];
 
 const solutions = [
-  "Eliminates Manual Scheduling: Automated booking and technician matching remove the need for back-and-forth calls, freeing advisors to focus on customer service.",
-  "Maximizes Throughput: Dynamic slot optimization and intelligent assignments ensure every resource operates at peak capacity.",
-  "Reduces No-Shows: Personalized reminders and self-service rescheduling lower missed appointments by up to 40%.",
-  "Improves Customer Satisfaction: Real-time updates and accurate ETAs build trust and increase repeat business.",
-  "Drives Revenue Growth: By minimizing idle time and filling gaps with additional service opportunities, businesses can boost service revenue by 15–25% within three months."
+  "Fast Implementation: Get operational in 5 minutes instead of 30+ days. No consultants, no complex setup, no lost revenue during transition.",
+  "Enterprise Security: Advanced role-based permissions let you control exactly what each team member sees and does—from entry-level to C-suite.",
+  "Universal Compatibility: One platform adapts to any business sector—retail, healthcare, non-profits, services, manufacturing, and everything in between.",
+  "True Cost Savings: 90% less than traditional enterprise CRMs. No hidden per-user fees, no forced upgrades, no surprise costs.",
+  "Real Business Impact: Track ROI from day one with built-in analytics. See exactly how much time and money you're saving in real-time."
 ];
 
 export default function Home() {
@@ -195,11 +203,14 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
+            <div className="inline-block bg-gradient-to-r from-primary/20 to-secondary/20 border border-primary/30 rounded-full px-6 py-2 mb-6">
+              <span className="text-primary font-semibold">Enterprise Capabilities Without Enterprise Complexity</span>
+            </div>
             <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight">
-              Core Features
+              What Makes VervidFlow Different
             </h2>
             <p className="text-xl md:text-2xl text-neutral-100 max-w-3xl mx-auto font-light leading-relaxed">
-              Discover how VervidFlow transforms your business operations with intelligent CRM automation
+              Built for <strong className="text-white">any business sector</strong>—from dealerships to orphanages, warehouses to healthcare. Get started in 5 minutes, not 30 days.
             </p>
           </motion.div>
           
@@ -212,8 +223,13 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -10, scale: 1.02 }}
-                className="group bg-neutral-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-neutral-700 hover:border-primary/50"
+                className="group bg-gradient-to-br from-neutral-800 to-neutral-900 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-neutral-700 hover:border-primary/50 relative overflow-hidden"
               >
+                {/* Badge */}
+                <div className="absolute top-4 right-4 bg-gradient-to-r from-primary to-secondary text-white text-xs font-bold px-3 py-1 rounded-full">
+                  {feature.badge}
+                </div>
+                
                 <div className="text-5xl text-primary mb-6 group-hover:scale-110 transition-transform duration-300">
                   {feature.icon}
                 </div>

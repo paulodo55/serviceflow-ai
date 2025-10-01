@@ -32,7 +32,7 @@ export default function PerformanceAnalyticsPage() {
               See Your ROI in Real-Time
             </h1>
             <p className="text-xl md:text-2xl text-neutral-200 max-w-3xl mx-auto leading-relaxed font-light">
-              <strong className="text-white">Unlike Salesforce's $25K analytics add-ons,</strong> every VervidFlow plan includes instant ROI dashboards. Track every dollar spent vs revenue generated—no consultants, no complex reports, no guesswork.
+              <strong className="text-white">Unlike enterprise CRM analytics add-ons that cost $25K+,</strong> every VervidFlow plan includes instant ROI dashboards. Track every dollar spent vs revenue generated—no consultants, no complex reports, no guesswork.
             </p>
           </motion.div>
         </div>

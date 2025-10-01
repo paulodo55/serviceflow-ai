@@ -12,9 +12,9 @@ const features = [
     id: 'instant-onboarding',
     icon: <FaRocket />,
     title: '5-Minute Data Onboarding',
-    description: 'Import your entire customer database, employee records, and business data in minutes. Unlike Salesforce\'s weeks-long implementation, we get you operational today.',
+    description: 'Import your entire customer database, employee records, and business data in minutes. While others take weeks or months to implement, we get you operational today.',
     slug: 'instant-booking',
-    competitive: 'vs Salesforce: Days not months'
+    competitive: 'Ready in minutes, not months'
   },
   {
     id: 'role-based-access',
@@ -30,13 +30,13 @@ const features = [
     title: 'Intelligent API Grouping',
     description: 'Separate API endpoints for different teams and departments. Sales, operations, support—each gets their own optimized data flow without interference.',
     slug: 'slot-optimization',
-    competitive: 'vs Podium: True multi-department'
+    competitive: 'True multi-department design'
   },
   {
     id: 'universal-crm',
     icon: <FaGlobeAmericas />,
     title: 'Universal Business CRM',
-    description: 'From dealerships to orphanages, warehouses to healthcare—one platform adapts to any business sector. No industry limitations like competitors.',
+    description: 'From dealerships to orphanages, warehouses to healthcare—one platform adapts to any business sector. No industry limitations.',
     slug: 'automated-reminders',
     competitive: 'Any industry, any size'
   },
@@ -46,13 +46,13 @@ const features = [
     title: 'True AI Automation',
     description: 'Not just scheduled messages—real AI that learns your business patterns, predicts customer needs, and automates complex workflows automatically.',
     slug: 'real-time-updates',
-    competitive: 'vs Microsoft: Real AI not rules'
+    competitive: 'Real AI, not just rules'
   },
   {
     id: 'unified-communications',
     icon: <FaHandshake />,
     title: 'Unified Multi-Channel Hub',
-    description: 'Every customer interaction—SMS, email, calls, social media, web chat—in one timeline. Stop juggling 5 different platforms like your competitors.',
+    description: 'Every customer interaction—SMS, email, calls, social media, web chat—in one timeline. Stop juggling multiple platforms.',
     slug: 'downtime-insights',
     competitive: 'All channels, one inbox'
   },
@@ -86,7 +86,7 @@ export default function FeaturesPage() {
             transition={{ duration: 0.6 }}
             className="inline-block bg-gradient-to-r from-primary/20 to-secondary/20 border border-primary/30 rounded-full px-6 py-2 mb-6"
           >
-            <span className="text-primary font-semibold">Why Enterprises Choose Us Over Salesforce, Podium & Microsoft</span>
+            <span className="text-primary font-semibold">Why Leading Businesses Switch to VervidFlow</span>
           </motion.div>
           
           <motion.h1
@@ -121,7 +121,7 @@ export default function FeaturesPage() {
             </div>
             <div className="bg-gradient-to-br from-secondary/10 to-transparent border border-secondary/20 rounded-xl p-6 text-center">
               <div className="text-4xl font-bold text-secondary mb-2">90%</div>
-              <div className="text-neutral-300">Cost Savings vs Salesforce</div>
+              <div className="text-neutral-300">Cost Savings vs Enterprise CRMs</div>
             </div>
             <div className="bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 rounded-xl p-6 text-center">
               <div className="text-4xl font-bold text-primary mb-2">Any</div>

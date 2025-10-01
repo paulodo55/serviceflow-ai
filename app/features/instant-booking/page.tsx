@@ -28,7 +28,7 @@ export default function InstantBookingPage() {
               Turn Website Visitors Into Booked Customers
             </h1>
             <p className="text-xl text-neutral-300 max-w-3xl mx-auto leading-relaxed">
-              <strong className="text-white">Capture more leads before they leave your site.</strong> While competitors make customers call or fill out forms, VervidFlow converts visitors to confirmed appointments in 90 seconds—24/7, mobile-optimized, zero friction.
+              <strong className="text-white">Capture more leads before they leave your site.</strong> While others make customers call or fill out forms, VervidFlow converts visitors to confirmed appointments in 90 seconds—24/7, mobile-optimized, zero friction.
             </p>
           </motion.div>
         </div>
@@ -109,27 +109,27 @@ export default function InstantBookingPage() {
           </div>
         </motion.section>
 
-        {/* Why We Beat Podium, Salesforce & Microsoft */}
+        {/* Why Businesses Switch */}
         <motion.section
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">Why Businesses Switch from Competitors</h2>
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">What Makes Us Different</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-neutral-800 p-6 rounded-xl border border-red-500/30">
-              <h3 className="text-lg font-bold text-red-400 mb-3">Podium</h3>
-              <p className="text-neutral-400 text-sm mb-3">Limited to messaging, no real booking engine</p>
+            <div className="bg-neutral-800 p-6 rounded-xl border border-primary/30">
+              <h3 className="text-lg font-bold text-primary mb-3">Messaging Platforms</h3>
+              <p className="text-neutral-400 text-sm mb-3">Limited to chat, no real booking engine</p>
               <p className="text-green-400 font-semibold">✓ VervidFlow: Full CRM + instant booking</p>
             </div>
-            <div className="bg-neutral-800 p-6 rounded-xl border border-red-500/30">
-              <h3 className="text-lg font-bold text-red-400 mb-3">Salesforce</h3>
+            <div className="bg-neutral-800 p-6 rounded-xl border border-primary/30">
+              <h3 className="text-lg font-bold text-primary mb-3">Enterprise CRMs</h3>
               <p className="text-neutral-400 text-sm mb-3">Requires custom development for booking</p>
               <p className="text-green-400 font-semibold">✓ VervidFlow: Ready out of the box</p>
             </div>
-            <div className="bg-neutral-800 p-6 rounded-xl border border-red-500/30">
-              <h3 className="text-lg font-bold text-red-400 mb-3">Microsoft Dynamics</h3>
+            <div className="bg-neutral-800 p-6 rounded-xl border border-primary/30">
+              <h3 className="text-lg font-bold text-primary mb-3">Legacy Systems</h3>
               <p className="text-neutral-400 text-sm mb-3">Complex setup, slow mobile experience</p>
               <p className="text-green-400 font-semibold">✓ VervidFlow: Mobile-first, instant</p>
             </div>
