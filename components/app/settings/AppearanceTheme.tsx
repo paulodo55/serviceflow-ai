@@ -54,15 +54,22 @@ export default function AppearanceTheme() {
   // Load settings from global theme or demo context
   useEffect(() => {
     if (isDemoMode && demoSettings.theme) {
+      // Validate mode
       const mode = (demoSettings.theme.mode === 'light' || demoSettings.theme.mode === 'dark' || demoSettings.theme.mode === 'system') 
         ? demoSettings.theme.mode 
         : 'light';
+      
+      // Validate fontSize
+      const validFontSizes = ['small', 'medium', 'large', 'extra-large'] as const;
+      const fontSize = (demoSettings.theme.fontSize && validFontSizes.includes(demoSettings.theme.fontSize as any))
+        ? demoSettings.theme.fontSize as 'small' | 'medium' | 'large' | 'extra-large'
+        : 'medium';
       
       setThemeSettings({
         theme: mode,
         systemTheme: false,
         highContrast: demoSettings.theme.highContrast || false,
-        fontSize: demoSettings.theme.fontSize || 'medium',
+        fontSize: fontSize,
         customColors: demoSettings.theme.customColors || globalTheme.customColors,
         selectedPreset: demoSettings.theme.selectedPreset || 'default',
         logoUrl: demoSettings.theme.logoUrl || '',
@@ -72,7 +79,7 @@ export default function AppearanceTheme() {
       updateGlobalTheme({
         mode,
         highContrast: demoSettings.theme.highContrast,
-        fontSize: demoSettings.theme.fontSize,
+        fontSize: fontSize,
         customColors: demoSettings.theme.customColors,
         selectedPreset: demoSettings.theme.selectedPreset,
         logoUrl: demoSettings.theme.logoUrl,
