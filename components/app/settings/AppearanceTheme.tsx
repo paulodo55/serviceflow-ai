@@ -21,11 +21,26 @@ import ToggleSwitch from './ToggleSwitch';
 import { useDemo } from '@/lib/demo-context';
 import { useTheme } from '@/lib/theme-provider';
 
+interface LocalThemeSettings {
+  theme: 'light' | 'dark' | 'system';
+  systemTheme: boolean;
+  highContrast: boolean;
+  fontSize: 'small' | 'medium' | 'large' | 'extra-large';
+  customColors: {
+    primary: string;
+    secondary: string;
+    accent: string;
+  };
+  selectedPreset: string;
+  logoUrl: string;
+  companyName: string;
+}
+
 export default function AppearanceTheme() {
   const { isDemoMode, demoSettings, updateDemoSettings } = useDemo();
   const { theme: globalTheme, updateTheme: updateGlobalTheme } = useTheme();
   
-  const [themeSettings, setThemeSettings] = useState({
+  const [themeSettings, setThemeSettings] = useState<LocalThemeSettings>({
     theme: globalTheme.mode,
     systemTheme: false,
     highContrast: globalTheme.highContrast,
@@ -39,19 +54,23 @@ export default function AppearanceTheme() {
   // Load settings from global theme or demo context
   useEffect(() => {
     if (isDemoMode && demoSettings.theme) {
+      const mode = (demoSettings.theme.mode === 'light' || demoSettings.theme.mode === 'dark' || demoSettings.theme.mode === 'system') 
+        ? demoSettings.theme.mode 
+        : 'light';
+      
       setThemeSettings({
-        theme: demoSettings.theme.mode,
+        theme: mode,
         systemTheme: false,
-        highContrast: demoSettings.theme.highContrast,
-        fontSize: demoSettings.theme.fontSize,
-        customColors: demoSettings.theme.customColors,
-        selectedPreset: demoSettings.theme.selectedPreset,
-        logoUrl: demoSettings.theme.logoUrl,
-        companyName: demoSettings.theme.companyName
+        highContrast: demoSettings.theme.highContrast || false,
+        fontSize: demoSettings.theme.fontSize || 'medium',
+        customColors: demoSettings.theme.customColors || globalTheme.customColors,
+        selectedPreset: demoSettings.theme.selectedPreset || 'default',
+        logoUrl: demoSettings.theme.logoUrl || '',
+        companyName: demoSettings.theme.companyName || 'VervidFlow'
       });
       // Sync to global theme
       updateGlobalTheme({
-        mode: demoSettings.theme.mode,
+        mode,
         highContrast: demoSettings.theme.highContrast,
         fontSize: demoSettings.theme.fontSize,
         customColors: demoSettings.theme.customColors,
@@ -71,7 +90,7 @@ export default function AppearanceTheme() {
         companyName: globalTheme.companyName
       });
     }
-  }, [isDemoMode, demoSettings, globalTheme]);
+  }, [isDemoMode, demoSettings, globalTheme, updateGlobalTheme]);
 
   const presetThemes = [
     {
