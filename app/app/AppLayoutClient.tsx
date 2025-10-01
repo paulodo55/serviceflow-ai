@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Session } from 'next-auth';
 import AppSidebar from '@/components/app/AppSidebar';
 import AppHeader from '@/components/app/AppHeader';
+import { ThemeProvider, useTheme } from '@/lib/theme-provider';
 
 interface AppLayoutClientProps {
   session: Session | null;
@@ -21,8 +22,9 @@ interface DemoUser {
   role: string;
 }
 
-export default function AppLayoutClient({ session, children }: AppLayoutClientProps) {
+function AppLayoutContent({ session, children }: AppLayoutClientProps) {
   const router = useRouter();
+  const { theme } = useTheme();
   const [isDemoMode, setIsDemoMode] = useState(false);
   const [demoUser, setDemoUser] = useState<DemoUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -55,10 +57,10 @@ export default function AppLayoutClient({ session, children }: AppLayoutClientPr
   // Show loading while checking auth
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400 mx-auto"></div>
+          <p className="mt-4 text-gray-600 dark:text-gray-300">Loading...</p>
         </div>
       </div>
     );
@@ -71,11 +73,14 @@ export default function AppLayoutClient({ session, children }: AppLayoutClientPr
     image: null
   };
 
+  // Get background color based on theme
+  const bgColor = theme.mode === 'dark' ? 'bg-gray-900' : 'bg-gray-50';
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={`min-h-screen transition-colors duration-200 ${bgColor}`}>
       {/* Demo Mode Indicator - only show in demo mode */}
       {isDemoMode && (
-        <div className="bg-blue-600 text-white text-center py-1 px-4 text-sm">
+        <div className="bg-blue-600 dark:bg-blue-700 text-white text-center py-1 px-4 text-sm">
           🚀 Demo Mode - Showcasing VervidFlow&apos;s Advanced Features
         </div>
       )}
@@ -90,11 +95,21 @@ export default function AppLayoutClient({ session, children }: AppLayoutClientPr
           <AppHeader user={user} />
           
           {/* Page Content */}
-          <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
+          <main className={`flex-1 overflow-y-auto p-6 transition-colors duration-200 ${bgColor}`}>
             {children}
           </main>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AppLayoutClient({ session, children }: AppLayoutClientProps) {
+  return (
+    <ThemeProvider>
+      <AppLayoutContent session={session}>
+        {children}
+      </AppLayoutContent>
+    </ThemeProvider>
   );
 }

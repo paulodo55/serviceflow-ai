@@ -19,26 +19,24 @@ import {
 import SettingsCard from './SettingsCard';
 import ToggleSwitch from './ToggleSwitch';
 import { useDemo } from '@/lib/demo-context';
+import { useTheme } from '@/lib/theme-provider';
 
 export default function AppearanceTheme() {
   const { isDemoMode, demoSettings, updateDemoSettings } = useDemo();
+  const { theme: globalTheme, updateTheme: updateGlobalTheme } = useTheme();
   
   const [themeSettings, setThemeSettings] = useState({
-    theme: 'light',
+    theme: globalTheme.mode,
     systemTheme: false,
-    highContrast: false,
-    fontSize: 'medium',
-      customColors: {
-        primary: '#3B82F6',
-        secondary: '#10B981',
-        accent: '#818cf8'
-      },
-    selectedPreset: 'default',
-    logoUrl: '',
-    companyName: 'VervidFlow'
+    highContrast: globalTheme.highContrast,
+    fontSize: globalTheme.fontSize,
+    customColors: globalTheme.customColors,
+    selectedPreset: globalTheme.selectedPreset,
+    logoUrl: globalTheme.logoUrl,
+    companyName: globalTheme.companyName
   });
 
-  // Load settings from demo context if in demo mode
+  // Load settings from global theme or demo context
   useEffect(() => {
     if (isDemoMode && demoSettings.theme) {
       setThemeSettings({
@@ -51,8 +49,29 @@ export default function AppearanceTheme() {
         logoUrl: demoSettings.theme.logoUrl,
         companyName: demoSettings.theme.companyName
       });
+      // Sync to global theme
+      updateGlobalTheme({
+        mode: demoSettings.theme.mode,
+        highContrast: demoSettings.theme.highContrast,
+        fontSize: demoSettings.theme.fontSize,
+        customColors: demoSettings.theme.customColors,
+        selectedPreset: demoSettings.theme.selectedPreset,
+        logoUrl: demoSettings.theme.logoUrl,
+        companyName: demoSettings.theme.companyName
+      });
+    } else {
+      setThemeSettings({
+        theme: globalTheme.mode,
+        systemTheme: false,
+        highContrast: globalTheme.highContrast,
+        fontSize: globalTheme.fontSize,
+        customColors: globalTheme.customColors,
+        selectedPreset: globalTheme.selectedPreset,
+        logoUrl: globalTheme.logoUrl,
+        companyName: globalTheme.companyName
+      });
     }
-  }, [isDemoMode, demoSettings]);
+  }, [isDemoMode, demoSettings, globalTheme]);
 
   const presetThemes = [
     {
@@ -103,19 +122,20 @@ export default function AppearanceTheme() {
     const newSettings = { ...themeSettings, [field]: value };
     setThemeSettings(newSettings);
     
+    // Update global theme
+    const globalThemeUpdate: any = {};
+    if (field === 'theme') globalThemeUpdate.mode = value;
+    else if (field === 'highContrast') globalThemeUpdate.highContrast = value;
+    else if (field === 'fontSize') globalThemeUpdate.fontSize = value;
+    else if (field === 'companyName') globalThemeUpdate.companyName = value;
+    else if (field === 'logoUrl') globalThemeUpdate.logoUrl = value;
+    else if (field === 'selectedPreset') globalThemeUpdate.selectedPreset = value;
+    
+    updateGlobalTheme(globalThemeUpdate);
+    
     // Update demo context if in demo mode
     if (isDemoMode) {
-      const demoThemeUpdate: any = {};
-      
-      // Map local state to demo context structure
-      if (field === 'theme') demoThemeUpdate.mode = value;
-      else if (field === 'highContrast') demoThemeUpdate.highContrast = value;
-      else if (field === 'fontSize') demoThemeUpdate.fontSize = value;
-      else if (field === 'companyName') demoThemeUpdate.companyName = value;
-      else if (field === 'logoUrl') demoThemeUpdate.logoUrl = value;
-      else if (field === 'selectedPreset') demoThemeUpdate.selectedPreset = value;
-      
-      updateDemoSettings('theme', demoThemeUpdate);
+      updateDemoSettings('theme', globalThemeUpdate);
     }
   };
 
@@ -125,6 +145,9 @@ export default function AppearanceTheme() {
       ...prev,
       customColors: newColors
     }));
+    
+    // Update global theme
+    updateGlobalTheme({ customColors: newColors });
     
     // Update demo context if in demo mode
     if (isDemoMode) {
@@ -140,6 +163,12 @@ export default function AppearanceTheme() {
         selectedPreset: presetId,
         customColors: preset.colors
       }));
+      
+      // Update global theme
+      updateGlobalTheme({
+        selectedPreset: presetId,
+        customColors: preset.colors
+      });
       
       // Update demo context if in demo mode
       if (isDemoMode) {
